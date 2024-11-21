@@ -29,7 +29,7 @@ parser.add_argument("--intersection-id", type=str, default="i_cr30_tln")
 parser.add_argument("--num-episodes", type=int, default=5)
 parser.add_argument("--gui", type=bool, default=False)
 parser.add_argument("--noised-edge", type=str, default="CR30_LR_8")
-parser.add_argument("--simulation-time", type=int, default=200)
+parser.add_argument("--simulation-time", type=int, default=1200)
 parser.add_argument("--run-per-alpha", type=int, default=5)
 parser.add_argument("--delta-time", type=int, default=3)
 parser.add_argument("--nu", type=float, default=0.5)
@@ -42,7 +42,7 @@ else:
     args.noise_added = True
 delta_time = args.delta_time
 nu = args.nu
-
+simulation_time_value = int(float(args.simulation_time) * float(args.delta_time))
 if args.noise_added:
     attack_state = "attacked"
 else:
@@ -309,6 +309,6 @@ if True:
                     state = new_state
 
             # here implement what we want to show as result
-            env.custom_save_data(script_directory + f"/output/i4-cyber_attack/rl/neighborhood/{nu}/{attack_state}/off-peak", file_name=f"data_{attack_state}_alpha_{alpha}_run_{run}.csv")
+            env.custom_save_data(script_directory + f"/output/i4-cyber_attack/rl/neighborhood/{simulation_time_value}_values/{nu}/{attack_state}/off-peak", file_name=f"data_{attack_state}_alpha_{alpha}_run_{run}.csv")
             env.delete_cache()
             # env.close()
