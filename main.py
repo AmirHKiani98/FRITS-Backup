@@ -248,7 +248,7 @@ if True:
             
             # Next step
             new_state, reward, _, _ = env.step(action=actions)
-            reward = blend_rewards_neighborhood(reward, nu)
+            # reward = blend_rewards_neighborhood(reward, nu)
             for ts, agent in agents.items():
                 agent.memory.push(new_state[ts], actions[ts], reward[ts], env.encode(state[ts], ts))
                 if len(agent.memory) > batch_size:
@@ -309,6 +309,6 @@ if True:
                     state = new_state
 
             # here implement what we want to show as result
-            env.custom_save_data(script_directory + f"/output/i4-cyber_attack/rl/neighborhood/{simulation_time_value}_values/{nu}/{attack_state}/off-peak", file_name=f"data_{attack_state}_alpha_{alpha}_run_{run}.csv")
+            env.custom_save_data(script_directory + f"/output/i4-cyber_attack/rl/without_frl/{attack_state}/off-peak", file_name=f"data_{attack_state}_alpha_{alpha}_run_{run}.csv")
             env.delete_cache()
             # env.close()

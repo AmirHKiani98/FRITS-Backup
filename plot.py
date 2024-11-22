@@ -10,11 +10,11 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from collections import defaultdict
-mu = 0.11
+mu = 0.51
 
 CWD = os.getcwd()
-DATA_PATH = os.path.join(CWD, 'output/i4-cyber_attack/rl/attacked/off-peak')
-DATA_PATH_NEW = os.path.join(CWD, f'output/i4-cyber_attack/rl/{mu}/attacked/off-peak')
+DATA_PATH = os.path.join(CWD, 'output/i4-cyber_attack/rl/without_frl/attacked/off-peak')
+DATA_PATH_NEW = os.path.join(CWD, f'output/i4-cyber_attack/rl/neighborhood/3600_values/{mu}/attacked/off-peak')
 
 def pad_or_truncate(arr, target_length):
     if len(arr) > target_length:
@@ -29,7 +29,7 @@ if __name__ == '__main__':
     wt = defaultdict(list)
     wt_new = defaultdict(list)  # For the new data
     colors = ['blue', 'green', 'red', 'purple', 'orange', 'cyan']
-    target_length = 550  # Define the target length for all arrays
+    target_length = 3600  # Define the target length for all arrays
 
     # Load and process the original data
     for a in alpha:
@@ -104,4 +104,4 @@ if __name__ == '__main__':
     plt.tick_params(axis='both', which='major', labelsize=18)
     plt.gca().get_yaxis().get_offset_text().set_size(18)
     plt.savefig(f'results_plot_mu_{mu}.png', format='png', dpi=1200, bbox_inches='tight')
-    plt.show()
+    # plt.show()

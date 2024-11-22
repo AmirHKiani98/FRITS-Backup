@@ -12,7 +12,7 @@ from collections import defaultdict
 mu = 0.11
 
 CWD = os.getcwd()
-DATA_PATH = os.path.join(CWD, 'output/i4-cyber_attack/rl/attacked/off-peak')
+DATA_PATH = os.path.join(CWD, 'output/i4-cyber_attack/rl/without_frl/attacked/off-peak')
 
 def pad_or_truncate(arr, target_length):
     if len(arr) > target_length:
@@ -21,11 +21,11 @@ def pad_or_truncate(arr, target_length):
         return np.pad(arr, (0, target_length - len(arr)), 'constant')
 def plot_all_mu(mu):
     alpha = list(range(5))
-    DATA_PATH_NEW = os.path.join(CWD, f'output/i4-cyber_attack/rl/{mu}/attacked/off-peak')
+    DATA_PATH_NEW = os.path.join(CWD, f'output/i4-cyber_attack/rl/neighborhood/3600_values/{mu}/attacked/off-peak')
     reps = 5
     wt = defaultdict(list)
     wt_new = defaultdict(list)  # For the new data
-    target_length = 550  # Define the target length for all arrays
+    target_length = 1400  # Define the target length for all arrays
 
     # Load and process the original data
     for a in alpha:
@@ -45,7 +45,6 @@ def plot_all_mu(mu):
             file_name = 'data_attacked_alpha_{}_run_{}.csv'.format(a, rep)
             file_path_new = os.path.join(DATA_PATH_NEW, file_name)
             if not os.path.isfile(file_path_new):
-                print("sh",file_name)
                 continue
             df_new = pd.read_csv(file_path_new, header=0)
             df_new = df_new.head(target_length)
@@ -78,7 +77,7 @@ def plot_all_mu(mu):
     
     return(_dict)
 all_dict = {}
-for mu in ["0.10", "0.11", "0.21", "0.31", "0.41", "0.51", "0.61", "0.71", "0.81", "0.90", "0.91"]:
+for mu in ["0.11", "0.21", "0.31", "0.41", "0.51", "0.61", "0.71", "0.81", "0.91"]:
     _dict = plot_all_mu(mu)
     all_dict[mu] = _dict
 
@@ -116,4 +115,5 @@ plt.grid(True)
 
 # Show the plot
 plt.tight_layout()
-plt.show()
+# plt.show()
+plt.savefig('performance_improvement_vs_mu.png', dpi=300)
