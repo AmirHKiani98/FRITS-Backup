@@ -19,6 +19,8 @@ from collections import defaultdict
 
 from CustomSumoRLEnv import *
 
+
+
 parser = argparse.ArgumentParser()
 # Command to run the file: python main.py --noise-added "True"
 script_directory = os.path.dirname(os.path.abspath(__file__))
@@ -33,6 +35,7 @@ parser.add_argument("--simulation-time", type=int, default=1200)
 parser.add_argument("--run-per-alpha", type=int, default=5)
 parser.add_argument("--delta-time", type=int, default=3)
 parser.add_argument("--nu", type=float, default=0.5)
+parser.add_argument("--distance-threshold", type=int, default=200)
 
 args = parser.parse_args()
 print(args.noise_added, "noise")
@@ -50,15 +53,83 @@ else:
 print("attack state:", attack_state)
 
 
+def get_intersections_positions():
+    junction_ids = traci.junction.getIDList()
+    junction_positions = {jid: traci.junction.getPosition(jid) for jid in junction_ids}
+    return junction_positions
+
+def get_intersections_distance_matrix():
+    junction_positions = get_intersections_positions()
+    junction_ids = list(junction_positions.keys())
+    distance_matrix = {key: {nested_key: 0 for nested_key in junction_ids.keys()} for key in junction_ids.keys()}
+    summation = 0
+    number = 0
+    for i in range(len(junction_ids)):
+        for j in range(len(junction_ids)):
+            distance = sqrt((junction_positions[junction_ids[i]][0] - junction_positions[junction_ids[j]][0])**2 + (junction_positions[junction_ids[i]][1] - junction_positions[junction_ids[j]][1])**2)
+            distance_matrix[i][j] = distance
+            summation += distance
+            number += 1
+    _mean = summation / number
+    
+    print("mean distance", _mean)
+    print("avetage one", np.mean(list(distance_matrix["10"].values())))
+    return (distance_matrix, _mean)
+
 def no_encode(state, ts_id):
     return tuple(state)
 
-neighbourhood_dict = {
-    "i_cr30_101": ["i_cr30_tln"],
-    "i_cr30_tln": ["i_cr30_101", "i_cr30_lln"],
-    "i_cr30_lln": ["i_cr30_101", "i_cr30_gln"],
-    "i_cr30_gln": ["i_cr30_lln"]
-}
+def get_signal_neighbors(tls_id, d):
+    """
+    Get traffic signal neighbors within 'd' meters of a given traffic signal.
+
+    :param tls_id: Traffic signal ID of interest.
+    :param d: Distance threshold in meters.
+    :return: List of nearby traffic signal IDs.
+    """
+    # Get controlled junction of the traffic light
+    trafficSignals = traci.trafficlight.getIDList()
+    print("trafficSignals", trafficSignals)
+    # print("controlled_links", controlled_links)
+    # if not controlled_links:
+    #     print(f"No controlled junction found for {tls_id}.")
+    #     return []
+    
+    # controlled_edge, _, _ = controlled_links[0][0]  # Extract first controlled edge
+    # tls_position = traci.junction.getPosition(controlled_edge)
+
+    # # Get all traffic signal IDs in the network
+    # all_tls_ids = traci.trafficlight.getIDList()
+    # neighboring_tls = []
+    
+    # for other_tls_id in all_tls_ids:
+    #     if other_tls_id == tls_id:
+    #         continue  # Skip itself
+
+    #     # Get position of the other traffic light
+    #     other_controlled_links = traci.trafficlight.getControlledLinks(other_tls_id)
+    #     if not other_controlled_links:
+    #         continue
+        
+    #     other_edge, _, _ = other_controlled_links[0][0]
+    #     other_position = traci.junction.getPosition(other_edge)
+
+    #     # Compute Euclidean distance
+    #     distance = sqrt((tls_position[0] - other_position[0])**2 + (tls_position[1] - other_position[1])**2)
+
+    #     if distance <= d:
+    #         neighboring_tls.append(other_tls_id)
+
+    return [""]
+
+
+# neighbourhood_dict = {
+#     "i_cr30_101": ["i_cr30_tln"],
+#     "i_cr30_tln": ["i_cr30_101", "i_cr30_lln"],
+#     "i_cr30_lln": ["i_cr30_101", "i_cr30_gln"],
+#     "i_cr30_gln": ["i_cr30_lln"]
+# }
+
 class ArrivalDepartureState(ObservationFunction):
     def __init__(self, ts: TrafficSignal):
         super().__init__(ts)
@@ -137,7 +208,7 @@ class ArrivalDepartureStateAttacked(ArrivalDepartureState):
             depart_lane_vehicles = 0
             for departure_lane in self.outgoing_lanes[index]:
                 depart_lane_vehicles += self.get_lane_vehicles(lane_id=departure_lane)
-            if self.ts.id == args.intersection_id and traci.lane.getEdgeID(arrival_lane) == args.noised_edge:
+            if self.ts.id == args.intersection_id: #and traci.lane.getEdgeID(arrival_lane) == args.noised_edge: #TODO check for noised_edge later
                 arrival_lane_vehicles += random.randint(0, ArrivalDepartureStateAttacked.alpha) # Adding only positive noise
                 depart_lane_vehicles += random.randint(0, ArrivalDepartureStateAttacked.alpha) # Adding only positive noise
             arrival_lane_vehicles = max(arrival_lane_vehicles, 0)
@@ -236,6 +307,9 @@ if True:
         reward_fn=reward_fn
     )
     env.reset()
+    # Get neighbors for each traffic signal based on distance threshold
+    print(get_intersections_distance_matrix())
+    exit()
     agents = {ts: DQLAgent(len(set(traci.trafficlight.getControlledLanes(ts)))*2, env.traffic_signals[ts].action_space.n, hidden_dim=100, seed=seed) for ts in env.ts_ids}
     
     total_rewards = []  # Store total rewards for each episode
