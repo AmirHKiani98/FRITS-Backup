@@ -19,6 +19,8 @@ from collections import defaultdict
 
 from CustomSumoRLEnv import *
 
+from tqdm import tqdm
+
 
 
 parser = argparse.ArgumentParser()
@@ -282,7 +284,9 @@ if True:
     all_rewards = defaultdict(list)  # Store all rewards for all steps
     for episode in range(num_episodes):
         state = env.reset()
-        for step in range(args.simulation_time):
+        print("Episode: ", episode)
+        for step in tqdm(range(args.simulation_time), desc="Processing"):
+            
             actions = {ts: agent.act(state[ts]) for ts, agent in agents.items()}
             
             # Next step
