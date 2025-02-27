@@ -2,7 +2,7 @@
 """
 Created on Thu Apr 11 14:46:51 2024
 
-@author: naftabi
+@authors: naftabi, akiani
 """
 import os
 import argparse
@@ -19,13 +19,17 @@ from collections import defaultdict
 
 from CustomSumoRLEnv import *
 
+from tqdm import tqdm
+
+
+
 parser = argparse.ArgumentParser()
 # Command to run the file: python main.py --noise-added "True"
 script_directory = os.path.dirname(os.path.abspath(__file__))
 parser.add_argument('--net', type=str, default=script_directory + r"/net/i4_new.net.xml")
 parser.add_argument('--route', type=str, default=script_directory + r'/rou/d_1_turnCount_am_offpeak_1_duplicated.rou.xml')
 parser.add_argument('--noise-added', type=str, default="True")
-parser.add_argument("--intersection-id", type=str, default="i_cr30_tln")
+parser.add_argument("--intersection-id", type=str, default="10")
 parser.add_argument("--num-episodes", type=int, default=5)
 parser.add_argument("--gui", type=bool, default=False)
 parser.add_argument("--noised-edge", type=str, default="CR30_LR_8")
@@ -33,6 +37,8 @@ parser.add_argument("--simulation-time", type=int, default=1200)
 parser.add_argument("--run-per-alpha", type=int, default=5)
 parser.add_argument("--delta-time", type=int, default=3)
 parser.add_argument("--nu", type=float, default=0.5)
+parser.add_argument("--distance-threshold", type=int, default=200)
+parser.add_argument("--omega", type=float, default=0.1)
 
 args = parser.parse_args()
 print(args.noise_added, "noise")
@@ -50,15 +56,38 @@ else:
 print("attack state:", attack_state)
 
 
+def get_intersections_positions():
+    junction_ids = traci.junction.getIDList()
+    junction_positions = {jid: traci.junction.getPosition(jid) for jid in junction_ids}
+    return junction_positions
+
+def get_intersections_distance_matrix():
+    junction_positions = get_intersections_positions()
+    distance_matrix = {key: {nested_key: 0 for nested_key in junction_positions.keys()} for key in junction_positions.keys()}
+    summation = 0
+    number = 0
+    for i in junction_positions.keys():
+        for j in junction_positions.keys():
+            distance = sqrt((junction_positions[i][0] - junction_positions[j][0])**2 + (junction_positions[i][1] - junction_positions[j][1])**2)
+            distance_matrix[i][j] = distance
+            summation += distance
+            number += 1
+    _mean = summation / number
+    
+    return (distance_matrix, _mean)
+
 def no_encode(state, ts_id):
     return tuple(state)
 
-neighbourhood_dict = {
-    "i_cr30_101": ["i_cr30_tln"],
-    "i_cr30_tln": ["i_cr30_101", "i_cr30_lln"],
-    "i_cr30_lln": ["i_cr30_101", "i_cr30_gln"],
-    "i_cr30_gln": ["i_cr30_lln"]
-}
+
+
+# neighbourhood_dict = {
+#     "i_cr30_101": ["i_cr30_tln"],
+#     "i_cr30_tln": ["i_cr30_101", "i_cr30_lln"],
+#     "i_cr30_lln": ["i_cr30_101", "i_cr30_gln"],
+#     "i_cr30_gln": ["i_cr30_lln"]
+# }
+
 class ArrivalDepartureState(ObservationFunction):
     def __init__(self, ts: TrafficSignal):
         super().__init__(ts)
@@ -137,7 +166,7 @@ class ArrivalDepartureStateAttacked(ArrivalDepartureState):
             depart_lane_vehicles = 0
             for departure_lane in self.outgoing_lanes[index]:
                 depart_lane_vehicles += self.get_lane_vehicles(lane_id=departure_lane)
-            if self.ts.id == args.intersection_id and traci.lane.getEdgeID(arrival_lane) == args.noised_edge:
+            if self.ts.id == args.intersection_id: #and traci.lane.getEdgeID(arrival_lane) == args.noised_edge: #TODO check for noised_edge later
                 arrival_lane_vehicles += random.randint(0, ArrivalDepartureStateAttacked.alpha) # Adding only positive noise
                 depart_lane_vehicles += random.randint(0, ArrivalDepartureStateAttacked.alpha) # Adding only positive noise
             arrival_lane_vehicles = max(arrival_lane_vehicles, 0)
@@ -197,7 +226,17 @@ def blend_rewards(rewards:dict, nu=0.5):
         rewards_copy[ts] = nu*rewards_avg + (1-nu)*reward
     return rewards_copy
 
-def blend_rewards_neighborhood(rewards:dict, nu=0.5):
+def get_neighbours(distance_threshold, distance_matrix):
+    neighbours = {}
+    for ts in distance_matrix.keys():
+        neighbours[ts] = []
+        for ts2 in distance_matrix[ts].keys():
+            if ts != ts2 and distance_matrix[ts][ts2] <= distance_threshold:
+                neighbours[ts].append(ts2)
+    return neighbours
+
+
+def blend_rewards_neighborhood(rewards:dict, neighbourhood_dict, nu=0.5):
     rewards_copy = deepcopy(rewards)
     for ts, reward in rewards_copy.items():
         rewards_avg = np.mean([rewards[neighbour] for neighbour in neighbourhood_dict[ts]])
@@ -236,18 +275,23 @@ if True:
         reward_fn=reward_fn
     )
     env.reset()
+    # Get neighbors for each traffic signal based on distance threshold
+    distance_matrix, distance_mean = get_intersections_distance_matrix()
+    
     agents = {ts: DQLAgent(len(set(traci.trafficlight.getControlledLanes(ts)))*2, env.traffic_signals[ts].action_space.n, hidden_dim=100, seed=seed) for ts in env.ts_ids}
     
     total_rewards = []  # Store total rewards for each episode
     all_rewards = defaultdict(list)  # Store all rewards for all steps
     for episode in range(num_episodes):
         state = env.reset()
-        for step in range(args.simulation_time):
+        print("Episode: ", episode)
+        for step in tqdm(range(args.simulation_time), desc="Processing"):
+            
             actions = {ts: agent.act(state[ts]) for ts, agent in agents.items()}
             
             # Next step
             new_state, reward, _, _ = env.step(action=actions)
-            # reward = blend_rewards_neighborhood(reward, nu)
+            reward = blend_rewards_neighborhood(reward, get_neighbours(distance_mean * args.omega, distance_matrix), nu)
             for ts, agent in agents.items():
                 agent.memory.push(new_state[ts], actions[ts], reward[ts], env.encode(state[ts], ts))
                 if len(agent.memory) > batch_size:
@@ -308,6 +352,25 @@ if True:
                     state = new_state
 
             # here implement what we want to show as result
-            env.custom_save_data(script_directory + f"/output/i4-cyber_attack/rl/without_frl/{attack_state}/off-peak", file_name=f"data_{attack_state}_alpha_{alpha}_run_{run}.csv")
+            output_folder = script_directory + f"/output/i4-cyber_attack/rl/without_frl/{attack_state}/off-peak/omega_{args.omega}/"
+            env.custom_save_data(output_folder, file_name=f"data_{attack_state}_alpha_{alpha}_run_{run}.csv")
             env.delete_cache()
             # env.close()
+    metadata = {
+        "net_file": args.net,
+        "route_file": args.route,
+        "noise_added": args.noise_added,
+        "intersection_id": args.intersection_id,
+        "num_episodes": args.num_episodes,
+        "gui": args.gui,
+        "noised_edge": args.noised_edge,
+        "simulation_time": args.simulation_time,
+        "run_per_alpha": args.run_per_alpha,
+        "delta_time": args.delta_time,
+        "nu": args.nu,
+        "distance_threshold": args.distance_threshold,
+        "omega": args.omega,
+        "distance_mean": distance_mean
+    }
+    env.save_metadata(metadata, output_folder, file_name=f"metadata_{attack_state}.csv")
+    
