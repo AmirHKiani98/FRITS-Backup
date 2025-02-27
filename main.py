@@ -57,7 +57,7 @@ print("attack state:", attack_state)
 
 
 def get_intersections_positions():
-    junction_ids = traci.junction.getIDList()
+    junction_ids = traci.trafficlight.getIDList()
     junction_positions = {jid: traci.junction.getPosition(jid) for jid in junction_ids}
     return junction_positions
 
@@ -275,6 +275,7 @@ if True:
         reward_fn=reward_fn
     )
     env.reset()
+    
     # Get neighbors for each traffic signal based on distance threshold
     distance_matrix, distance_mean = get_intersections_distance_matrix()
     

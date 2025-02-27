@@ -18,5 +18,7 @@ for omage in range(0, 201, 20):
         #     command = f"START /min python {main_script} --nu {nu_value} > output_{i}.log 2>&1"
         # else:
         for attack_phase in ["True", "False"]:
-            command = f"nohup python3 {main_script} --nu {nu_value} --noise-added '{attack_phase}' --omega {omage} > output_{i}.log 2>&1 &"
+            print(omage)
+            command = f"nohup python3 {main_script} --nu {nu_value} --noise-added '{attack_phase}' --omega {omage} > output_{i}_{omage}_noiseadded_{attack_phase}.log 2>&1 &"
             os.system(command)
+            # print(command)
