@@ -10,12 +10,13 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from collections import defaultdict
-mu = 0.51
-
+import sys
+omega = sys.argv[1]
+attack_state = sys.argv[2]
 CWD = os.getcwd()
-DATA_PATH = os.path.join(CWD, 'output/i4-cyber_attack/rl/without_frl/attacked/off-peak')
-DATA_PATH_NEW = os.path.join(CWD, f'output/i4-cyber_attack/rl/neighborhood/3600_values/{mu}/attacked/off-peak')
-
+DATA_PATH = os.path.join(CWD, f'/Users/cavelab/Documents/Github/FRITS-Backup/output/i4-cyber_attack/rl/without_frl/{attack_state}/off-peak/omega_{omega}')
+DATA_PATH_NEW = os.path.join(CWD, f'/Users/cavelab/Documents/Github/FRITS-Backup/output/i4-cyber_attack/rl/without_frl/{attack_state}/off-peak/omega_{omega}')
+attribute_oi = "system_total_stopped"
 def pad_or_truncate(arr, target_length):
     if len(arr) > target_length:
         return arr[:target_length]
@@ -34,7 +35,7 @@ if __name__ == '__main__':
     # Load and process the original data
     for a in alpha:
         for rep in range(reps):
-            file_name = 'data_attacked_alpha_{}_run_{}.csv'.format(a, rep)
+            file_name = 'data_{}_alpha_{}_run_{}.csv'.format(attack_state,a, rep)
             file_path = os.path.join(DATA_PATH, file_name)
             if not os.path.isfile(file_path):
                 print(file_name)
@@ -44,12 +45,12 @@ if __name__ == '__main__':
             # if df.shape[0] != 18000 and df.shape[0] != 3600:
             #     continue
             df = df.head(target_length)
-            wt[a].append(pad_or_truncate(df['system_total_stopped'].values, target_length))
+            wt[a].append(pad_or_truncate(df[attribute_oi].values, target_length))
     
     # Load and process the new data from the new folder
     for a in alpha:
         for rep in range(reps):
-            file_name = 'data_attacked_alpha_{}_run_{}.csv'.format(a, rep)
+            file_name = 'data_{}_alpha_{}_run_{}.csv'.format(attack_state,a, rep)
             file_path_new = os.path.join(DATA_PATH_NEW, file_name)
             if not os.path.isfile(file_path_new):
                 print("sh",file_name)
@@ -60,7 +61,7 @@ if __name__ == '__main__':
             #     continue
             df_new = df_new.head(target_length)
             print(df_new.shape, file_name)
-            wt_new[a].append(pad_or_truncate(df_new['system_total_stopped'].values, target_length))
+            wt_new[a].append(pad_or_truncate(df_new[attribute_oi].values, target_length))
 
     # Stack the arrays for easier manipulation
     for a in alpha:
@@ -70,8 +71,8 @@ if __name__ == '__main__':
         wt_new[a] = np.stack(wt_new[a], axis=0)
     
     # --------------------------------------------------------------------
-    df = pd.read_csv('d_2_fixed.csv')
-    fixed = df['system_total_stopped'].values
+    df = pd.read_csv('4x4_fixed.csv')
+    fixed = df[attribute_oi].values
     fixed = pad_or_truncate(fixed, target_length)
     #---------------------------------------------------------------------
     x_ax = np.arange(target_length)
@@ -90,7 +91,7 @@ if __name__ == '__main__':
         lb_new = np.percentile(wt_new[a], 0.25, axis=0)
         ub_new = np.percentile(wt_new[a], 99.75, axis=0)
         mean_new = wt_new[a].mean(axis=0)
-        plt.plot(x_ax, mean_new, '--', color=colors[a], label=r'$\alpha=$'+'{} | $\mu = {}$'.format(a, mu))
+        plt.plot(x_ax, mean_new, '--', color=colors[a], label=r'$\alpha=$'+'{} | $\omega = {}$'.format(a, omega))
         plt.fill_between(x_ax, lb_new, ub_new, color=colors[a], alpha=0.2, linestyle='--')
 
     # Plot the fixed data
@@ -100,8 +101,8 @@ if __name__ == '__main__':
     plt.grid(True)
     plt.legend(loc='upper left', fontsize=20)
     plt.xlabel('Time (s)', fontsize=25)
-    plt.ylabel('Total Number of Stopped Vehicles', fontsize=25)
+    plt.ylabel('Total Stopped Vehicles', fontsize=25)
     plt.tick_params(axis='both', which='major', labelsize=18)
     plt.gca().get_yaxis().get_offset_text().set_size(18)
-    plt.savefig(f'results_plot_mu_{mu}.png', format='png', dpi=1200, bbox_inches='tight')
+    plt.savefig(f'results_plot_omega_{omega}_{attack_state}_mu_0.5.png', format='png', dpi=400, bbox_inches='tight')
     # plt.show()

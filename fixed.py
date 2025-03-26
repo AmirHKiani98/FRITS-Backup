@@ -15,8 +15,8 @@ sumo_binary = sumolib.checkBinary("sumo")
 
 script_path = os.path.dirname(os.path.abspath(__file__))
 
-rou = script_path+"/rou/d_1_turnCount_am_offpeak_1.rou.xml"
-net = script_path+"/net/i4_new.net.xml"
+rou = script_path+"/rou/4x4c2c1.rou.xml"
+net = script_path+"/net/4x4.net.xml"
 
 sumo_cmd = [sumo_binary, "-n", net, "-r", rou]
 
@@ -44,8 +44,9 @@ def _get_system_info():
 df = pd.DataFrame({})
 
 pd.concat([df, pd.DataFrame([_get_system_info()])], ignore_index=True)
-for _ in range(simulation_time):
+for index in range(simulation_time):
+    print(index)
     traci.simulationStep()
     df = pd.concat([df, pd.DataFrame([_get_system_info()])], ignore_index=True)
 
-df.to_csv("d_1_fixed.csv")
+df.to_csv("4x4_fixed.csv")
