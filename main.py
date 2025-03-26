@@ -35,7 +35,7 @@ parser.add_argument("--intersection-id", type=str, default="10")
 parser.add_argument("--num-episodes", type=int, default=5)
 parser.add_argument("--gui", type=bool, default=False)
 parser.add_argument("--noised-edge", type=str, default="CR30_LR_8")
-parser.add_argument("--simulation-time", type=int, default=1200)
+parser.add_argument("--simulation-time", type=int, default=200)
 parser.add_argument("--run-per-alpha", type=int, default=5)
 parser.add_argument("--delta-time", type=int, default=3)
 parser.add_argument("--nu", type=float, default=0.5)
@@ -119,13 +119,6 @@ def no_encode(state, ts_id):
     return tuple(state)
 
 
-
-# neighbourhood_dict = {
-#     "i_cr30_101": ["i_cr30_tln"],
-#     "i_cr30_tln": ["i_cr30_101", "i_cr30_lln"],
-#     "i_cr30_lln": ["i_cr30_101", "i_cr30_gln"],
-#     "i_cr30_gln": ["i_cr30_lln"]
-# }
 
 class ArrivalDepartureState(ObservationFunction):
     def __init__(self, ts: TrafficSignal):
@@ -396,7 +389,13 @@ if True:
                     state = new_state
 
             # here implement what we want to show as result
-            output_folder = script_directory + f"/output/i4-cyber_attack/rl/without_frl/{attack_state}/off-peak/omega_{args.omega}/"
+            if args.omega > 0:
+                output_folder = script_directory + f"/output/i4-cyber_attack/rl/without_frl/{attack_state}/off-peak/omega_{args.omega}/"
+            elif args.cutoff > 0:
+                output_folder = script_directory + f"/output/i4-cyber_attack/rl/without_frl/{attack_state}/off-peak/cutoff_{args.cutoff}/"
+            else:
+                output_folder = script_directory + f"/output/i4-cyber_attack/rl/without_frl/{attack_state}/off-peak/nu_{args.nu}/"
+                
             env.custom_save_data(output_folder, file_name=f"data_{attack_state}_alpha_{alpha}_run_{run}.csv")
             env.delete_cache()
             # env.close()

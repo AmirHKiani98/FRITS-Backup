@@ -1,0 +1,95 @@
+Warning: Speed of straight connection 'gneE34_0->WCN_UD_0' reduced by 16.37 due to turning radius of 20.56 (length=15.76, angle=60.69).
+Success.
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Ignoring tag param at depth 2
+Step #0.00 (0ms ?*RT. ?UPS, TraCI: 38ms, vehicles TOT 0 ACT 0 BUF 0)                     
+Step #0.00 (0ms ?*RT. ?UPS, TraCI: 4102ms, vehicles TOT 0 ACT 0 BUF 0)                   
+False noise
+attack state: no_attack
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+Episode:  0
+Processing:   0%|          | 0/200 [00:00<?, ?it/s]Processing:   0%|          | 1/200 [00:00<00:20,  9.87it/s]Processing:   2%|▏         | 3/200 [00:00<00:17, 11.59it/s]Processing:   2%|▎         | 5/200 [00:00<00:17, 10.87it/s]Processing:   4%|▎         | 7/200 [00:00<00:18, 10.37it/s]Processing:   4%|▍         | 9/200 [00:00<00:19,  9.71it/s]
