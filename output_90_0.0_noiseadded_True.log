@@ -68,9 +68,132 @@ Step #0.00 (0ms ?*RT. ?UPS, TraCI: 57ms, vehicles TOT 0 ACT 0 BUF 0)
 Step #0.00 (0ms ?*RT. ?UPS, TraCI: 53ms, vehicles TOT 0 ACT 0 BUF 0)                     
 Step #0.00 (0ms ?*RT. ?UPS, TraCI: 59ms, vehicles TOT 0 ACT 0 BUF 0)                     
 Step #0.00 (0ms ?*RT. ?UPS, TraCI: 54ms, vehicles TOT 0 ACT 0 BUF 0)                     
-
-Step #0.00 (0ms ?*RT. ?UPS, TraCI: 56ms, vehicles TOT 0 ACT 0 BUF 0)                     
-Step #0.00 (0ms ?*RT. ?UPS, TraCI: 57ms, vehicles TOT 0 ACT 0 BUF 0)                     
-Step #0.00 (0ms ?*RT. ?UPS, TraCI: 56ms, vehicles TOT 0 ACT 0 BUF 0)                     
-Step #0.00 (0ms ?*RT. ?UPS, TraCI: 59ms, vehicles TOT 0 ACT 0 BUF 0)                     
 Step #0.00 (0ms ?*RT. ?UPS, TraCI: 50ms, vehicles TOT 0 ACT 0 BUF 0)                     
+Step #0.00 (0ms ?*RT. ?UPS, TraCI: 48ms, vehicles TOT 0 ACT 0 BUF 0)                     
+Step #0.00 (0ms ?*RT. ?UPS, TraCI: 39ms, vehicles TOT 0 ACT 0 BUF 0)                     
+Step #0.00 (0ms ?*RT. ?UPS, TraCI: 24ms, vehicles TOT 0 ACT 0 BUF 0)                     
+Episode: 5, Total Reward: -13.759427955782051
+alpha 0 run 0
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+alpha 0 run 1
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+alpha 0 run 2
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+alpha 0 run 3
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+alpha 0 run 4
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+alpha 1 run 0
+ RetrStep #0.00 (0ms ?*RT. ?UPS, TraCI: 17ms, vehicles TOT 0 ACT 0 BUF 0)                     
+Step #0.00 (0ms ?*RT. ?UPS, TraCI: 17ms, vehicles TOT 0 ACT 0 BUF 0)                     
+Step #0.00 (0ms ?*RT. ?UPS, TraCI: 15ms, vehicles TOT 0 ACT 0 BUF 0)                     
+Episode: 5, Total Reward: -8.089735525900483
+alpha 0 run 0
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+alpha 0 run 1
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+alpha 0 run 2
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+alpha 0 run 3
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+alpha 0 run 4
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+alpha 1 run 0
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+alpha 1 run 1
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+alpha 1 run 2
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+alpha 1 run 3
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+alpha 1 run 4
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+alpha 2 run 0
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+alpha 2 run 1
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+alpha 2 run 2
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+alpha 2 run 3
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+alpha 2 run 4
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+alpha 3 run 0
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+alpha 3 run 1
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+alpha 3 run 2
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+alpha 3 run 3
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+alpha 3 run 4
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+alpha 4 run 0
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+alpha 4 run 1
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+alpha 4 run 2
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+alpha 4 run 3
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+alpha 4 run 4
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+alpha 5 run 0
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+alpha 5 run 1
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+alpha 5 run 2
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+alpha 5 run 3
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+alpha 5 run 4
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+Step #0.00 (1ms ~= 1000.00*RT, ~8000.00UPS, TraCI: 111ms, vehicles TOT 8 ACT 8 BUF 0)     Step #100.00 (0ms ?*RT. ?UPS, TraCI: 89ms, vehicles TOT 272 ACT 229 BUF 0)                Step #118.00 (1ms ~= 1000.00*RT, ~251000.00UPS, TraCI: 2202096ms, vehicles TOT 316 ACT 251
+Step #0.00 (1ms ~= 1000.00*RT, ~8000.00UPS, TraCI: 115ms, vehicles TOT 8 ACT 8 BUF 0)     Step #100.00 (1ms ~= 1000.00*RT, ~221000.00UPS, TraCI: 84ms, vehicles TOT 272 ACT 221 BUF Step #200.00 (1ms ~= 1000.00*RT, ~357000.00UPS, TraCI: 127ms, vehicles TOT 536 ACT 357 BUFStep #300.00 (2ms ~= 500.00*RT, ~226500.00UPS, TraCI: 1093ms, vehicles TOT 770 ACT 453 BUFStep #400.00 (1ms ~= 1000.00*RT, ~539000.00UPS, TraCI: 188ms, vehicles TOT 946 ACT 539 BUFStep #500.00 (2ms ~= 500.00*RT, ~289000.00UPS, TraCI: 206ms, vehicles TOT 1086 ACT 578 BUFStep #600.00 (1ms ~= 1000.00*RT, ~611000.00UPS, TraCI: 1938091ms, vehicles TOT 1208 ACT 61
+Step #0.00 (0ms ?*RT. ?UPS, TraCI: 115ms, vehicles TOT 8 ACT 8 BUF 0)                     Step #100.00 (0ms ?*RT. ?UPS, TraCI: 86ms, vehicles TOT 272 ACT 236 BUF 0)                Step #200.00 (1ms ~= 1000.00*RT, ~329000.00UPS, TraCI: 120ms, vehicles TOT 505 ACT 329 BUFStep #300.00 (1ms ~= 1000.00*RT, ~447000.00UPS, TraCI: 1076ms, vehicles TOT 741 ACT 447 BUStep #400.00 (1ms ~= 1000.00*RT, ~538000.00UPS, TraCI: 190ms, vehicles TOT 898 ACT 538 BUFStep #500.00 (1ms ~= 1000.00*RT, ~564000.00UPS, TraCI: 190ms, vehicles TOT 994 ACT 564 BUFStep #600.00 (1ms ~= 1000.00*RT, ~607000.00UPS, TraCI: 1676854ms, vehicles TOT 1108 ACT 60
+Step #0.00 (0ms ?*RT. ?UPS, TraCI: 111ms, vehicles TOT 8 ACT 8 BUF 0)                     Step #100.00 (0ms ?*RT. ?UPS, TraCI: 94ms, vehicles TOT 268 ACT 232 BUF 4)                Step #200.00 (1ms ~= 1000.00*RT, ~335000.00UPS, TraCI: 112ms, vehicles TOT 472 ACT 335 BUFStep #300.00 (1ms ~= 1000.00*RT, ~443000.00UPS, TraCI: 1041ms, vehicles TOT 668 ACT 443 BUStep #400.00 (1ms ~= 1000.00*RT, ~488000.00UPS, TraCI: 171ms, vehicles TOT 763 ACT 488 BUFStep #500.00 (1ms ~= 1000.00*RT, ~509000.00UPS, TraCI: 179ms, vehicles TOT 895 ACT 509 BUFStep #600.00 (1ms ~= 1000.00*RT, ~527000.00UPS, TraCI: 1428390ms, vehicles TOT 1005 ACT 52
+Step #0.00 (0ms ?*RT. ?UPS, TraCI: 103ms, vehicles TOT 8 ACT 8 BUF 0)                     Step #100.00 (1ms ~= 1000.00*RT, ~234000.00UPS, TraCI: 91ms, vehicles TOT 272 ACT 234 BUF Step #200.00 (1ms ~= 1000.00*RT, ~335000.00UPS, TraCI: 126ms, vehicles TOT 499 ACT 335 BUFStep #300.00 (1ms ~= 1000.00*RT, ~442000.00UPS, TraCI: 1026ms, vehicles TOT 692 ACT 442 BUStep #400.00 (1ms ~= 1000.00*RT, ~495000.00UPS, TraCI: 173ms, vehicles TOT 818 ACT 495 BUFStep #500.00 (1ms ~= 1000.00*RT, ~528000.00UPS, TraCI: 187ms, vehicles TOT 910 ACT 528 BUFStep #600.00 (1ms ~= 1000.00*RT, ~596000.00UPS, TraCI: 1176388ms, vehicles TOT 1014 ACT 59
+Step #0.00 (0ms ?*RT. ?UPS, TraCI: 109ms, vehicles TOT 8 ACT 8 BUF 0)                     Step #100.00 (1ms ~= 1000.00*RT, ~237000.00UPS, TraCI: 89ms, vehicles TOT 272 ACT 237 BUF Step #200.00 (1ms ~= 1000.00*RT, ~351000.00UPS, TraCI: 129ms, vehicles TOT 503 ACT 351 BUFStep #300.00 (1ms ~= 1000.00*RT, ~463000.00UPS, TraCI: 1104ms, vehicles TOT 684 ACT 463 BUStep #400.00 (1ms ~= 1000.00*RT, ~500000.00UPS, TraCI: 162ms, vehicles TOT 767 ACT 500 BUFStep #500.00 (1ms ~= 1000.00*RT, ~518000.00UPS, TraCI: 170ms, vehicles TOT 897 ACT 518 BUFStep #600.00 (1ms ~= 1000.00*RT, ~552000.00UPS, TraCI: 930608ms, vehicles TOT 1015 ACT 552
+Step #0.00 (0ms ?*RT. ?UPS, TraCI: 101ms, vehicles TOT 8 ACT 8 BUF 0)                     Step #100.00 (1ms ~= 1000.00*RT, ~245000.00UPS, TraCI: 88ms, vehicles TOT 272 ACT 245 BUF Step #200.00 (1ms ~= 1000.00*RT, ~384000.00UPS, TraCI: 131ms, vehicles TOT 508 ACT 384 BUFStep #300.00 (1ms ~= 1000.00*RT, ~495000.00UPS, TraCI: 1140ms, vehicles TOT 643 ACT 495 BUStep #400.00 (1ms ~= 1000.00*RT, ~511000.00UPS, TraCI: 165ms, vehicles TOT 737 ACT 511 BUFStep #500.00 (1ms ~= 1000.00*RT, ~517000.00UPS, TraCI: 164ms, vehicles TOT 852 ACT 517 BUFStep #600.00 (1ms ~= 1000.00*RT, ~548000.00UPS, TraCI: 684667ms, vehicles TOT 953 ACT 548 
+Step #0.00 (1ms ~= 1000.00*RT, ~8000.00UPS, TraCI: 102ms, vehicles TOT 8 ACT 8 BUF 0)     Step #100.00 (1ms ~= 1000.00*RT, ~241000.00UPS, TraCI: 82ms, vehicles TOT 272 ACT 241 BUF Step #200.00 (1ms ~= 1000.00*RT, ~329000.00UPS, TraCI: 105ms, vehicles TOT 498 ACT 329 BUFStep #300.00 (1ms ~= 1000.00*RT, ~464000.00UPS, TraCI: 1003ms, vehicles TOT 676 ACT 464 BUStep #400.00 (1ms ~= 1000.00*RT, ~508000.00UPS, TraCI: 155ms, vehicles TOT 779 ACT 508 BUFStep #500.00 (1ms ~= 1000.00*RT, ~525000.00UPS, TraCI: 152ms, vehicles TOT 893 ACT 525 BUFStep #600.00 (1ms ~= 1000.00*RT, ~550000.00UPS, TraCI: 467884ms, vehicles TOT 999 ACT 550 
+Step #0.00 (0ms ?*RT. ?UPS, TraCI: 82ms, vehicles TOT 8 ACT 8 BUF 0)                      Step #100.00 (1ms ~= 1000.00*RT, ~247000.00UPS, TraCI: 62ms, vehicles TOT 272 ACT 247 BUF Step #200.00 (1ms ~= 1000.00*RT, ~382000.00UPS, TraCI: 90ms, vehicles TOT 491 ACT 382 BUF Step #300.00 (1ms ~= 1000.00*RT, ~472000.00UPS, TraCI: 731ms, vehicles TOT 637 ACT 472 BUFStep #400.00 (2ms ~= 500.00*RT, ~257500.00UPS, TraCI: 92ms, vehicles TOT 747 ACT 515 BUF 3Step #500.00 (1ms ~= 1000.00*RT, ~572000.00UPS, TraCI: 93ms, vehicles TOT 861 ACT 572 BUF Step #600.00 (2ms ~= 500.00*RT, ~304000.00UPS, TraCI: 314003ms, vehicles TOT 943 ACT 608 B
+Step #0.00 (0ms ?*RT. ?UPS, TraCI: 42ms, vehicles TOT 8 ACT 8 BUF 0)                      Step #100.00 (1ms ~= 1000.00*RT, ~242000.00UPS, TraCI: 34ms, vehicles TOT 263 ACT 242 BUF Step #200.00 (1ms ~= 1000.00*RT, ~375000.00UPS, TraCI: 39ms, vehicles TOT 471 ACT 375 BUF Step #300.00 (1ms ~= 1000.00*RT, ~455000.00UPS, TraCI: 368ms, vehicles TOT 616 ACT 455 BUFStep #400.00 (1ms ~= 1000.00*RT, ~520000.00UPS, TraCI: 61ms, vehicles TOT 736 ACT 520 BUF Step #500.00 (1ms ~= 1000.00*RT, ~567000.00UPS, TraCI: 55ms, vehicles TOT 838 ACT 567 BUF Step #600.00 (1ms ~= 1000.00*RT, ~608000.00UPS, TraCI: 224883ms, vehicles TOT 943 ACT 608 
+Step #0.00 (0ms ?*RT. ?UPS, TraCI: 36ms, vehicles TOT 8 ACT 8 BUF 0)                      Step #100.00 (1ms ~= 1000.00*RT, ~251000.00UPS, TraCI: 26ms, vehicles TOT 269 ACT 251 BUF Step #200.00 (0ms ?*RT. ?UPS, TraCI: 34ms, vehicles TOT 476 ACT 376 BUF 64)               Step #300.00 (1ms ~= 1000.00*RT, ~447000.00UPS, TraCI: 302ms, vehicles TOT 603 ACT 447 BUFStep #400.00 (1ms ~= 1000.00*RT, ~493000.00UPS, TraCI: 44ms, vehicles TOT 713 ACT 493 BUF Step #500.00 (1ms ~= 1000.00*RT, ~523000.00UPS, TraCI: 53ms, vehicles TOT 834 ACT 523 BUF Step #600.00 (1ms ~= 1000.00*RT, ~544000.00UPS, TraCI: 150793ms, vehicles TOT 935 ACT 544 
+Step #0.00 (0ms ?*RT. ?UPS, TraCI: 38ms, vehicles TOT 8 ACT 8 BUF 0)                      Step #100.00 (1ms ~= 1000.00*RT, ~241000.00UPS, TraCI: 23ms, vehicles TOT 267 ACT 241 BUF Step #200.00 (1ms ~= 1000.00*RT, ~369000.00UPS, TraCI: 33ms, vehicles TOT 482 ACT 369 BUF Step #300.00 (1ms ~= 1000.00*RT, ~462000.00UPS, TraCI: 318ms, vehicles TOT 608 ACT 462 BUFStep #400.00 (1ms ~= 1000.00*RT, ~496000.00UPS, TraCI: 40ms, vehicles TOT 722 ACT 496 BUF Step #500.00 (1ms ~= 1000.00*RT, ~511000.00UPS, TraCI: 47ms, vehicles TOT 828 ACT 511 BUF Step #600.00 (1ms ~= 1000.00*RT, ~524000.00UPS, TraCI: 76949ms, vehicles TOT 926 ACT 524 B
+Step #0.00 (0ms ?*RT. ?UPS, TraCI: 38ms, vehicles TOT 8 ACT 8 BUF 0)                      Step #100.00 (0ms ?*RT. ?UPS, TraCI: 24ms, vehicles TOT 269 ACT 239 BUF 3)                Step #200.00 (1ms ~= 1000.00*RT, ~375000.00UPS, TraCI: 38ms, vehicles TOT 485 ACT 375 BUF Step #300.00 (1ms ~= 1000.00*RT, ~467000.00UPS, TraCI: 338ms, vehicles TOT 608 ACT 467 BUFStep #400.00 (0ms ?*RT. ?UPS, TraCI: 51ms, vehicles TOT 721 ACT 527 BUF 351)              Step #500.00 (1ms ~= 1000.00*RT, ~545000.00UPS, TraCI: 45ms, vehicles TOT 826 ACT 545 BUF Step #600.00 (1ms ~= 1000.00*RT, ~585000.00UPS, TraCI: 529ms, vehicles TOT 920 ACT 585 BUF
+Step #600.00 (1ms ~= 1000.00*RT, ~532000.00UPS, TraCI: 587ms, vehicles TOT 915 ACT 532 BUF
