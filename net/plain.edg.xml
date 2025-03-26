@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2025-03-26 00:55:25 by Eclipse SUMO netconvert Version 1.20.0
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
+
+    <input>
+        <sumo-net-file value="4x4.net.xml"/>
+    </input>
+
+    <output>
+        <plain-output-prefix value="plain"/>
+    </output>
+
+    <processing>
+        <geometry.min-radius.fix.railways value="false"/>
+        <geometry.max-grade.fix value="false"/>
+        <offset.disable-normalization value="true"/>
+        <lefthand value="0"/>
+    </processing>
+
+    <junctions>
+        <no-turnarounds value="true"/>
+        <junctions.corner-detail value="0"/>
+        <junctions.limit-turn-speed value="-1.00"/>
+        <rectangular-lane-cut value="0"/>
+    </junctions>
+
+    <pedestrian>
+        <walkingareas value="0"/>
+    </pedestrian>
+
+</configuration>
+-->
+
+<edges version="1.20" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/edges_file.xsd">
+    <edge id="0to1" from="0" to="1" priority="-1" numLanes="2" speed="13.90"/>
+    <edge id="0to4" from="0" to="4" priority="-1" numLanes="2" speed="13.90"/>
+    <edge id="10to11" from="10" to="11" priority="-1" numLanes="2" speed="13.90"/>
+    <edge id="10to14" from="10" to="14" priority="-1" numLanes="2" speed="13.90"/>
+    <edge id="11to15" from="11" to="15" priority="-1" numLanes="2" speed="13.90"/>
+    <edge id="11to30" from="11" to="30" priority="-1" numLanes="2" speed="13.90"/>
+    <edge id="12to13" from="12" to="13" priority="-1" numLanes="2" speed="13.90"/>
+    <edge id="12to24" from="12" to="24" priority="-1" numLanes="2" speed="13.90"/>
+    <edge id="13to14" from="13" to="14" priority="-1" numLanes="2" speed="13.90"/>
+    <edge id="13to25" from="13" to="25" priority="-1" numLanes="2" speed="13.90"/>
+    <edge id="14to15" from="14" to="15" priority="-1" numLanes="2" speed="13.90"/>
+    <edge id="14to26" from="14" to="26" priority="-1" numLanes="2" speed="13.90"/>
+    <edge id="15to27" from="15" to="27" priority="-1" numLanes="2" speed="13.90"/>
+    <edge id="15to31" from="15" to="31" priority="-1" numLanes="2" speed="13.90"/>
+    <edge id="16to0" from="16" to="0" priority="-1" numLanes="2" speed="13.90"/>
+    <edge id="17to1" from="17" to="1" priority="-1" numLanes="2" speed="13.90"/>
+    <edge id="18to2" from="18" to="2" priority="-1" numLanes="2" speed="13.90"/>
+    <edge id="19to3" from="19" to="3" priority="-1" numLanes="2" speed="13.90"/>
+    <edge id="1to2" from="1" to="2" priority="-1" numLanes="2" speed="13.90"/>
+    <edge id="1to5" from="1" to="5" priority="-1" numLanes="2" speed="13.90"/>
+    <edge id="20to0" from="20" to="0" priority="-1" numLanes="2" speed="13.90"/>
+    <edge id="21to4" from="21" to="4" priority="-1" numLanes="2" speed="13.90"/>
+    <edge id="22to8" from="22" to="8" priority="-1" numLanes="2" speed="13.90"/>
+    <edge id="23to12" from="23" to="12" priority="-1" numLanes="2" speed="13.90"/>
+    <edge id="2to3" from="2" to="3" priority="-1" numLanes="2" speed="13.90"/>
+    <edge id="2to6" from="2" to="6" priority="-1" numLanes="2" speed="13.90"/>
+    <edge id="3to28" from="3" to="28" priority="-1" numLanes="2" speed="13.90"/>
+    <edge id="3to7" from="3" to="7" priority="-1" numLanes="2" speed="13.90"/>
+    <edge id="4to5" from="4" to="5" priority="-1" numLanes="2" speed="13.90"/>
+    <edge id="4to8" from="4" to="8" priority="-1" numLanes="2" speed="13.90"/>
+    <edge id="5to6" from="5" to="6" priority="-1" numLanes="2" speed="13.90"/>
+    <edge id="5to9" from="5" to="9" priority="-1" numLanes="2" speed="13.90"/>
+    <edge id="6to10" from="6" to="10" priority="-1" numLanes="2" speed="13.90"/>
+    <edge id="6to7" from="6" to="7" priority="-1" numLanes="2" speed="13.90"/>
+    <edge id="7to11" from="7" to="11" priority="-1" numLanes="2" speed="13.90"/>
+    <edge id="7to29" from="7" to="29" priority="-1" numLanes="2" speed="13.90"/>
+    <edge id="8to12" from="8" to="12" priority="-1" numLanes="2" speed="13.90"/>
+    <edge id="8to9" from="8" to="9" priority="-1" numLanes="2" speed="13.90"/>
+    <edge id="9to10" from="9" to="10" priority="-1" numLanes="2" speed="13.90"/>
+    <edge id="9to13" from="9" to="13" priority="-1" numLanes="2" speed="13.90"/>
+</edges>

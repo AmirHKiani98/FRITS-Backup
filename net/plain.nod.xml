@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2025-03-26 00:55:25 by Eclipse SUMO netconvert Version 1.20.0
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
+
+    <input>
+        <sumo-net-file value="4x4.net.xml"/>
+    </input>
+
+    <output>
+        <plain-output-prefix value="plain"/>
+    </output>
+
+    <processing>
+        <geometry.min-radius.fix.railways value="false"/>
+        <geometry.max-grade.fix value="false"/>
+        <offset.disable-normalization value="true"/>
+        <lefthand value="0"/>
+    </processing>
+
+    <junctions>
+        <no-turnarounds value="true"/>
+        <junctions.corner-detail value="0"/>
+        <junctions.limit-turn-speed value="-1.00"/>
+        <rectangular-lane-cut value="0"/>
+    </junctions>
+
+    <pedestrian>
+        <walkingareas value="0"/>
+    </pedestrian>
+
+</configuration>
+-->
+
+<nodes version="1.20" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/nodes_file.xsd">
+    <location netOffset="-1850.00,-2900.00" convBoundary="0.00,0.00,750.00,750.00" origBoundary="1850.00,2900.00,2600.00,3650.00" projParameter="!"/>
+
+    <node id="0" x="150.00" y="600.00" type="traffic_light" tl="0"/>
+    <node id="1" x="300.00" y="600.00" type="traffic_light" tl="1"/>
+    <node id="10" x="450.00" y="300.00" type="traffic_light" tl="10"/>
+    <node id="11" x="600.00" y="300.00" type="traffic_light" tl="11"/>
+    <node id="12" x="150.00" y="150.00" type="traffic_light" tl="12"/>
+    <node id="13" x="300.00" y="150.00" type="traffic_light" tl="13"/>
+    <node id="14" x="450.00" y="150.00" type="traffic_light" tl="14"/>
+    <node id="15" x="600.00" y="150.00" type="traffic_light" tl="15"/>
+    <node id="16" x="150.00" y="750.00" type="dead_end"/>
+    <node id="17" x="300.00" y="750.00" type="dead_end"/>
+    <node id="18" x="450.00" y="750.00" type="dead_end"/>
+    <node id="19" x="600.00" y="750.00" type="dead_end"/>
+    <node id="2" x="450.00" y="600.00" type="traffic_light" tl="2"/>
+    <node id="20" x="0.00" y="600.00" type="dead_end"/>
+    <node id="21" x="0.00" y="450.00" type="dead_end"/>
+    <node id="22" x="0.00" y="300.00" type="dead_end"/>
+    <node id="23" x="0.00" y="150.00" type="dead_end"/>
+    <node id="24" x="150.00" y="0.00" type="dead_end"/>
+    <node id="25" x="300.00" y="0.00" type="dead_end"/>
+    <node id="26" x="450.00" y="0.00" type="dead_end"/>
+    <node id="27" x="600.00" y="0.00" type="dead_end"/>
+    <node id="28" x="750.00" y="600.00" type="dead_end"/>
+    <node id="29" x="750.00" y="450.00" type="dead_end"/>
+    <node id="3" x="600.00" y="600.00" type="traffic_light" tl="3"/>
+    <node id="30" x="750.00" y="300.00" type="dead_end"/>
+    <node id="31" x="750.00" y="150.00" type="dead_end"/>
+    <node id="4" x="150.00" y="450.00" type="traffic_light" tl="4"/>
+    <node id="5" x="300.00" y="450.00" type="traffic_light" tl="5"/>
+    <node id="6" x="450.00" y="450.00" type="traffic_light" tl="6"/>
+    <node id="7" x="600.00" y="450.00" type="traffic_light" tl="7"/>
+    <node id="8" x="150.00" y="300.00" type="traffic_light" tl="8"/>
+    <node id="9" x="300.00" y="300.00" type="traffic_light" tl="9"/>
+</nodes>

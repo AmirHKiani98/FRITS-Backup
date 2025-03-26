@@ -9,6 +9,8 @@ import argparse
 import pandas as pd
 from copy import deepcopy
 from math import sqrt
+import pandas as pd
+import networkx as nx
 
 from dql import DQLAgent
 
@@ -38,7 +40,8 @@ parser.add_argument("--run-per-alpha", type=int, default=5)
 parser.add_argument("--delta-time", type=int, default=3)
 parser.add_argument("--nu", type=float, default=0.5)
 parser.add_argument("--distance-threshold", type=int, default=200)
-parser.add_argument("--omega", type=float, default=0.1)
+parser.add_argument("--omega", type=float, default=0.0)
+parser.add_argument("--cutoff", type=int, default=0)
 
 args = parser.parse_args()
 print(args.noise_added, "noise")
@@ -53,11 +56,47 @@ if args.noise_added:
     attack_state = "attacked"
 else:
     attack_state = "no_attack"
+
+# network to edges
+net_prefix = args.net.split('.')[0] + "_plain"
+os.system(f'netconvert -s {args.net} --plain-output-prefix {net_prefix}') # TODO if the net doesn't have . in the name, it will work
+# edges to csv
+sumo_path = os.environ.get("SUMO_HOME")
+os.system(f'{sumo_path}/tools/xml/xml2csv.py {net_prefix}.edg.xml')
+
+data = []
+with open(f"{net_prefix}.edg.csv", "r") as f:
+    header = f.readline().strip().split(";")
+    
+    # lines = f.readlines()
+
+    for line in f:  
+        # print(f"{i+1}: {line.strip()}")
+        data.append(line.strip().split(";"))
+edges = pd.DataFrame(data, columns=header)
+
+# csv to graph
+# Create a directed graph
+G = nx.DiGraph()
+
+# Add edges from CSV
+for _, row in edges.iterrows():
+    from_node = str(row['edge_from'])  # Cast to string if needed
+    to_node = str(row['edge_to'])
+    G.add_edge(from_node, to_node)
+    
+def get_connectivity_network(G, cutoff=2):
+    connectivity = {}
+    for node in G.nodes:
+        connectivity[node] = [v for v in list(nx.single_source_shortest_path_length(G, node, cutoff=cutoff).keys()) if v != node] 
+    return connectivity
+
+connectivity = get_connectivity_network(G, cutoff=args.cutoff)
 print("attack state:", attack_state)
 
 
 def get_intersections_positions():
-    junction_ids = traci.trafficlight.getIDList()
+    junction_ids = traci.junction.getIDList()
     junction_positions = {jid: traci.junction.getPosition(jid) for jid in junction_ids}
     return junction_positions
 
@@ -275,7 +314,6 @@ if True:
         reward_fn=reward_fn
     )
     env.reset()
-    
     # Get neighbors for each traffic signal based on distance threshold
     distance_matrix, distance_mean = get_intersections_distance_matrix()
     
@@ -292,7 +330,12 @@ if True:
             
             # Next step
             new_state, reward, _, _ = env.step(action=actions)
-            reward = blend_rewards_neighborhood(reward, get_neighbours(distance_mean * args.omega, distance_matrix), nu)
+            if args.omega > 0:
+                reward = blend_rewards_neighborhood(reward, get_neighbours(distance_mean * args.omega, distance_matrix), nu)
+            elif args.cutoff > 0:
+                reward = blend_rewards_neighborhood(reward, connectivity, nu)
+            else:
+                reward = blend_rewards(reward, nu)
             for ts, agent in agents.items():
                 agent.memory.push(new_state[ts], actions[ts], reward[ts], env.encode(state[ts], ts))
                 if len(agent.memory) > batch_size:
