@@ -72,7 +72,7 @@ if __name__ == '__main__':
         wt_new[a] = np.stack(wt_new[a], axis=0)
     
     # --------------------------------------------------------------------
-    df = pd.read_csv('4x4_fixed.csv')
+    df = pd.read_csv('d_1_fixed.csv')
     
     fixed = df[attribute_oi].values
     fixed = pad_or_truncate(fixed, target_length)

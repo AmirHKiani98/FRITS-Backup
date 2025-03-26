@@ -389,12 +389,7 @@ if True:
                     state = new_state
 
             # here implement what we want to show as result
-            if args.omega > 0:
-                output_folder = script_directory + f"/output/i4-cyber_attack/rl/without_frl/{attack_state}/off-peak/omega_{args.omega}/"
-            elif args.cutoff > 0:
-                output_folder = script_directory + f"/output/i4-cyber_attack/rl/without_frl/{attack_state}/off-peak/cutoff_{args.cutoff}/"
-            else:
-                output_folder = script_directory + f"/output/i4-cyber_attack/rl/without_frl/{attack_state}/off-peak/nu_{args.nu}/"
+            output_folder = script_directory + f"/output/i4-cyber_attack/rl/without_frl/{attack_state}/off-peak/omega_{args.omega}_cutoff_{args.cutoff}_nu_{args.nu}/"
                 
             env.custom_save_data(output_folder, file_name=f"data_{attack_state}_alpha_{alpha}_run_{run}.csv")
             env.delete_cache()

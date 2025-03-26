@@ -9,7 +9,7 @@ main_script = "main.py"
 is_windows = platform.system() == "Windows"
 
 # Loop to run the script with different nu values
-for omage in [0]:
+for cutoff in [0]:
     omage = omage/100
     for i in range(0, 101, 20):
         nu_value = i / 100.0
