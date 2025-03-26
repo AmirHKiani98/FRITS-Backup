@@ -11,11 +11,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 from collections import defaultdict
 import sys
-omega = sys.argv[1]
+check_value = sys.argv[1]
 attack_state = sys.argv[2]
+check_attribute = sys.argv[3] if len(sys.argv) > 3 else "nu"
 CWD = os.getcwd()
-DATA_PATH = os.path.join(CWD, f'/Users/cavelab/Documents/Github/FRITS-Backup/output/i4-cyber_attack/rl/without_frl/{attack_state}/off-peak/omega_{omega}')
-DATA_PATH_NEW = os.path.join(CWD, f'/Users/cavelab/Documents/Github/FRITS-Backup/output/i4-cyber_attack/rl/without_frl/{attack_state}/off-peak/omega_{omega}')
+DATA_PATH = os.path.join(CWD, f'/Users/cavelab/Documents/Github/FRITS-Backup/output/i4-cyber_attack/rl/without_frl/{attack_state}/off-peak/{check_attribute}_{check_value}')
+DATA_PATH_NEW = os.path.join(CWD, f'/Users/cavelab/Documents/Github/FRITS-Backup/output/i4-cyber_attack/rl/without_frl/{attack_state}/off-peak/{check_attribute}_{check_value}')
 attribute_oi = "system_total_stopped"
 def pad_or_truncate(arr, target_length):
     if len(arr) > target_length:
@@ -30,7 +31,7 @@ if __name__ == '__main__':
     wt = defaultdict(list)
     wt_new = defaultdict(list)  # For the new data
     colors = ['blue', 'green', 'red', 'purple', 'orange', 'cyan']
-    target_length = 3600  # Define the target length for all arrays
+    target_length = 600  # Define the target length for all arrays
 
     # Load and process the original data
     for a in alpha:
@@ -41,6 +42,7 @@ if __name__ == '__main__':
                 print(file_name)
                 continue
             df = pd.read_csv(file_path, header=0)
+            df = df.iloc[:600]
             # print(df.shape, file_name)
             # if df.shape[0] != 18000 and df.shape[0] != 3600:
             #     continue
@@ -60,18 +62,18 @@ if __name__ == '__main__':
             # if df_new.shape[0] != 18000 and df_new.shape[0] != 600:
             #     continue
             df_new = df_new.head(target_length)
-            print(df_new.shape, file_name)
             wt_new[a].append(pad_or_truncate(df_new[attribute_oi].values, target_length))
 
     # Stack the arrays for easier manipulation
     for a in alpha:
-        print(len(wt[a]), a)
+        # print(len(wt[a]), a)
         wt[a] = np.stack(wt[a], axis=0)
-        print(len(wt_new[a]), a)
+        # print(len(wt_new[a]), a)
         wt_new[a] = np.stack(wt_new[a], axis=0)
     
     # --------------------------------------------------------------------
     df = pd.read_csv('4x4_fixed.csv')
+    
     fixed = df[attribute_oi].values
     fixed = pad_or_truncate(fixed, target_length)
     #---------------------------------------------------------------------
@@ -91,7 +93,7 @@ if __name__ == '__main__':
         lb_new = np.percentile(wt_new[a], 0.25, axis=0)
         ub_new = np.percentile(wt_new[a], 99.75, axis=0)
         mean_new = wt_new[a].mean(axis=0)
-        plt.plot(x_ax, mean_new, '--', color=colors[a], label=r'$\alpha=$'+'{} | $\omega = {}$'.format(a, omega))
+        plt.plot(x_ax, mean_new, '--', color=colors[a], label=r'$\alpha=$'+'{} | $\check_attribute = {}$'.format(a, check_value))
         plt.fill_between(x_ax, lb_new, ub_new, color=colors[a], alpha=0.2, linestyle='--')
 
     # Plot the fixed data
@@ -104,5 +106,6 @@ if __name__ == '__main__':
     plt.ylabel('Total Stopped Vehicles', fontsize=25)
     plt.tick_params(axis='both', which='major', labelsize=18)
     plt.gca().get_yaxis().get_offset_text().set_size(18)
-    plt.savefig(f'results_plot_omega_{omega}_{attack_state}_mu_0.5.png', format='png', dpi=400, bbox_inches='tight')
+    plt.savefig(f'results_plot_{check_attribute}_{check_value}_{attack_state}.png', format='png', dpi=400, bbox_inches='tight')
+    print("Figure saved")
     # plt.show()

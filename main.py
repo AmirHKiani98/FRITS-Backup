@@ -28,8 +28,8 @@ from tqdm import tqdm
 parser = argparse.ArgumentParser()
 # Command to run the file: python main.py --noise-added "True"
 script_directory = os.path.dirname(os.path.abspath(__file__))
-parser.add_argument('--net', type=str, default=script_directory + r"/net/i4_new.net.xml")
-parser.add_argument('--route', type=str, default=script_directory + r'/rou/d_1_turnCount_am_offpeak_1_duplicated.rou.xml')
+parser.add_argument('--net', type=str, default=script_directory + r"/net/4x4.net.xml")
+parser.add_argument('--route', type=str, default=script_directory + r'/rou/4x4c2c1.rou.xml')
 parser.add_argument('--noise-added', type=str, default="True")
 parser.add_argument("--intersection-id", type=str, default="10")
 parser.add_argument("--num-episodes", type=int, default=5)
