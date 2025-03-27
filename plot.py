@@ -15,7 +15,7 @@ check_value = sys.argv[1]
 attack_state = sys.argv[2]
 check_attribute = sys.argv[3] if len(sys.argv) > 3 else "nu"
 CWD = os.getcwd()
-DATA_PATH = os.path.join(CWD, f'/Users/cavelab/Documents/Github/FRITS-Backup/output/i4-cyber_attack/rl/without_frl/{attack_state}/off-peak/{check_attribute}_{check_value}')
+DATA_PATH = os.path.join(CWD, f'/Users/cavelab/Documents/Github/FRITS-Backup/output/i4-cyber_attack/rl/without_frl/{attack_state}/off-peak/')
 DATA_PATH_NEW = os.path.join(CWD, f'/Users/cavelab/Documents/Github/FRITS-Backup/output/i4-cyber_attack/rl/without_frl/{attack_state}/off-peak/{check_attribute}_{check_value}')
 attribute_oi = "system_total_stopped"
 def pad_or_truncate(arr, target_length):
@@ -72,7 +72,7 @@ if __name__ == '__main__':
         wt_new[a] = np.stack(wt_new[a], axis=0)
     
     # --------------------------------------------------------------------
-    df = pd.read_csv('d_1_fixed.csv')
+    df = pd.read_csv('4x4_fixed.csv')
     
     fixed = df[attribute_oi].values
     fixed = pad_or_truncate(fixed, target_length)
@@ -93,7 +93,7 @@ if __name__ == '__main__':
         lb_new = np.percentile(wt_new[a], 0.25, axis=0)
         ub_new = np.percentile(wt_new[a], 99.75, axis=0)
         mean_new = wt_new[a].mean(axis=0)
-        plt.plot(x_ax, mean_new, '--', color=colors[a], label=r'$\alpha=$'+'{} | $\check_attribute = {}$'.format(a, check_value))
+        plt.plot(x_ax, mean_new, '--', color=colors[a], label=r'$\alpha=$'+'{} | $\{} = {}$'.format(a, check_attribute,check_value))
         plt.fill_between(x_ax, lb_new, ub_new, color=colors[a], alpha=0.2, linestyle='--')
 
     # Plot the fixed data
