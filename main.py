@@ -234,6 +234,21 @@ class ArrivalDepartureStateAttacked(ArrivalDepartureState):
             high=np.inf,
             shape=self.state_dim
         )
+
+def reward_for_phase_continuity_fl_level(ts:str, new_phase, env, reward):
+    if env.get_traffic_signal_green_phase == new_phase:
+        beta = random.uniform(1, 2)
+    else:
+        beta = random.uniform(0.0, 1)
+    return reward * beta
+
+def reward_for_phase_continuity_agent_level(ts:str, new_phase, env, reward):
+    if env.get_traffic_signal_green_phase == new_phase:
+        _lambda = random.uniform(0, reward)
+    else:
+        _lambda = random.uniform(-1 * reward, 0)
+    return reward + _lambda
+
 # Reward function:
 def diff_waiting_time_reward_noised(ts:TrafficSignal):
     if ts.id == args.intersection_id:
@@ -247,6 +262,7 @@ def diff_waiting_time_reward_noised(ts:TrafficSignal):
 
 def diff_waiting_time_reward_normal(ts:TrafficSignal):
     ts_wait = sum(ts.get_accumulated_waiting_time_per_lane()) / 100.0
+
     reward = ts.last_measure - ts_wait
     ts.last_measure = ts_wait
     return reward
@@ -323,6 +339,7 @@ if True:
             
             # Next step
             new_state, reward, _, _ = env.step(action=actions)
+            reward = {ts: reward_for_phase_continuity_fl_level(ts, actions[ts], env, reward[ts]) for ts in reward.keys()} # Reward on phase continueity #TODO check if we want to apply the changes on the Federated Level Reward.
             if args.omega > 0:
                 reward = blend_rewards_neighborhood(reward, get_neighbours(distance_mean * args.omega, distance_matrix), nu)
             elif args.cutoff > 0:
@@ -389,7 +406,7 @@ if True:
                     state = new_state
 
             # here implement what we want to show as result
-            output_folder = script_directory + f"/output/i4-cyber_attack/rl/without_frl/{attack_state}/off-peak/omega_{args.omega}_cutoff_{args.cutoff}_nu_{args.nu}/"
+            output_folder = script_directory + f"/output/i4-cyber_attack/rl/without_frl/{attack_state}/off-peak/with_reward_continuity_fl/omega_{args.omega}_cutoff_{args.cutoff}_nu_{args.nu}/"
                 
             env.custom_save_data(output_folder, file_name=f"data_{attack_state}_alpha_{alpha}_run_{run}.csv")
             env.delete_cache()

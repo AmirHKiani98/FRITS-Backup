@@ -399,7 +399,8 @@ class CustomSUMORLEnv(SumoEnvironment):
                 traci.vehicle.add(veh_id, routeID=route_id)
                 self.flow_data[route_id].append({"time": traci.simulation.getTime(), "veh_id": veh_id})
 
-
+    def get_traffic_signal_green_phase(self, traffic_signal_id):
+        return self.traffic_signals[traffic_signal_id].green_phase
     
     def get_summation(self, data, column_name, window):
         to_return = []
