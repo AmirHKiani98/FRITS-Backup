@@ -121,7 +121,7 @@ def no_encode(state, ts_id):
 
 
 class ArrivalDepartureState(ObservationFunction):
-    def __init__(self, ts: TrafficSignal):
+    def __init__(self, ts: TrafficSignalCustom):
         super().__init__(ts)
  
         self.arrival_lanes = []
@@ -184,7 +184,7 @@ class ArrivalDepartureState(ObservationFunction):
 
 class ArrivalDepartureStateAttacked(ArrivalDepartureState):
     alpha = 0
-    def __init__(self, ts: TrafficSignal):
+    def __init__(self, ts: TrafficSignalCustom):
         super().__init__(ts)
         
         
@@ -250,7 +250,7 @@ def reward_for_phase_continuity_agent_level(ts:str, new_phase, env, reward):
     return reward + _lambda
 
 # Reward function:
-def diff_waiting_time_reward_noised(ts:TrafficSignal):
+def diff_waiting_time_reward_noised(ts:TrafficSignalCustom):
     if ts.id == args.intersection_id:
         noise = random.uniform(0.8,1.2)
     else:
@@ -260,11 +260,19 @@ def diff_waiting_time_reward_noised(ts:TrafficSignal):
     reward = noise*(no_noised_reward)
     return reward
 
-def diff_waiting_time_reward_normal(ts:TrafficSignal):
+def diff_waiting_time_reward_normal(ts:TrafficSignalCustom):
     ts_wait = sum(ts.get_accumulated_waiting_time_per_lane()) / 100.0
 
     reward = ts.last_measure - ts_wait
     ts.last_measure = ts_wait
+    return reward
+
+
+def diff_waiting_time_reward_normal_phase_continuity(ts:TrafficSignalCustom):
+    reward = reward_fn(ts)
+    
+    if ts.get_previous_green_phase() == ts.green_phase:
+        reward *= random.uniform(1, 2)
     return reward
 
 def blend_rewards(rewards:dict, nu=0.5):
@@ -320,7 +328,7 @@ if True:
         random_flow=False,
         real_data_type=False,
         percentage_added=0.1,
-        reward_fn=reward_fn
+        reward_fn=diff_waiting_time_reward_normal_phase_continuity
     )
     env.reset()
     # Get neighbors for each traffic signal based on distance threshold
@@ -339,7 +347,7 @@ if True:
             
             # Next step
             new_state, reward, _, _ = env.step(action=actions)
-            reward = {ts: reward_for_phase_continuity_fl_level(ts, actions[ts], env, reward[ts]) for ts in reward.keys()} # Reward on phase continueity #TODO check if we want to apply the changes on the Federated Level Reward.
+            # reward = {ts: reward_for_phase_continuity_fl_level(ts, actions[ts], env, reward[ts]) for ts in reward.keys()} # Reward on phase continueity #TODO check if we want to apply the changes on the Federated Level Reward.
             if args.omega > 0:
                 reward = blend_rewards_neighborhood(reward, get_neighbours(distance_mean * args.omega, distance_matrix), nu)
             elif args.cutoff > 0:
@@ -380,7 +388,7 @@ if True:
                 random_flow=False,
                 real_data_type=False,
                 percentage_added=0.1,
-                reward_fn=reward_fn
+                reward_fn=diff_waiting_time_reward_normal_phase_continuity
             )
             state = env.reset()
             # env.observation_class.alpha = alpha
@@ -406,7 +414,7 @@ if True:
                     state = new_state
 
             # here implement what we want to show as result
-            output_folder = script_directory + f"/output/i4-cyber_attack/rl/without_frl/{attack_state}/off-peak/with_reward_continuity_fl/omega_{args.omega}_cutoff_{args.cutoff}_nu_{args.nu}/"
+            output_folder = script_directory + f"/output/i4-cyber_attack/rl/without_frl/{attack_state}/off-peak/with_reward_continuity_agent/omega_{args.omega}_cutoff_{args.cutoff}_nu_{args.nu}/"
                 
             env.custom_save_data(output_folder, file_name=f"data_{attack_state}_alpha_{alpha}_run_{run}.csv")
             env.delete_cache()

@@ -20,6 +20,6 @@ for cutoff in [1, 2]:
         # else:
         for attack_phase in ["True", "False"]:
             print(omage)
-            command = f"nohup python3 {main_script} --nu {nu_value} --noise-added '{attack_phase}' --omega {omage} > output_{i}_{omage}_noiseadded_{attack_phase}.log 2>&1 &"
+            command = f"nohup python3 {main_script} --nu {nu_value} --noise-added '{attack_phase}' --omega {omage} > output_with_reward_continuity_agent_{i}_{omage}_noiseadded_{attack_phase}.log 2>&1 &"
             os.system(command)
             # print(command)

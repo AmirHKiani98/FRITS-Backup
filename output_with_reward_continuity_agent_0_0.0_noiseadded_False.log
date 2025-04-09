@@ -1,0 +1,25 @@
+Success.
+Step #0.00 (0ms ?*RT. ?UPS, TraCI: 76ms, vehicles TOT 0 ACT 0 BUF 0)                     
+Step #0.00 (0ms ?*RT. ?UPS, TraCI: 3515ms, vehicles TOT 0 ACT 0 BUF 0)                   
+False noise
+attack state: no_attack
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+Episode:  0
+Processing:   0%|          | 0/200 [00:00<?, ?it/s]Processing:   0%|          | 0/200 [00:00<?, ?it/s]
+Traceback (most recent call last):
+  File "/Users/cavelab/Documents/Github/FRITS-Backup/main.py", line 349, in <module>
+    new_state, reward, _, _ = env.step(action=actions)
+  File "/Users/cavelab/Documents/Github/FRITS-Backup/.venv/lib/python3.9/site-packages/sumo_rl/environment/env.py", line 316, in step
+    rewards = self._compute_rewards()
+  File "/Users/cavelab/Documents/Github/FRITS-Backup/.venv/lib/python3.9/site-packages/sumo_rl/environment/env.py", line 381, in _compute_rewards
+    {
+  File "/Users/cavelab/Documents/Github/FRITS-Backup/.venv/lib/python3.9/site-packages/sumo_rl/environment/env.py", line 382, in <dictcomp>
+    ts: self.traffic_signals[ts].compute_reward()
+  File "/Users/cavelab/Documents/Github/FRITS-Backup/.venv/lib/python3.9/site-packages/sumo_rl/environment/traffic_signal.py", line 185, in compute_reward
+    self.last_reward = self.reward_fn(self)
+  File "/Users/cavelab/Documents/Github/FRITS-Backup/main.py", line 274, in diff_waiting_time_reward_normal_phase_continuity
+    if ts.get_previous_green_phase() == ts.green_phase:
+AttributeError: 'TrafficSignal' object has no attribute 'get_previous_green_phase'
+Step #0.00 (0ms ?*RT. ?UPS, TraCI: 253ms, vehicles TOT 8 ACT 8 BUF 0)                     Step #3.00 (0ms ?*RT. ?UPS, TraCI: 239ms, vehicles TOT 12 ACT 12 BUF 0)                   
