@@ -10,9 +10,9 @@ is_windows = platform.system() == "Windows"
 
 # Loop to run the script with different nu values
 omage = 0.0
-for cutoff in [1, 2]:
+for cutoff in [2]:
     omage = omage/100
-    for i in range(0, 92, 45):
+    for i in [50]:
         nu_value = i / 100.0
         # Construct the command with the script path and nu_value
         # if is_windows:

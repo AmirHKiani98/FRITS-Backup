@@ -175,6 +175,7 @@ class QueueObservation(ObservationFunction):
             high=500,
             shape=self.state_dim
         )
+    
 
 
 class DefaultObservationFunction(ObservationFunction):
@@ -466,3 +467,45 @@ class CustomSUMORLEnv(SumoEnvironment):
         self.dataframes = defaultdict(lambda: pd.DataFrame({}, columns=["time", "veh_id"]))
         self.vehicles_arrived_area_detector = defaultdict(list)
         self.vehicles_arrived_loop_detector = defaultdict(list)
+    
+
+    def reset(self, seed: Optional[int] = None, **kwargs):
+        super().reset(seed=seed, **kwargs)
+        
+        # Override traffic signal class
+        if isinstance(self.reward_fn, dict):
+            self.traffic_signals = {
+                ts: TrafficSignalCustom(
+                    self,
+                    ts,
+                    self.delta_time,
+                    self.yellow_time,
+                    self.min_green,
+                    self.max_green,
+                    self.begin_time,
+                    self.reward_fn[ts],
+                    self.sumo,
+                )
+                for ts in self.reward_fn.keys()
+            }
+        else:
+            self.traffic_signals = {
+                ts: TrafficSignalCustom(
+                    self,
+                    ts,
+                    self.delta_time,
+                    self.yellow_time,
+                    self.min_green,
+                    self.max_green,
+                    self.begin_time,
+                    self.reward_fn,
+                    self.sumo,
+                )
+                for ts in self.ts_ids
+            }
+
+        self.vehicles = dict()
+        if self.single_agent:
+            return self._compute_observations()[self.ts_ids[0]], self._compute_info()
+        else:
+            return self._compute_observations()

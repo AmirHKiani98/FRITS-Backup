@@ -236,14 +236,14 @@ class ArrivalDepartureStateAttacked(ArrivalDepartureState):
         )
 
 def reward_for_phase_continuity_fl_level(ts:str, new_phase, env, reward):
-    if env.get_traffic_signal_green_phase == new_phase:
+    if env.get_traffic_signal_green_phase(ts) == new_phase:
         beta = random.uniform(1, 2)
     else:
         beta = random.uniform(0.0, 1)
     return reward * beta
 
 def reward_for_phase_continuity_agent_level(ts:str, new_phase, env, reward):
-    if env.get_traffic_signal_green_phase == new_phase:
+    if env.get_traffic_signal_green_phase(ts) == new_phase:
         _lambda = random.uniform(0, reward)
     else:
         _lambda = random.uniform(-1 * reward, 0)
@@ -311,9 +311,6 @@ if True:
     seed = 7
     num_episodes = args.num_episodes
     
-    # env parameters
-    # state_dim = 10
-    # action_dim = 10
 
     env = CustomSUMORLEnv(
         net_file=args.net,
@@ -414,7 +411,7 @@ if True:
                     state = new_state
 
             # here implement what we want to show as result
-            output_folder = script_directory + f"/output/i4-cyber_attack/rl/without_frl/{attack_state}/off-peak/with_reward_continuity_agent/omega_{args.omega}_cutoff_{args.cutoff}_nu_{args.nu}/"
+            output_folder = script_directory + f"/output/i4-cyber_attack/rl/without_frl/{attack_state}/off-peak/diff_waiting_time_reward_normal_phase_continuity/omega_{args.omega}_cutoff_{args.cutoff}_nu_{args.nu}/"
                 
             env.custom_save_data(output_folder, file_name=f"data_{attack_state}_alpha_{alpha}_run_{run}.csv")
             env.delete_cache()

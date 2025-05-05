@@ -15,8 +15,8 @@ check_value = sys.argv[1]
 attack_state = sys.argv[2]
 check_attribute = sys.argv[3] if len(sys.argv) > 3 else "nu"
 CWD = os.getcwd()
-DATA_PATH = os.path.join(CWD, f'/Users/cavelab/Documents/Github/FRITS-Backup/output/i4-cyber_attack/rl/without_frl/{attack_state}/off-peak/')
-DATA_PATH_NEW = os.path.join(CWD, f'/Users/cavelab/Documents/Github/FRITS-Backup/output/i4-cyber_attack/rl/without_frl/{attack_state}/off-peak/{check_attribute}_{check_value}')
+DATA_PATH = os.path.join(CWD, f'/Users/cavelab/Documents/Github/FRITS-Backup/output/i4-cyber_attack/rl/without_frl/{attack_state}/off-peak/diff_waiting_time_reward_normal_phase_continuity/omega_0.0_cutoff_0_nu_0.5')
+DATA_PATH_NEW = os.path.join(CWD, f'/Users/cavelab/Documents/Github/FRITS-Backup/output/i4-cyber_attack/rl/without_frl/{attack_state}/off-peak/diff_waiting_time_reward_normal_phase_continuity/omega_0.0_cutoff_0_nu_0.5')
 attribute_oi = "system_total_stopped"
 def pad_or_truncate(arr, target_length):
     if len(arr) > target_length:
