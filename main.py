@@ -41,7 +41,7 @@ parser.add_argument("--delta-time", type=int, default=3)
 parser.add_argument("--nu", type=float, default=0.5)
 parser.add_argument("--distance-threshold", type=int, default=200)
 parser.add_argument("--omega", type=float, default=0.0)
-parser.add_argument("--cutoff", type=int, default=0)
+parser.add_argument("--cutoff", type=int, default=2)
 
 args = parser.parse_args()
 print(args.noise_added, "noise")
@@ -92,6 +92,7 @@ def get_connectivity_network(G, cutoff=2):
     return connectivity
 
 connectivity = get_connectivity_network(G, cutoff=args.cutoff)
+print("connectivity:", connectivity)
 print("attack state:", attack_state)
 
 
@@ -294,8 +295,12 @@ def get_neighbours(distance_threshold, distance_matrix):
 
 def blend_rewards_neighborhood(rewards:dict, neighbourhood_dict, nu=0.5):
     rewards_copy = deepcopy(rewards)
-    for ts, reward in rewards_copy.items():
-        rewards_avg = np.mean([rewards[neighbour] for neighbour in neighbourhood_dict[ts]])
+    for ts, reward in rewards_copy.items():        
+        neighbors_rewards = [rewards[neighbour] for neighbour in neighbourhood_dict[ts] if neighbour in rewards]
+        if neighbors_rewards:
+            rewards_avg = np.mean(neighbors_rewards)
+        else:
+            rewards_avg = 0.0
         rewards_copy[ts] = nu*rewards_avg + (1-nu)*reward
     return rewards_copy
 
