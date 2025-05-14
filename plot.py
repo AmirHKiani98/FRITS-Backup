@@ -11,12 +11,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 from collections import defaultdict
 import sys
-check_value = sys.argv[1]
-attack_state = sys.argv[2]
-check_attribute = sys.argv[3] if len(sys.argv) > 3 else "nu"
+path_to_data = sys.argv[1]
+output_path = sys.argv[2]
+attack_state = sys.argv[3]
+check_attribute = sys.argv[4]
+check_value = sys.argv[5]
 CWD = os.getcwd()
-DATA_PATH = os.path.join(CWD, f'/Users/cavelab/Documents/Github/FRITS-Backup/output/i4-cyber_attack/rl/without_frl/{attack_state}/off-peak/diff_waiting_time_reward_normal_phase_continuity/omega_0.0_cutoff_0_nu_0.5')
-DATA_PATH_NEW = os.path.join(CWD, f'/Users/cavelab/Documents/Github/FRITS-Backup/output/i4-cyber_attack/rl/without_frl/{attack_state}/off-peak/diff_waiting_time_reward_normal_phase_continuity/omega_0.0_cutoff_0_nu_0.5')
+DATA_PATH = os.path.join(CWD, f'{path_to_data}')
+DATA_PATH_NEW = os.path.join(CWD, f'{path_to_data}')
 attribute_oi = "system_total_stopped"
 def pad_or_truncate(arr, target_length):
     if len(arr) > target_length:
@@ -106,6 +108,6 @@ if __name__ == '__main__':
     plt.ylabel('Total Stopped Vehicles', fontsize=25)
     plt.tick_params(axis='both', which='major', labelsize=18)
     plt.gca().get_yaxis().get_offset_text().set_size(18)
-    plt.savefig(f'results_plot_{check_attribute}_{check_value}_{attack_state}.png', format='png', dpi=400, bbox_inches='tight')
+    plt.savefig(f'results_plot_{check_attribute}_{check_value}_{attack_state}.png', format='png', dpi=100, bbox_inches='tight')
     print("Figure saved")
     # plt.show()

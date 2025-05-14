@@ -50,7 +50,7 @@ if args.noise_added.lower() == "false":
 else:
     args.noise_added = True
 delta_time = args.delta_time
-nu = args.nu
+nu = args.nu # Blending the rewards
 simulation_time_value = int(float(args.simulation_time) * float(args.delta_time))
 if args.noise_added:
     attack_state = "attacked"
