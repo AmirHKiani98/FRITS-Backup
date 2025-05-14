@@ -13,6 +13,9 @@ from collections import defaultdict
 import sys
 path_to_data = sys.argv[1]
 output_path = sys.argv[2]
+output_parent_path = os.path.dirname(output_path)
+if not os.path.exists(output_parent_path):
+    os.makedirs(output_parent_path)
 attack_state = sys.argv[3]
 check_attribute = sys.argv[4]
 check_value = sys.argv[5]
@@ -108,6 +111,6 @@ if __name__ == '__main__':
     plt.ylabel('Total Stopped Vehicles', fontsize=25)
     plt.tick_params(axis='both', which='major', labelsize=18)
     plt.gca().get_yaxis().get_offset_text().set_size(18)
-    plt.savefig(f'results_plot_{check_attribute}_{check_value}_{attack_state}.png', format='png', dpi=100, bbox_inches='tight')
+    plt.savefig(output_path, format='png', dpi=100, bbox_inches='tight')
     print("Figure saved")
     # plt.show()
