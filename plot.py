@@ -17,11 +17,11 @@ output_parent_path = os.path.dirname(output_path)
 if not os.path.exists(output_parent_path):
     os.makedirs(output_parent_path)
 attack_state = sys.argv[3]
-check_attribute = sys.argv[4]
-check_value = sys.argv[5]
+label = sys.argv[4]
 CWD = os.getcwd()
 DATA_PATH = os.path.join(CWD, f'{path_to_data}')
-DATA_PATH_NEW = os.path.join(CWD, f'{path_to_data}')
+data_new_path = str(DATA_PATH).replace("attacked", "no_attack")
+DATA_PATH_NEW = os.path.join(CWD, f'{data_new_path}')
 attribute_oi = "system_total_stopped"
 def pad_or_truncate(arr, target_length):
     if len(arr) > target_length:
@@ -41,7 +41,7 @@ if __name__ == '__main__':
     # Load and process the original data
     for a in alpha:
         for rep in range(reps):
-            file_name = 'data_{}_alpha_{}_run_{}.csv'.format(attack_state,a, rep)
+            file_name = 'data_{}_alpha_{}_run_{}.csv'.format("attacked",a, rep)
             file_path = os.path.join(DATA_PATH, file_name)
             if not os.path.isfile(file_path):
                 print(file_name)
@@ -57,8 +57,9 @@ if __name__ == '__main__':
     # Load and process the new data from the new folder
     for a in alpha:
         for rep in range(reps):
-            file_name = 'data_{}_alpha_{}_run_{}.csv'.format(attack_state,a, rep)
+            file_name = 'data_{}_alpha_{}_run_{}.csv'.format("no_attack",a, rep)
             file_path_new = os.path.join(DATA_PATH_NEW, file_name)
+            print(file_name)
             if not os.path.isfile(file_path_new):
                 print("sh",file_name)
                 continue
@@ -98,7 +99,7 @@ if __name__ == '__main__':
         lb_new = np.percentile(wt_new[a], 0.25, axis=0)
         ub_new = np.percentile(wt_new[a], 99.75, axis=0)
         mean_new = wt_new[a].mean(axis=0)
-        plt.plot(x_ax, mean_new, '--', color=colors[a], label=r'$\alpha=$'+'{} | $\{} = {}$'.format(a, check_attribute,check_value))
+        plt.plot(x_ax, mean_new, '--', color=colors[a], label=r'$\alpha=$'+'{} | ${}$'.format(a, label))
         plt.fill_between(x_ax, lb_new, ub_new, color=colors[a], alpha=0.2, linestyle='--')
 
     # Plot the fixed data

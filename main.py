@@ -26,6 +26,7 @@ from tqdm import tqdm
 
 
 parser = argparse.ArgumentParser()
+np.random.seed(110)
 # Command to run the file: python main.py --noise-added "True"
 script_directory = os.path.dirname(os.path.abspath(__file__))
 parser.add_argument('--net', type=str, default=script_directory + r"/net/4x4.net.xml")
@@ -35,7 +36,7 @@ parser.add_argument("--intersection-id", type=str, default="10")
 parser.add_argument("--num-episodes", type=int, default=5)
 parser.add_argument("--gui", type=bool, default=False)
 parser.add_argument("--noised-edge", type=str, default="CR30_LR_8")
-parser.add_argument("--simulation-time", type=int, default=200)
+parser.add_argument("--simulation-time", type=int, default=1200)
 parser.add_argument("--run-per-alpha", type=int, default=5)
 parser.add_argument("--delta-time", type=int, default=3)
 parser.add_argument("--nu", type=float, default=0.5)
@@ -57,6 +58,7 @@ if args.noise_added:
 else:
     attack_state = "no_attack"
 
+args.simulation_time /= args.delta_time
 # network to edges
 net_prefix = args.net.split('.')[0] + "_plain"
 os.system(f'netconvert -s {args.net} --plain-output-prefix {net_prefix}') # TODO if the net doesn't have . in the name, it will work
