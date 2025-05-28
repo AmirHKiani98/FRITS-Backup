@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "H:\GitHub\FRITS-Backup\main.py", line 22, in <module>
+    from CustomSumoRLEnv import *
+  File "H:\GitHub\FRITS-Backup\CustomSumoRLEnv.py", line 3, in <module>
+    from sumo_rl import SumoEnvironment
+  File "H:\GitHub\FRITS-Backup\.venv\lib\site-packages\sumo_rl\__init__.py", line 3, in <module>
+    from sumo_rl.environment.env import (
+  File "H:\GitHub\FRITS-Backup\.venv\lib\site-packages\sumo_rl\environment\env.py", line 12, in <module>
+    raise ImportError("Please declare the environment variable 'SUMO_HOME'")
+ImportError: Please declare the environment variable 'SUMO_HOME'
