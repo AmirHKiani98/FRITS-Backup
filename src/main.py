@@ -4,6 +4,15 @@ Main entry point for the application.
 
 import argparse
 import os
+import traci
+from src.enviroment.custom_sumorl_env import CustomSUMORLEnv
+from src.enviroment.state_env import ArrivalDepartureState
+from src.enviroment.utility import diff_waiting_time_reward_normal_phase_continuity, get_intersections_distance_matrix
+
+from src.rl.dql import DQLAgent
+
+def no_encode(state, ts_id):
+    return tuple(state)
 
 def main():
     """
@@ -15,7 +24,6 @@ def main():
 
     parser.add_argument('--net', type=str, default=BASE_DIR + r"/networks/4x4.net.xml")
     parser.add_argument('--route', type=str, default=BASE_DIR + r'/routes/4x4c2c1.rou.xml')
-    parser.add_argument('--noise-added', type=str, default="True")
     parser.add_argument("--intersection-id", type=str, default="10")
     parser.add_argument("--num-episodes", type=int, default=5)
     parser.add_argument("--gui", type=bool, default=False)
@@ -30,5 +38,45 @@ def main():
 
 
     args = parser.parse_args()
+
+
+    batch_size = 64
+    seed = 7
+    num_episodes = args.num_episodes
+    
+
+    env = CustomSUMORLEnv(
+        net_file=args.net,
+        route_file=args.route,
+        use_gui=args.gui,
+        num_seconds=args.simulation_time,
+        min_green=5,
+        yellow_time=2,
+        delta_time=args.delta_time,
+        observation_class=ArrivalDepartureState, # type: ignore
+        encode_function=no_encode,
+        random_flow=False,
+        real_data_type=False,
+        percentage_added=0.1,
+        reward_fn=diff_waiting_time_reward_normal_phase_continuity
+    )
+
+    env.reset()
+
+    distance_matrix, distance_mean = get_intersections_distance_matrix()
+
+    agents = {
+        ts: DQLAgent(
+            len(set(traci.trafficlight.getControlledLanes(ts))) * 2,
+            env.traffic_signals[ts].action_space.n, # type: ignore
+            hidden_dim=100,
+            seed=seed
+        )
+        for ts in env.ts_ids
+    }
+
+    
+
+    
 
     

@@ -5,6 +5,7 @@ Created on Thu Apr 11 12:11:49 2024
 @author: naftabi
 """
 
+from typing import Optional
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -27,7 +28,7 @@ class DQLAgent:
                  epsilon_end: float = 0.05,
                  epsilon_decay: float = 0.995,
                  buffer_size: int = 100000,
-                 seed: int = None):
+                 seed: Optional[int] = None):
         
         if seed is not None:
             random.seed(seed)
@@ -110,5 +111,5 @@ class DQLAgent:
     
     def load_policy(self, idx):
         self.q_network.load_state_dict(
-            './saved_q/agent_{}.pkl'.format(idx)
+            torch.load('./saved_q/agent_{}.pkl'.format(idx))
             )

@@ -12,6 +12,8 @@ import matplotlib.pyplot as plt
 from collections import defaultdict
 import sys
 path_to_data = sys.argv[1]
+path_to_data = path_to_data.strip("\"'")  # Remove any quotes
+path_to_data = os.path.normpath(path_to_data)  # Normalize slashes
 output_path = sys.argv[2]
 output_parent_path = os.path.dirname(output_path)
 if not os.path.exists(output_parent_path):
@@ -20,8 +22,7 @@ attack_state = sys.argv[3]
 label = sys.argv[4]
 CWD = os.getcwd()
 DATA_PATH = os.path.join(CWD, f'{path_to_data}')
-data_new_path = str(DATA_PATH).replace("attacked", "no_attack")
-DATA_PATH_NEW = os.path.join(CWD, f'{data_new_path}')
+DATA_PATH_NEW = DATA_PATH.replace("attacked", "no_attack").replace("'", "").replace('"', "")
 attribute_oi = "system_total_stopped"
 def pad_or_truncate(arr, target_length):
     if len(arr) > target_length:
@@ -44,7 +45,7 @@ if __name__ == '__main__':
             file_name = 'data_{}_alpha_{}_run_{}.csv'.format("attacked",a, rep)
             file_path = os.path.join(DATA_PATH, file_name)
             if not os.path.isfile(file_path):
-                print(file_name)
+                print("File not found:", file_path)
                 continue
             df = pd.read_csv(file_path, header=0)
             df = df.iloc[:600]
@@ -59,9 +60,8 @@ if __name__ == '__main__':
         for rep in range(reps):
             file_name = 'data_{}_alpha_{}_run_{}.csv'.format("no_attack",a, rep)
             file_path_new = os.path.join(DATA_PATH_NEW, file_name)
-            print(file_name)
             if not os.path.isfile(file_path_new):
-                print("sh",file_name)
+                print("File not found:", file_path_new)
                 continue
             df_new = pd.read_csv(file_path_new, header=0)
             # print(df_new.shape, file_name)
@@ -73,6 +73,7 @@ if __name__ == '__main__':
     # Stack the arrays for easier manipulation
     for a in alpha:
         # print(len(wt[a]), a)
+        print(len(wt[a]), len(wt_new[a]), a)
         wt[a] = np.stack(wt[a], axis=0)
         # print(len(wt_new[a]), a)
         wt_new[a] = np.stack(wt_new[a], axis=0)
