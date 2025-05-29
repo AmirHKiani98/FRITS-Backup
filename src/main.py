@@ -78,7 +78,7 @@ def main():
         )
         for ts in env.ts_ids
     }
-    connectivity = get_connectivity_network(G, cutoff=args.cutoff)
+    connectivity = get_connectivity_network(args.net, cutoff=args.cutoff)
     for episode in tqdm(range(num_episodes), desc="Episodes"):
         all_rewards = {}
 
@@ -97,11 +97,49 @@ def main():
         all_rewards[episode] = episode_rewards
 
     alphas = list(range(6)) # change value of this list
-    for ts, agent in agents.items():
+    for _, agent in agents.items():
         agent.epsilon = 0.0
         agent.epsilon_end = 0.0
         agent.q_network.eval()
-
+    output_folder = (
+        BASE_DIR + f"/output/i4-cyber_attack/rl/without_frl/{args.attack_state}/"
+        f"off-peak/diff_waiting_time_reward_normal_phase_continuity/"
+        f"omega_{args.omega}_cutoff_{args.cutoff}_nu_{args.nu}/"
+    )
+    for alpha in alphas:
+        
+        for run in range(args.run_per_alpha):
+            
+            run_alpha(
+                net=args.net,
+                route=args.route,
+                gui=args.gui,
+                simulation_time=args.simulation_time,
+                delta_time=args.delta_time,
+                alpha=alpha,
+                run=run,
+                observation_class=ArrivalDepartureState, # type: ignore
+                agents=agents,
+                attack_state=args.attack_state,
+                output_folder=output_folder
+            )
+    metadata = {
+        "net_file": args.net,
+        "route_file": args.route,
+        "noise_added": args.noise_added,
+        "intersection_id": args.intersection_id,
+        "num_episodes": args.num_episodes,
+        "gui": args.gui,
+        "noised_edge": args.noised_edge,
+        "simulation_time": args.simulation_time,
+        "run_per_alpha": args.run_per_alpha,
+        "delta_time": args.delta_time,
+        "nu": args.nu,
+        "distance_threshold": args.distance_threshold,
+        "omega": args.omega,
+        "distance_mean": distance_mean
+    }
+    env.save_metadata(metadata, output_folder, file_name=f"metadata_{args.attack_state}.csv")
 
     
 
@@ -134,13 +172,11 @@ def run_alpha(net,
                 simulation_time,
                 delta_time,
                 alpha,
-                omega,
-                cutoff,
-                nu,
                 run,
                 observation_class,
                 agents,
-                attack_state
+                attack_state,
+                output_folder
                 ):
     env = CustomSUMORLEnv(
                 net_file=net,
@@ -160,11 +196,8 @@ def run_alpha(net,
     state = env.reset()
     if not isinstance(state, dict):
         raise ValueError("State should be a dictionary with traffic signal IDs as keys.")
-    # env.observation_class.alpha = alpha
-    # for ts, agent in agents.items():
-    #     agent.memory = deepcopy(memories[ts])
 
-    for step in range(simulation_time): # for how many steps we want to evaluate? 
+    for _ in range(simulation_time): # for how many steps we want to evaluate? 
         actions = {ts: agent.act(state[ts]) for ts, agent in agents.items()}
         try:
             result = env.step(action=actions)
@@ -187,18 +220,12 @@ def run_alpha(net,
             state = new_state
 
     # here implement what we want to show as result
-    output_folder = os.path.join(
-        BASE_DIR,
-        "output",
-        "i4-cyber_attack",
-        "rl",
-        "without_frl",
-        attack_state,
-        "off-peak",
-        "diff_waiting_time_reward_normal_phase_continuity",
-        f"omega_{omega}_cutoff_{cutoff}_nu_{nu}"
-    )
         
     file_name = f"data_{attack_state}_alpha_{alpha}_run_{run}.csv"
     env.custom_save_data(output_folder, file_name=file_name)
     env.delete_cache()
+
+if __name__ == "__main__":
+    main()
+    traci.close()  # Ensure that TraCI is closed after the simulation
+    print("Simulation completed and TraCI closed.")
