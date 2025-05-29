@@ -1,25 +1,34 @@
 import os
 import platform
+import subprocess
 
-# Define the path to the main script
-script_directory = os.path.dirname(os.path.abspath(__file__))
-main_script = "main.py"
-
-# Determine the operating system
+# Detect OS
 is_windows = platform.system() == "Windows"
 
-# Loop to run the script with different nu values
-omage = 0.0
-for cutoff in [2]:
-    omage = omage/100
+# Define base directory and script
+script_directory = os.path.dirname(os.path.abspath(__file__))
+main_script = os.path.join(script_directory, "main.py")
+
+# Find Python executable in .venv
+venv_dir = os.path.join(script_directory, ".venv", "Scripts" if is_windows else "bin")
+python_exec = os.path.join(venv_dir, "python.exe" if is_windows else "python3")
+os.environ["SUMO_HOME"] = r"F:\Applications\Sumo\bin"
+# Confirm the .venv Python exists
+if not os.path.exists(python_exec):
+    raise FileNotFoundError(f"Python interpreter not found in virtual environment: {python_exec}")
+
+# Run loop
+for cutoff in [1, 3]:
+    omega = 0
     for i in [50]:
         nu_value = i / 100.0
-        # Construct the command with the script path and nu_value
-        # if is_windows:
-        #     command = f"START /min python {main_script} --nu {nu_value} > output_{i}.log 2>&1"
-        # else:
-        for attack_phase in ["True"]:
-            print(omage)
-            command = f"nohup python3 {main_script} --nu {nu_value} --noise-added '{attack_phase}' --omega {omage} > output_with_reward_continuity_agent_{i}_{omage}_noiseadded_{attack_phase}.log 2>&1 &"
-            os.system(command)
-            # print(command)
+        for attack_phase in ["True", "False"]:
+            log_file = f"output_with_reward_continuity_agent_cutoff_{cutoff}_i_{i}_omega_{omega}_noiseadded_{attack_phase}.log"
+            print(f"Launching: nu={nu_value}, omega={omega}, attack={attack_phase}")
+            with open(log_file, "w") as f:
+                subprocess.Popen(
+                    [python_exec, main_script, "--nu", str(nu_value), "--noise-added", attack_phase, "--omega", str(omega), "--cutoff", str(cutoff)],
+                    stdout=f,
+                    stderr=subprocess.STDOUT,
+                    creationflags=subprocess.CREATE_NO_WINDOW if is_windows else 0
+                )

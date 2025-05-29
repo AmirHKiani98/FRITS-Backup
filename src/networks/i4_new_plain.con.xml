@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2025-03-26 02:34:36 by Eclipse SUMO netconvert Version 1.20.0
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
+
+    <input>
+        <sumo-net-file value="/Users/cavelab/Documents/Github/FRITS-Backup/net/i4_new.net.xml"/>
+    </input>
+
+    <output>
+        <plain-output-prefix value="/Users/cavelab/Documents/Github/FRITS-Backup/net/i4_new_plain"/>
+        <output.street-names value="true"/>
+    </output>
+
+    <processing>
+        <geometry.min-radius.fix.railways value="false"/>
+        <geometry.max-grade.fix value="false"/>
+        <offset.disable-normalization value="true"/>
+        <lefthand value="0"/>
+    </processing>
+
+    <junctions>
+        <no-turnarounds value="true"/>
+        <junctions.corner-detail value="5"/>
+        <junctions.limit-turn-speed value="5.50"/>
+        <rectangular-lane-cut value="0"/>
+    </junctions>
+
+    <pedestrian>
+        <walkingareas value="0"/>
+    </pedestrian>
+
+</configuration>
+-->
+
+<connections version="1.20" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/connections_file.xsd">
+    <connection from="CR101_DU_1" to="CR101_DU_2" fromLane="0" toLane="0"/>
+    <connection from="CR101_DU_1" to="CR101_DU_2" fromLane="0" toLane="1"/>
+
+    <connection from="CR101_DU_2" to="CR101_DU_3R" fromLane="0" toLane="0"/>
+    <connection from="CR101_DU_2" to="CR101_DU_3" fromLane="0" toLane="0"/>
+    <connection from="CR101_DU_2" to="CR101_DU_3" fromLane="1" toLane="1"/>
+
+    <connection from="CR101_DU_3" to="CR101_DU_4" fromLane="0" toLane="0"/>
+    <connection from="CR101_DU_3" to="CR30_RL_16" fromLane="1" toLane="0"/>
+
+    <connection from="CR101_DU_3R" to="CR30_LR_4" fromLane="0" toLane="0"/>
+
+    <connection from="CR101_DU_4" to="CR101_DU_5" fromLane="0" toLane="0" pass="1"/>
+
+    <connection from="CR101_UD_1" to="CR101_UD_2" fromLane="0" toLane="0"/>
+    <connection from="CR101_UD_1" to="CR101_UD_2" fromLane="0" toLane="1"/>
+
+    <connection from="CR101_UD_2" to="CR30_RL_16" fromLane="0" toLane="0"/>
+    <connection from="CR101_UD_2" to="CR101_UD_3" fromLane="0" toLane="0"/>
+    <connection from="CR101_UD_2" to="CR30_LR_3" fromLane="1" toLane="0"/>
+
+    <connection from="CR30_LR_1" to="CR30_LR_2" fromLane="0" toLane="0"/>
+    <connection from="CR30_LR_1" to="CR30_LR_2" fromLane="0" toLane="1"/>
+
+    <connection from="CR30_LR_10" to="CR30_LR_11" fromLane="0" toLane="0"/>
+    <connection from="CR30_LR_10" to="CR30_LR_11" fromLane="0" toLane="1"/>
+    <connection from="CR30_LR_10" to="CR30_LR_11" fromLane="1" toLane="2"/>
+
+    <connection from="CR30_LR_10from9" to="QLN_UD" fromLane="0" toLane="0"/>
+    <connection from="CR30_LR_10from9" to="CR30_LR_10" fromLane="0" toLane="0"/>
+    <connection from="CR30_LR_10from9" to="CR30_LR_10" fromLane="1" toLane="1"/>
+
+    <connection from="CR30_LR_11" to="PLN_UD" fromLane="0" toLane="0"/>
+    <connection from="CR30_LR_11" to="CR30_LR_12" fromLane="1" toLane="0"/>
+    <connection from="CR30_LR_11" to="CR30_LR_12" fromLane="2" toLane="1"/>
+
+    <connection from="CR30_LR_12" to="CR30_LR_13" fromLane="0" toLane="0"/>
+    <connection from="CR30_LR_12" to="CR30_LR_13" fromLane="0" toLane="1"/>
+    <connection from="CR30_LR_12" to="CR30_LR_13" fromLane="1" toLane="2"/>
+    <connection from="CR30_LR_12" to="CR30_LR_13" fromLane="1" toLane="3"/>
+
+    <connection from="CR30_LR_13" to="LLN_UD_3" fromLane="0" toLane="0"/>
+    <connection from="CR30_LR_13" to="CR30_LR_14" fromLane="1" toLane="0"/>
+    <connection from="CR30_LR_13" to="CR30_LR_14" fromLane="2" toLane="1"/>
+    <connection from="CR30_LR_13" to="LLN_DU_3" fromLane="3" toLane="0"/>
+
+    <connection from="CR30_LR_14" to="CR30_LR_15from14" fromLane="0" toLane="0"/>
+    <connection from="CR30_LR_14" to="CR30_LR_15from14" fromLane="1" toLane="1"/>
+
+    <connection from="CR30_LR_15" to="GLN_UD_3" fromLane="0" toLane="0"/>
+    <connection from="CR30_LR_15" to="GLN_UD_3" fromLane="0" toLane="1"/>
+    <connection from="CR30_LR_15" to="CR30_LR_16" fromLane="1" toLane="0"/>
+    <connection from="CR30_LR_15" to="CR30_LR_16" fromLane="2" toLane="1"/>
+    <connection from="CR30_LR_15" to="GLN_DU_3" fromLane="3" toLane="0"/>
+
+    <connection from="CR30_LR_15from14" to="CR30_LR_15" fromLane="0" toLane="0"/>
+    <connection from="CR30_LR_15from14" to="CR30_LR_15" fromLane="0" toLane="1"/>
+    <connection from="CR30_LR_15from14" to="CR30_LR_15" fromLane="1" toLane="2"/>
+    <connection from="CR30_LR_15from14" to="CR30_LR_15" fromLane="1" toLane="3"/>
+
+    <connection from="CR30_LR_2" to="CR101_UD_3" fromLane="0" toLane="0"/>
+    <connection from="CR30_LR_2" to="CR30_LR_3" fromLane="0" toLane="0"/>
+    <connection from="CR30_LR_2" to="CR101_DU_4" fromLane="1" toLane="0"/>
+
+    <connection from="CR30_LR_3" to="CR30_LR_4" fromLane="0" toLane="1"/>
+
+    <connection from="CR30_LR_4" to="ZLN_UD" fromLane="0" toLane="0"/>
+    <connection from="CR30_LR_4" to="CR30_LR_5" fromLane="0" toLane="0"/>
+    <connection from="CR30_LR_4" to="CR30_LR_5" fromLane="1" toLane="1"/>
+
+    <connection from="CR30_LR_5" to="CR30_LR_6" fromLane="0" toLane="0"/>
+    <connection from="CR30_LR_5" to="CR30_LR_6" fromLane="0" toLane="1"/>
+    <connection from="CR30_LR_5" to="CR30_LR_6" fromLane="1" toLane="2"/>
+
+    <connection from="CR30_LR_6" to="WCN_UD" fromLane="0" toLane="0" pass="1"/>
+    <connection from="CR30_LR_6" to="CR30_LR_7" fromLane="1" toLane="0"/>
+    <connection from="CR30_LR_6" to="CR30_LR_7" fromLane="2" toLane="1"/>
+
+    <connection from="CR30_LR_7" to="CR30_LR_8" fromLane="0" toLane="0"/>
+    <connection from="CR30_LR_7" to="CR30_LR_8" fromLane="1" toLane="1"/>
+    <connection from="CR30_LR_7" to="CR30_LR_8" fromLane="1" toLane="2"/>
+
+    <connection from="CR30_LR_8" to="CR30_LR_9" fromLane="0" toLane="0"/>
+    <connection from="CR30_LR_8" to="CR30_LR_9" fromLane="1" toLane="1"/>
+    <connection from="CR30_LR_8" to="TLN_DU" fromLane="2" toLane="0"/>
+
+    <connection from="CR30_LR_9" to="CR30_LR_10from9" fromLane="0" toLane="0"/>
+    <connection from="CR30_LR_9" to="CR30_LR_10from9" fromLane="1" toLane="1"/>
+
+    <connection from="CR30_RL_1" to="CR30_RL_2" fromLane="0" toLane="0"/>
+    <connection from="CR30_RL_1" to="CR30_RL_2" fromLane="0" toLane="1"/>
+    <connection from="CR30_RL_1" to="CR30_RL_2" fromLane="1" toLane="2"/>
+    <connection from="CR30_RL_1" to="CR30_RL_2" fromLane="1" toLane="3"/>
+
+    <connection from="CR30_RL_10" to="CR30_RL_11" fromLane="0" toLane="0"/>
+    <connection from="CR30_RL_10" to="CR30_RL_11" fromLane="1" toLane="1"/>
+    <connection from="CR30_RL_10" to="gneE34" fromLane="2" toLane="0"/>
+
+    <connection from="CR30_RL_11" to="CR30_RL_12" fromLane="0" toLane="0"/>
+    <connection from="CR30_RL_11" to="CR30_RL_12" fromLane="1" toLane="1"/>
+    <connection from="CR30_RL_11" to="CR30_RL_12" fromLane="1" toLane="2"/>
+
+    <connection from="CR30_RL_12" to="CR30_RL_13" fromLane="0" toLane="0"/>
+    <connection from="CR30_RL_12" to="CR30_RL_13" fromLane="1" toLane="1"/>
+    <connection from="CR30_RL_12" to="gneE35" fromLane="2" toLane="0"/>
+
+    <connection from="CR30_RL_13" to="CR30_RL_15R" fromLane="0" toLane="0"/>
+    <connection from="CR30_RL_13" to="CR30_RL_14" fromLane="1" toLane="0"/>
+
+    <connection from="CR30_RL_14" to="CR30_RL_15" fromLane="0" toLane="0"/>
+    <connection from="CR30_RL_14" to="CR30_RL_15" fromLane="0" toLane="1"/>
+
+    <connection from="CR30_RL_15" to="CR30_RL_16" fromLane="0" toLane="0"/>
+    <connection from="CR30_RL_15" to="CR101_UD_3" fromLane="1" toLane="0"/>
+
+    <connection from="CR30_RL_15R" to="CR101_DU_5" fromLane="0" toLane="0"/>
+
+    <connection from="CR30_RL_2" to="GLN_DU_3" fromLane="0" toLane="0"/>
+    <connection from="CR30_RL_2" to="CR30_RL_3" fromLane="1" toLane="0"/>
+    <connection from="CR30_RL_2" to="CR30_RL_3" fromLane="2" toLane="1"/>
+    <connection from="CR30_RL_2" to="GLN_UD_3" fromLane="3" toLane="0"/>
+    <connection from="CR30_RL_2" to="GLN_UD_3" fromLane="3" toLane="1"/>
+
+    <connection from="CR30_RL_3" to="CR30_RL_4from3" fromLane="0" toLane="0"/>
+    <connection from="CR30_RL_3" to="CR30_RL_4from3" fromLane="1" toLane="1"/>
+
+    <connection from="CR30_RL_4" to="LLN_DU_3" fromLane="0" toLane="0"/>
+    <connection from="CR30_RL_4" to="CR30_RL_5" fromLane="1" toLane="0"/>
+    <connection from="CR30_RL_4" to="CR30_RL_5" fromLane="2" toLane="1"/>
+    <connection from="CR30_RL_4" to="LLN_UD_3" fromLane="3" toLane="0"/>
+
+    <connection from="CR30_RL_4from3" to="CR30_RL_4" fromLane="0" toLane="0"/>
+    <connection from="CR30_RL_4from3" to="CR30_RL_4" fromLane="0" toLane="1"/>
+    <connection from="CR30_RL_4from3" to="CR30_RL_4" fromLane="1" toLane="2"/>
+    <connection from="CR30_RL_4from3" to="CR30_RL_4" fromLane="1" toLane="3"/>
+
+    <connection from="CR30_RL_5" to="CR30_RL_6from5" fromLane="0" toLane="0"/>
+    <connection from="CR30_RL_5" to="CR30_RL_6from5" fromLane="1" toLane="1"/>
+
+    <connection from="CR30_RL_6" to="CR30_RL_7" fromLane="0" toLane="0"/>
+    <connection from="CR30_RL_6" to="CR30_RL_7" fromLane="1" toLane="1"/>
+    <connection from="CR30_RL_6" to="PLN_UD" fromLane="2" toLane="0" pass="1"/>
+
+    <connection from="CR30_RL_6from5" to="CR30_RL_6" fromLane="0" toLane="0"/>
+    <connection from="CR30_RL_6from5" to="CR30_RL_6" fromLane="1" toLane="1"/>
+    <connection from="CR30_RL_6from5" to="CR30_RL_6" fromLane="1" toLane="2"/>
+
+    <connection from="CR30_RL_7" to="CR30_RL_8" fromLane="0" toLane="0"/>
+    <connection from="CR30_RL_7" to="CR30_RL_8" fromLane="0" toLane="1"/>
+    <connection from="CR30_RL_7" to="CR30_RL_8" fromLane="1" toLane="2"/>
+
+    <connection from="CR30_RL_8" to="TLN_DU" fromLane="0" toLane="0"/>
+    <connection from="CR30_RL_8" to="CR30_RL_9" fromLane="1" toLane="0"/>
+    <connection from="CR30_RL_8" to="CR30_RL_9" fromLane="2" toLane="1"/>
+
+    <connection from="CR30_RL_9" to="CR30_RL_10" fromLane="0" toLane="0"/>
+    <connection from="CR30_RL_9" to="CR30_RL_10" fromLane="0" toLane="1"/>
+    <connection from="CR30_RL_9" to="CR30_RL_10" fromLane="1" toLane="2"/>
+
+    <connection from="GLN_DU_1" to="GLN_DU_2" fromLane="0" toLane="0"/>
+    <connection from="GLN_DU_1" to="GLN_DU_2" fromLane="0" toLane="1"/>
+    <connection from="GLN_DU_1" to="GLN_DU_2" fromLane="1" toLane="2"/>
+
+    <connection from="GLN_DU_2" to="CR30_LR_16" fromLane="0" toLane="0"/>
+    <connection from="GLN_DU_2" to="CR30_LR_16" fromLane="0" toLane="1"/>
+    <connection from="GLN_DU_2" to="GLN_DU_3" fromLane="1" toLane="0"/>
+    <connection from="GLN_DU_2" to="CR30_RL_3" fromLane="2" toLane="0"/>
+    <connection from="GLN_DU_2" to="CR30_RL_3" fromLane="2" toLane="1"/>
+
+    <connection from="GLN_DU_3" to="GLN_DU_4" fromLane="0" toLane="0"/>
+
+    <connection from="GLN_UD_1" to="GLN_UD_2" fromLane="0" toLane="0"/>
+    <connection from="GLN_UD_1" to="GLN_UD_2" fromLane="1" toLane="1"/>
+    <connection from="GLN_UD_1" to="GLN_UD_2" fromLane="1" toLane="2"/>
+
+    <connection from="GLN_UD_2" to="CR30_RL_3" fromLane="0" toLane="0"/>
+    <connection from="GLN_UD_2" to="CR30_RL_3" fromLane="0" toLane="1"/>
+    <connection from="GLN_UD_2" to="GLN_UD_3" fromLane="1" toLane="0"/>
+    <connection from="GLN_UD_2" to="GLN_UD_3" fromLane="1" toLane="1"/>
+    <connection from="GLN_UD_2" to="CR30_LR_16" fromLane="2" toLane="0"/>
+    <connection from="GLN_UD_2" to="CR30_LR_16" fromLane="2" toLane="1"/>
+
+    <connection from="GLN_UD_3" to="GLN_UD_4" fromLane="0" toLane="0"/>
+    <connection from="GLN_UD_3" to="GLN_UD_4" fromLane="1" toLane="1"/>
+
+    <connection from="LLN_DU_1" to="LLN_DU_2" fromLane="0" toLane="0"/>
+    <connection from="LLN_DU_1" to="LLN_DU_2" fromLane="0" toLane="1"/>
+
+    <connection from="LLN_DU_2" to="CR30_LR_14" fromLane="0" toLane="0"/>
+    <connection from="LLN_DU_2" to="CR30_LR_14" fromLane="0" toLane="1"/>
+    <connection from="LLN_DU_2" to="LLN_DU_3" fromLane="0" toLane="0"/>
+    <connection from="LLN_DU_2" to="CR30_RL_5" fromLane="1" toLane="0"/>
+    <connection from="LLN_DU_2" to="CR30_RL_5" fromLane="1" toLane="1"/>
+
+    <connection from="LLN_UD_1" to="LLN_UD_2" fromLane="0" toLane="0"/>
+    <connection from="LLN_UD_1" to="LLN_UD_2" fromLane="0" toLane="1"/>
+
+    <connection from="LLN_UD_2" to="CR30_RL_5" fromLane="0" toLane="0"/>
+    <connection from="LLN_UD_2" to="CR30_RL_5" fromLane="0" toLane="1"/>
+    <connection from="LLN_UD_2" to="LLN_UD_3" fromLane="0" toLane="0"/>
+    <connection from="LLN_UD_2" to="CR30_LR_14" fromLane="1" toLane="0"/>
+    <connection from="LLN_UD_2" to="CR30_LR_14" fromLane="1" toLane="1"/>
+
+    <connection from="PLN_DU" to="CR30_LR_12" fromLane="0" toLane="0"/>
+    <connection from="PLN_DU" to="CR30_RL_7" fromLane="0" toLane="1"/>
+
+    <connection from="PLN_UD"/>
+
+    <connection from="QLN_DU" to="CR30_LR_10" fromLane="0" toLane="0"/>
+
+    <connection from="QLN_UD"/>
+
+    <connection from="TLN_DU" to="TLN_DU_2" fromLane="0" toLane="0"/>
+
+    <connection from="TLN_DU_2" to="TLN_UD_1" fromLane="0" toLane="0"/>
+
+    <connection from="TLN_UD_1" to="TLN_UD_2.1" fromLane="0" toLane="0"/>
+
+    <connection from="TLN_UD_2" to="CR30_RL_9" fromLane="0" toLane="0"/>
+    <connection from="TLN_UD_2" to="CR30_RL_9" fromLane="0" toLane="1"/>
+    <connection from="TLN_UD_2" to="CR30_LR_9" fromLane="1" toLane="0"/>
+    <connection from="TLN_UD_2" to="CR30_LR_9" fromLane="1" toLane="1"/>
+
+    <connection from="TLN_UD_2.1" to="TLN_UD_2" fromLane="0" toLane="0"/>
+    <connection from="TLN_UD_2.1" to="TLN_UD_2" fromLane="0" toLane="1"/>
+
+    <connection from="WCN_DU" to="CR30_LR_7" fromLane="0" toLane="0"/>
+
+    <connection from="WCN_UD"/>
+
+    <connection from="ZLN_DU" to="CR30_LR_5" fromLane="0" toLane="0"/>
+
+    <connection from="ZLN_UD"/>
+
+    <connection from="gneE34" to="WCN_UD" fromLane="0" toLane="0"/>
+    <connection from="gneE34" to="CR30_LR_7" fromLane="0" toLane="1"/>
+
+    <connection from="gneE35" to="ZLN_UD" fromLane="0" toLane="0" pass="1"/>
+    <connection from="gneE35" to="CR30_LR_5" fromLane="0" toLane="1" pass="1"/>
+
+</connections>

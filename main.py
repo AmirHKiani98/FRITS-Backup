@@ -33,11 +33,11 @@ parser.add_argument('--net', type=str, default=script_directory + r"/net/4x4.net
 parser.add_argument('--route', type=str, default=script_directory + r'/rou/4x4c2c1.rou.xml')
 parser.add_argument('--noise-added', type=str, default="True")
 parser.add_argument("--intersection-id", type=str, default="10")
-parser.add_argument("--num-episodes", type=int, default=5)
+parser.add_argument("--num-episodes", type=int, default=3)
 parser.add_argument("--gui", type=bool, default=False)
 parser.add_argument("--noised-edge", type=str, default="CR30_LR_8")
 parser.add_argument("--simulation-time", type=int, default=1200)
-parser.add_argument("--run-per-alpha", type=int, default=5)
+parser.add_argument("--run-per-alpha", type=int, default=3)
 parser.add_argument("--delta-time", type=int, default=3)
 parser.add_argument("--nu", type=float, default=0.5)
 parser.add_argument("--distance-threshold", type=int, default=200)
@@ -351,6 +351,8 @@ if True:
             
             # Next step
             new_state, reward, _, _ = env.step(action=actions)
+            if not isinstance(reward, dict):
+                raise ValueError("Reward should be a dictionary with traffic signal IDs as keys.")
             # reward = {ts: reward_for_phase_continuity_fl_level(ts, actions[ts], env, reward[ts]) for ts in reward.keys()} # Reward on phase continueity #TODO check if we want to apply the changes on the Federated Level Reward.
             if args.omega > 0:
                 reward = blend_rewards_neighborhood(reward, get_neighbours(distance_mean * args.omega, distance_matrix), nu)
@@ -378,7 +380,6 @@ if True:
     
     for alpha in alphas:
         for run in range(args.run_per_alpha):
-            print("alpha", alpha, "run", run)
             env = CustomSUMORLEnv(
                 net_file=args.net,
                 route_file=args.route,

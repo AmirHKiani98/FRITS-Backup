@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2025-03-26 02:34:36 by Eclipse SUMO netconvert Version 1.20.0
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
+
+    <input>
+        <sumo-net-file value="/Users/cavelab/Documents/Github/FRITS-Backup/net/i4_new.net.xml"/>
+    </input>
+
+    <output>
+        <plain-output-prefix value="/Users/cavelab/Documents/Github/FRITS-Backup/net/i4_new_plain"/>
+        <output.street-names value="true"/>
+    </output>
+
+    <processing>
+        <geometry.min-radius.fix.railways value="false"/>
+        <geometry.max-grade.fix value="false"/>
+        <offset.disable-normalization value="true"/>
+        <lefthand value="0"/>
+    </processing>
+
+    <junctions>
+        <no-turnarounds value="true"/>
+        <junctions.corner-detail value="5"/>
+        <junctions.limit-turn-speed value="5.50"/>
+        <rectangular-lane-cut value="0"/>
+    </junctions>
+
+    <pedestrian>
+        <walkingareas value="0"/>
+    </pedestrian>
+
+</configuration>
+-->
+
+<tlLogics version="1.20" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/tllogic_file.xsd">
+    <tlLogic id="i_cr30_101" type="static" programID="111" offset="0">
+        <phase duration="20" state="rrrrrrrGGG"/>
+        <phase duration="5"  state="rrrrrrryyy"/>
+        <phase duration="22" state="GrrrGGrrrr"/>
+        <phase duration="5"  state="yrrryyrrrr"/>
+        <phase duration="6"  state="rGrrrrGrrr"/>
+        <phase duration="5"  state="ryrrrryrrr"/>
+        <phase duration="22" state="rrGGGrrrrr"/>
+        <phase duration="5"  state="rryyyrrrrr"/>
+    </tlLogic>
+    <tlLogic id="i_cr30_gln" type="static" programID="111" offset="0">
+        <phase duration="29" state="rrrrrrGGGggrrrrrGGGGr"/>
+        <phase duration="5"  state="rrrrrryyyggrrrrryyyyr"/>
+        <phase duration="6"  state="rrrrrrrrrGGrrrrrrrrrG"/>
+        <phase duration="5"  state="rrrrrrrrryyrrrrrrrrry"/>
+        <phase duration="29" state="GGGGggrrrrrGGGggrrrrr"/>
+        <phase duration="5"  state="yyyyggrrrrryyyggrrrrr"/>
+        <phase duration="6"  state="rrrrGGrrrrrrrrGGrrrrr"/>
+        <phase duration="5"  state="rrrryyrrrrrrrryyrrrrr"/>
+    </tlLogic>
+    <tlLogic id="i_cr30_lln" type="static" programID="111" offset="0">
+        <phase duration="29" state="rrrrrGGGrrrrrrGGGr"/>
+        <phase duration="5"  state="rrrrryyyrrrrrryyyr"/>
+        <phase duration="6"  state="rrrrrrrrGrrrrrrrrG"/>
+        <phase duration="5"  state="rrrrrrrryrrrrrrrry"/>
+        <phase duration="29" state="GGGggrrrrGGGggrrrr"/>
+        <phase duration="5"  state="yyyggrrrryyyggrrrr"/>
+        <phase duration="6"  state="rrrGGrrrrrrrGGrrrr"/>
+        <phase duration="5"  state="rrryyrrrrrrryyrrrr"/>
+    </tlLogic>
+    <tlLogic id="i_cr30_tln" type="static" programID="111" offset="0">
+        <phase duration="35" state="rrrrGGGGGr"/>
+        <phase duration="5"  state="rrrryyyyyr"/>
+        <phase duration="6"  state="rrrrrrrGGG"/>
+        <phase duration="5"  state="rrrrrrryyy"/>
+        <phase duration="34" state="GGGGGrrrrr"/>
+        <phase duration="5"  state="yyyyyrrrrr"/>
+    </tlLogic>
+
+    <connection from="CR101_DU_3" to="CR101_DU_4" fromLane="0" toLane="0" tl="i_cr30_101" linkIndex="2"/>
+    <connection from="CR101_DU_3" to="CR30_RL_16" fromLane="1" toLane="0" tl="i_cr30_101" linkIndex="3"/>
+    <connection from="CR101_UD_2" to="CR30_RL_16" fromLane="0" toLane="0" tl="i_cr30_101" linkIndex="7"/>
+    <connection from="CR101_UD_2" to="CR101_UD_3" fromLane="0" toLane="0" tl="i_cr30_101" linkIndex="8"/>
+    <connection from="CR101_UD_2" to="CR30_LR_3" fromLane="1" toLane="0" tl="i_cr30_101" linkIndex="9"/>
+    <connection from="CR30_LR_13" to="LLN_UD_3" fromLane="0" toLane="0" tl="i_cr30_lln" linkIndex="14"/>
+    <connection from="CR30_LR_13" to="CR30_LR_14" fromLane="1" toLane="0" tl="i_cr30_lln" linkIndex="15"/>
+    <connection from="CR30_LR_13" to="CR30_LR_14" fromLane="2" toLane="1" tl="i_cr30_lln" linkIndex="16"/>
+    <connection from="CR30_LR_13" to="LLN_DU_3" fromLane="3" toLane="0" tl="i_cr30_lln" linkIndex="17"/>
+    <connection from="CR30_LR_15" to="GLN_UD_3" fromLane="0" toLane="0" tl="i_cr30_gln" linkIndex="16"/>
+    <connection from="CR30_LR_15" to="GLN_UD_3" fromLane="0" toLane="1" tl="i_cr30_gln" linkIndex="17"/>
+    <connection from="CR30_LR_15" to="CR30_LR_16" fromLane="1" toLane="0" tl="i_cr30_gln" linkIndex="18"/>
+    <connection from="CR30_LR_15" to="CR30_LR_16" fromLane="2" toLane="1" tl="i_cr30_gln" linkIndex="19"/>
+    <connection from="CR30_LR_15" to="GLN_DU_3" fromLane="3" toLane="0" tl="i_cr30_gln" linkIndex="20"/>
+    <connection from="CR30_LR_2" to="CR101_UD_3" fromLane="0" toLane="0" tl="i_cr30_101" linkIndex="4"/>
+    <connection from="CR30_LR_2" to="CR30_LR_3" fromLane="0" toLane="0" tl="i_cr30_101" linkIndex="5"/>
+    <connection from="CR30_LR_2" to="CR101_DU_4" fromLane="1" toLane="0" tl="i_cr30_101" linkIndex="6"/>
+    <connection from="CR30_LR_8" to="CR30_LR_9" fromLane="0" toLane="0" tl="i_cr30_tln" linkIndex="7"/>
+    <connection from="CR30_LR_8" to="CR30_LR_9" fromLane="1" toLane="1" tl="i_cr30_tln" linkIndex="8"/>
+    <connection from="CR30_LR_8" to="TLN_DU" fromLane="2" toLane="0" tl="i_cr30_tln" linkIndex="9"/>
+    <connection from="CR30_RL_15" to="CR30_RL_16" fromLane="0" toLane="0" tl="i_cr30_101" linkIndex="0"/>
+    <connection from="CR30_RL_15" to="CR101_UD_3" fromLane="1" toLane="0" tl="i_cr30_101" linkIndex="1"/>
+    <connection from="CR30_RL_2" to="GLN_DU_3" fromLane="0" toLane="0" tl="i_cr30_gln" linkIndex="6"/>
+    <connection from="CR30_RL_2" to="CR30_RL_3" fromLane="1" toLane="0" tl="i_cr30_gln" linkIndex="7"/>
+    <connection from="CR30_RL_2" to="CR30_RL_3" fromLane="2" toLane="1" tl="i_cr30_gln" linkIndex="8"/>
+    <connection from="CR30_RL_2" to="GLN_UD_3" fromLane="3" toLane="0" tl="i_cr30_gln" linkIndex="9"/>
+    <connection from="CR30_RL_2" to="GLN_UD_3" fromLane="3" toLane="1" tl="i_cr30_gln" linkIndex="10"/>
+    <connection from="CR30_RL_4" to="LLN_DU_3" fromLane="0" toLane="0" tl="i_cr30_lln" linkIndex="5"/>
+    <connection from="CR30_RL_4" to="CR30_RL_5" fromLane="1" toLane="0" tl="i_cr30_lln" linkIndex="6"/>
+    <connection from="CR30_RL_4" to="CR30_RL_5" fromLane="2" toLane="1" tl="i_cr30_lln" linkIndex="7"/>
+    <connection from="CR30_RL_4" to="LLN_UD_3" fromLane="3" toLane="0" tl="i_cr30_lln" linkIndex="8"/>
+    <connection from="CR30_RL_8" to="TLN_DU" fromLane="0" toLane="0" tl="i_cr30_tln" linkIndex="4"/>
+    <connection from="CR30_RL_8" to="CR30_RL_9" fromLane="1" toLane="0" tl="i_cr30_tln" linkIndex="5"/>
+    <connection from="CR30_RL_8" to="CR30_RL_9" fromLane="2" toLane="1" tl="i_cr30_tln" linkIndex="6"/>
+    <connection from="GLN_DU_2" to="CR30_LR_16" fromLane="0" toLane="0" tl="i_cr30_gln" linkIndex="11"/>
+    <connection from="GLN_DU_2" to="CR30_LR_16" fromLane="0" toLane="1" tl="i_cr30_gln" linkIndex="12"/>
+    <connection from="GLN_DU_2" to="GLN_DU_3" fromLane="1" toLane="0" tl="i_cr30_gln" linkIndex="13"/>
+    <connection from="GLN_DU_2" to="CR30_RL_3" fromLane="2" toLane="0" tl="i_cr30_gln" linkIndex="14"/>
+    <connection from="GLN_DU_2" to="CR30_RL_3" fromLane="2" toLane="1" tl="i_cr30_gln" linkIndex="15"/>
+    <connection from="GLN_UD_2" to="CR30_RL_3" fromLane="0" toLane="0" tl="i_cr30_gln" linkIndex="0"/>
+    <connection from="GLN_UD_2" to="CR30_RL_3" fromLane="0" toLane="1" tl="i_cr30_gln" linkIndex="1"/>
+    <connection from="GLN_UD_2" to="GLN_UD_3" fromLane="1" toLane="0" tl="i_cr30_gln" linkIndex="2"/>
+    <connection from="GLN_UD_2" to="GLN_UD_3" fromLane="1" toLane="1" tl="i_cr30_gln" linkIndex="3"/>
+    <connection from="GLN_UD_2" to="CR30_LR_16" fromLane="2" toLane="0" tl="i_cr30_gln" linkIndex="4"/>
+    <connection from="GLN_UD_2" to="CR30_LR_16" fromLane="2" toLane="1" tl="i_cr30_gln" linkIndex="5"/>
+    <connection from="LLN_DU_2" to="CR30_LR_14" fromLane="0" toLane="0" tl="i_cr30_lln" linkIndex="9"/>
+    <connection from="LLN_DU_2" to="CR30_LR_14" fromLane="0" toLane="1" tl="i_cr30_lln" linkIndex="10"/>
+    <connection from="LLN_DU_2" to="LLN_DU_3" fromLane="0" toLane="0" tl="i_cr30_lln" linkIndex="11"/>
+    <connection from="LLN_DU_2" to="CR30_RL_5" fromLane="1" toLane="0" tl="i_cr30_lln" linkIndex="12"/>
+    <connection from="LLN_DU_2" to="CR30_RL_5" fromLane="1" toLane="1" tl="i_cr30_lln" linkIndex="13"/>
+    <connection from="LLN_UD_2" to="CR30_RL_5" fromLane="0" toLane="0" tl="i_cr30_lln" linkIndex="0"/>
+    <connection from="LLN_UD_2" to="CR30_RL_5" fromLane="0" toLane="1" tl="i_cr30_lln" linkIndex="1"/>
+    <connection from="LLN_UD_2" to="LLN_UD_3" fromLane="0" toLane="0" tl="i_cr30_lln" linkIndex="2"/>
+    <connection from="LLN_UD_2" to="CR30_LR_14" fromLane="1" toLane="0" tl="i_cr30_lln" linkIndex="3"/>
+    <connection from="LLN_UD_2" to="CR30_LR_14" fromLane="1" toLane="1" tl="i_cr30_lln" linkIndex="4"/>
+    <connection from="TLN_UD_2" to="CR30_RL_9" fromLane="0" toLane="0" tl="i_cr30_tln" linkIndex="0"/>
+    <connection from="TLN_UD_2" to="CR30_RL_9" fromLane="0" toLane="1" tl="i_cr30_tln" linkIndex="1"/>
+    <connection from="TLN_UD_2" to="CR30_LR_9" fromLane="1" toLane="0" tl="i_cr30_tln" linkIndex="2"/>
+    <connection from="TLN_UD_2" to="CR30_LR_9" fromLane="1" toLane="1" tl="i_cr30_tln" linkIndex="3"/>
+</tlLogics>

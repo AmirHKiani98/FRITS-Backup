@@ -1,0 +1,17 @@
+False noise
+connectivity: {'0': ['1', '4', '2', '5', '8', '3', '6', '9', '12'], '1': ['2', '5', '3', '6', '9', '28', '7', '10', '13'], '4': ['5', '8', '6', '9', '12', '10', '7', '13', '24'], '10': ['11', '14', '15', '30', '26', '27', '31'], '11': ['15', '30', '27', '31'], '14': ['15', '26', '27', '31'], '15': ['27', '31'], '30': [], '12': ['13', '24', '14', '25', '15', '26'], '13': ['14', '25', '15', '26', '27', '31'], '24': [], '25': [], '26': [], '27': [], '31': [], '16': ['0', '1', '4', '2', '5', '8'], '17': ['1', '2', '5', '3', '6', '9'], '18': ['2', '3', '6', '28', '7', '10'], '2': ['3', '6', '28', '7', '10', '11', '29', '14'], '19': ['3', '28', '7', '11', '29'], '3': ['28', '7', '11', '29', '15', '30'], '5': ['6', '9', '10', '7', '13', '11', '14', '29', '25'], '20': ['0', '1', '4', '2', '5', '8'], '21': ['4', '5', '8', '6', '9', '12'], '22': ['8', '12', '9', '13', '24', '10'], '8': ['12', '9', '13', '24', '10', '14', '25', '11'], '23': ['12', '13', '24', '14', '25'], '6': ['10', '7', '11', '14', '29', '15', '30', '26'], '28': [], '7': ['11', '29', '15', '30', '27', '31'], '9': ['10', '13', '11', '14', '25', '15', '30', '26'], '29': []}
+attack state: no_attack
+Traceback (most recent call last):
+  File "H:\GitHub\FRITS-Backup\main.py", line 322, in <module>
+    env = CustomSUMORLEnv(
+  File "H:\GitHub\FRITS-Backup\CustomSumoRLEnv.py", line 239, in __init__
+    super().__init__(net_file, route_file, out_csv_name, use_gui, virtual_display, begin_time, num_seconds, max_depart_delay, waiting_time_memory, time_to_teleport, delta_time, yellow_time, min_green, max_green, single_agent, reward_fn, observation_class, add_system_info, add_per_agent_info, sumo_seed, fixed_ts, sumo_warnings, additional_sumo_cmd, render_mode)
+  File "H:\GitHub\FRITS-Backup\.venv\lib\site-packages\sumo_rl\environment\env.py", line 149, in __init__
+    traci.start([sumolib.checkBinary("sumo"), "-n", self._net], label="init_connection" + self.label)
+  File "H:\GitHub\FRITS-Backup\.venv\lib\site-packages\traci\main.py", line 145, in start
+    sumoProcess = subprocess.Popen(cmd2, stdout=stdout)
+  File "C:\Users\AmirKian\AppData\Local\Programs\Python\Python310\lib\subprocess.py", line 966, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "C:\Users\AmirKian\AppData\Local\Programs\Python\Python310\lib\subprocess.py", line 1435, in _execute_child
+    hp, ht, pid, tid = _winapi.CreateProcess(executable, args,
+FileNotFoundError: [WinError 2] The system cannot find the file specified

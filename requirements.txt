@@ -2,4 +2,7 @@ matplotlib
 tqdm
 torch
 sumo-rl
-numoy
+numpy
+gym[all]
+pandas
+networkx
