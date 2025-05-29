@@ -84,7 +84,6 @@ def get_graph(net):
         # lines = f.readlines()
 
         for line in f:  
-            # print(f"{i+1}: {line.strip()}")
             data.append(line.strip().split(";"))
     edges = pd.DataFrame(data, columns=header)
     G = nx.DiGraph()

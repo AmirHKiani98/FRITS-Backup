@@ -20,10 +20,7 @@ class TrafficSignalCustom(TrafficSignal):
     def set_next_phase(self, new_phase: int):
         """Set the next phase of the traffic signal."""
         self.previous_green_phase = self.green_phase
-        print(f"Previous phase before changing: {self.previous_green_phase}")
         super().set_next_phase(new_phase)
-        print(f"New phase: {self.green_phase}")
-        print(f"Previous phase: {self.previous_green_phase}")
     
     def get_previous_green_phase(self):
         return self.previous_green_phase
