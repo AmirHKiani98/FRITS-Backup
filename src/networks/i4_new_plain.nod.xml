@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2025-03-26 02:34:36 by Eclipse SUMO netconvert Version 1.20.0
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
+
+    <input>
+        <sumo-net-file value="/Users/cavelab/Documents/Github/FRITS-Backup/net/i4_new.net.xml"/>
+    </input>
+
+    <output>
+        <plain-output-prefix value="/Users/cavelab/Documents/Github/FRITS-Backup/net/i4_new_plain"/>
+        <output.street-names value="true"/>
+    </output>
+
+    <processing>
+        <geometry.min-radius.fix.railways value="false"/>
+        <geometry.max-grade.fix value="false"/>
+        <offset.disable-normalization value="true"/>
+        <lefthand value="0"/>
+    </processing>
+
+    <junctions>
+        <no-turnarounds value="true"/>
+        <junctions.corner-detail value="5"/>
+        <junctions.limit-turn-speed value="5.50"/>
+        <rectangular-lane-cut value="0"/>
+    </junctions>
+
+    <pedestrian>
+        <walkingareas value="0"/>
+    </pedestrian>
+
+</configuration>
+-->
+
+<nodes version="1.20" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/nodes_file.xsd">
+    <location netOffset="-450011.54,-4996025.65" convBoundary="8628.46,930.16,11243.17,2012.33" origBoundary="-93.635696,45.109217,-93.481704,45.152564" projParameter="+proj=utm +zone=15 +ellps=WGS84 +datum=WGS84 +units=m +no_defs"/>
+
+    <node id="gneJ1" x="9790.66" y="1604.97" type="priority"/>
+    <node id="gneJ2" x="10305.79" y="1324.70" type="priority"/>
+    <node id="gneJ3" x="9658.82" y="1720.63" type="priority"/>
+    <node id="gneJ4" x="10719.32" y="1144.24" type="priority"/>
+    <node id="gneJ5" x="11014.76" y="1055.67" type="priority"/>
+    <node id="gneJ6" x="11024.52" y="1356.67" type="priority"/>
+    <node id="gneJ7" x="10796.90" y="1173.41" type="priority"/>
+    <node id="gneJ8" x="9678.16" y="1805.28" type="priority"/>
+    <node id="gneJ9" x="9011.87" y="1624.83" type="priority"/>
+    <node id="i_cr30_101" x="8931.08" y="1621.05" type="traffic_light" tl="i_cr30_101"/>
+    <node id="i_cr30_gln" x="11019.28" y="1194.19" type="traffic_light" tl="i_cr30_gln"/>
+    <node id="i_cr30_lln" x="10493.15" y="1201.98" type="traffic_light" tl="i_cr30_lln"/>
+    <node id="i_cr30_pln" x="10117.21" y="1429.87" type="priority"/>
+    <node id="i_cr30_tln" x="9590.16" y="1618.83" type="traffic_light" tl="i_cr30_tln"/>
+    <node id="ncr101_du_1" x="8928.53" y="1325.82" type="dead_end"/>
+    <node id="ncr101_du_2" x="8930.94" y="1518.79" type="priority"/>
+    <node id="ncr101_du_3" x="8931.39" y="1581.37" type="priority"/>
+    <node id="ncr101_du_4" x="8932.54" y="1684.20" type="priority"/>
+    <node id="ncr101_du_5" x="8933.41" y="1912.28" type="dead_end"/>
+    <node id="ncr101_ud_1" x="8929.04" y="1912.37" type="dead_end"/>
+    <node id="ncr101_ud_2" x="8927.62" y="1718.64" type="priority"/>
+    <node id="ncr101_ud_3" x="8925.87" y="1326.31" type="dead_end"/>
+    <node id="ncr30_lr_1" x="8628.54" y="1619.58" type="dead_end"/>
+    <node id="ncr30_lr_10" x="10395.17" y="1256.59" type="priority"/>
+    <node id="ncr30_lr_11" x="10890.81" y="1184.41" type="priority"/>
+    <node id="ncr30_lr_12" x="11241.85" y="1182.74" type="dead_end"/>
+    <node id="ncr30_lr_2" x="8844.18" y="1618.61" type="priority"/>
+    <node id="ncr30_lr_3" x="8959.24" y="1617.70" type="priority"/>
+    <node id="ncr30_lr_4" x="9126.30" y="1615.25" type="priority"/>
+    <node id="ncr30_lr_5" x="9185.36" y="1614.11" type="priority"/>
+    <node id="ncr30_lr_6" x="9298.26" y="1614.96" type="priority"/>
+    <node id="ncr30_lr_7" x="9484.97" y="1615.47" type="priority"/>
+    <node id="ncr30_lr_8" x="9970.11" y="1514.36" type="priority"/>
+    <node id="ncr30_lr_9" x="10025.14" y="1479.41" type="priority"/>
+    <node id="ncr30_rl_1" x="11243.17" y="1195.58" type="dead_end"/>
+    <node id="ncr30_rl_11" x="9057.49" y="1626.67" type="priority"/>
+    <node id="ncr30_rl_12" x="8628.46" y="1623.96" type="dead_end"/>
+    <node id="ncr30_rl_2" x="11155.45" y="1197.43" type="priority"/>
+    <node id="ncr30_rl_3" x="10613.19" y="1162.47" type="priority"/>
+    <node id="ncr30_rl_4" x="10219.68" y="1376.28" type="priority"/>
+    <node id="ncr30_rl_5" x="9697.66" y="1622.44" type="priority"/>
+    <node id="ncr30_rl_6" x="9404.75" y="1623.19" type="priority"/>
+    <node id="ncr30_rl_7" x="9310.55" y="1623.28" type="priority"/>
+    <node id="ncr30_rl_8" x="9246.46" y="1624.54" type="priority"/>
+    <node id="ncr30_rl_9" x="9142.16" y="1626.68" type="priority"/>
+    <node id="ngln_du_1" x="11022.06" y="930.16" type="dead_end"/>
+    <node id="ngln_du_2" x="11023.59" y="1076.21" type="priority"/>
+    <node id="ngln_du_3" x="11025.35" y="1453.07" type="dead_end"/>
+    <node id="ngln_ud_1" x="11017.40" y="1452.62" type="dead_end"/>
+    <node id="ngln_ud_2" x="11016.95" y="1309.82" type="priority"/>
+    <node id="ngln_ud_3" x="11013.27" y="930.46" type="dead_end"/>
+    <node id="nlln_du_1" x="10493.16" y="953.10" type="dead_end"/>
+    <node id="nlln_du_2" x="10495.49" y="1087.63" type="priority"/>
+    <node id="nlln_du_3" x="10499.08" y="1469.25" type="dead_end"/>
+    <node id="nlln_ud_1" x="10497.87" y="1469.27" type="dead_end"/>
+    <node id="nlln_ud_2" x="10494.11" y="1296.11" type="priority"/>
+    <node id="nlln_ud_3" x="10490.26" y="952.57" type="dead_end"/>
+    <node id="npln" x="10061.32" y="1344.34" type="dead_end"/>
+    <node id="nqln" x="9934.22" y="1454.90" type="dead_end"/>
+    <node id="ntln" x="9673.02" y="2012.14" type="priority"/>
+    <node id="ntln_ud" x="9656.87" y="1722.21" type="priority"/>
+    <node id="nwcn" x="9382.27" y="1458.73" type="dead_end"/>
+    <node id="nzln" x="9120.00" y="1531.18" type="dead_end"/>
+</nodes>
