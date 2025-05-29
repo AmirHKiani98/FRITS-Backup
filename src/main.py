@@ -3,6 +3,7 @@ Main entry point for the application.
 """
 
 import argparse
+from multiprocessing import Pool, cpu_count
 import os
 import traci
 import numpy as np
@@ -112,27 +113,45 @@ def main():
         f"off-peak/diff_waiting_time_reward_normal_phase_continuity/"
         f"omega_{args.omega}_cutoff_{args.cutoff}_nu_{args.nu}/"
     )
+    alpha_tasks = []
+    
     for alpha in alphas:
         
         for run in range(args.run_per_alpha):
-            
-            run_alpha(
-                net=args.net,
-                route=args.route,
-                gui=args.gui,
-                simulation_time=args.simulation_time,
-                delta_time=args.delta_time,
-                alpha=alpha,
-                run=run,
-                observation_class=ArrivalDepartureState, # type: ignore
-                agents=agents,
-                attack_state=attack_state,
-                output_folder=output_folder
+            alpha_tasks.append([
+                args.net,
+                args.route,
+                args.gui,
+                args.simulation_time,
+                args.delta_time,
+                alpha,
+                run,
+                ArrivalDepartureState, # type: ignore
+                agents,
+                attack_state,
+                output_folder
+            ]
             )
+            # run_alpha(
+            #     net=args.net,
+            #     route=args.route,
+            #     gui=args.gui,
+            #     simulation_time=args.simulation_time,
+            #     delta_time=args.delta_time,
+            #     alpha=alpha,
+            #     run=run,
+            #     observation_class=ArrivalDepartureState, # type: ignore
+            #     agents=agents,
+            #     attack_state=attack_state,
+            #     output_folder=output_folder
+            # )
+    with Pool(processes=cpu_count()) as pool:
+        for _ in tqdm(pool.starmap(run_alpha, alpha_tasks), desc="Alpha Tasks"):
+            pass
     metadata = {
         "net_file": args.net,
         "route_file": args.route,
-        "noise_added": args.noise_added,
+        "noise_added":  args.noise_added,
         "intersection_id": args.intersection_id,
         "num_episodes": args.num_episodes,
         "gui": args.gui,
@@ -241,6 +260,9 @@ def run_alpha(net,
     env.delete_cache()
 
 if __name__ == "__main__":
-    main()
-    traci.close()  # Ensure that TraCI is closed after the simulation
-    print("Simulation completed and TraCI closed.")
+    try:
+        main()
+    finally:
+        if traci.isLoaded():
+            traci.close()
+        print("Simulation completed and TraCI closed.")
