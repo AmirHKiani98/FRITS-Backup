@@ -1,17 +1,55 @@
-False noise
-connectivity: {'0': ['1', '4', '2', '5', '8', '3', '6', '9', '12'], '1': ['2', '5', '3', '6', '9', '28', '7', '10', '13'], '4': ['5', '8', '6', '9', '12', '10', '7', '13', '24'], '10': ['11', '14', '15', '30', '26', '27', '31'], '11': ['15', '30', '27', '31'], '14': ['15', '26', '27', '31'], '15': ['27', '31'], '30': [], '12': ['13', '24', '14', '25', '15', '26'], '13': ['14', '25', '15', '26', '27', '31'], '24': [], '25': [], '26': [], '27': [], '31': [], '16': ['0', '1', '4', '2', '5', '8'], '17': ['1', '2', '5', '3', '6', '9'], '18': ['2', '3', '6', '28', '7', '10'], '2': ['3', '6', '28', '7', '10', '11', '29', '14'], '19': ['3', '28', '7', '11', '29'], '3': ['28', '7', '11', '29', '15', '30'], '5': ['6', '9', '10', '7', '13', '11', '14', '29', '25'], '20': ['0', '1', '4', '2', '5', '8'], '21': ['4', '5', '8', '6', '9', '12'], '22': ['8', '12', '9', '13', '24', '10'], '8': ['12', '9', '13', '24', '10', '14', '25', '11'], '23': ['12', '13', '24', '14', '25'], '6': ['10', '7', '11', '14', '29', '15', '30', '26'], '28': [], '7': ['11', '29', '15', '30', '27', '31'], '9': ['10', '13', '11', '14', '25', '15', '30', '26'], '29': []}
-attack state: no_attack
-Traceback (most recent call last):
-  File "H:\GitHub\FRITS-Backup\main.py", line 322, in <module>
-    env = CustomSUMORLEnv(
-  File "H:\GitHub\FRITS-Backup\CustomSumoRLEnv.py", line 239, in __init__
-    super().__init__(net_file, route_file, out_csv_name, use_gui, virtual_display, begin_time, num_seconds, max_depart_delay, waiting_time_memory, time_to_teleport, delta_time, yellow_time, min_green, max_green, single_agent, reward_fn, observation_class, add_system_info, add_per_agent_info, sumo_seed, fixed_ts, sumo_warnings, additional_sumo_cmd, render_mode)
-  File "H:\GitHub\FRITS-Backup\.venv\lib\site-packages\sumo_rl\environment\env.py", line 149, in __init__
-    traci.start([sumolib.checkBinary("sumo"), "-n", self._net], label="init_connection" + self.label)
-  File "H:\GitHub\FRITS-Backup\.venv\lib\site-packages\traci\main.py", line 145, in start
-    sumoProcess = subprocess.Popen(cmd2, stdout=stdout)
-  File "C:\Users\AmirKian\AppData\Local\Programs\Python\Python310\lib\subprocess.py", line 966, in __init__
-    self._execute_child(args, executable, preexec_fn, close_fds,
-  File "C:\Users\AmirKian\AppData\Local\Programs\Python\Python310\lib\subprocess.py", line 1435, in _execute_child
-    hp, ht, pid, tid = _winapi.CreateProcess(executable, args,
-FileNotFoundError: [WinError 2] The system cannot find the file specified
+Step #0.00 (0ms ?*RT. ?UPS, TraCI: 37ms, vehicles TOT 0 ACT 0 BUF 0)                     
+Success.
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+Episodes:   0%|          | 0/1 [00:00<?, ?it/s] Retrying in 1 seconds
+
+Processing episode:   0%|          | 0/1200 [00:00<?, ?it/s][A
+Processing episode:   0%|          | 2/1200 [00:00<01:40, 11.90it/s][A
+Processing episode:   0%|          | 4/1200 [00:00<02:01,  9.83it/s][A
+Processing episode:   0%|          | 6/1200 [00:00<02:08,  9.31it/s][A
+Processing episode:   1%|          | 7/1200 [00:00<02:22,  8.35it/s][A
+Processing episode:   1%|          | 8/1200 [00:00<02:26,  8.12it/s][A
+Processing episode:   1%|          | 9/1200 [00:01<02:38,  7.49it/s][A
+Processing episode:   1%|          | 10/1200 [00:01<02:52,  6.92it/s][A
+Processing episode:   1%|          | 11/1200 [00:01<03:08,  6.30it/s][A
+Processing episode:   1%|          | 12/1200 [00:01<03:19,  5.96it/s][A
+Processing episode:   1%|          | 13/1200 [00:01<03:38,  5.43it/s][A
+Processing episode:   1%|          | 14/1200 [00:02<03:39,  5.40it/s][A
+Processing episode:   1%|▏         | 15/1200 [00:02<03:59,  4.94it/s][A
+Processing episode:   1%|▏         | 16/1200 [00:02<04:14,  4.65it/s][A
+Processing episode:   1%|▏         | 17/1200 [00:02<04:23,  4.50it/s][A
+Processing episode:   2%|▏         | 18/1200 [00:03<04:36,  4.27it/s][A
+Processing episode:   2%|▏         | 19/1200 [00:03<04:45,  4.13it/s][A
+Processing episode:   2%|▏         | 20/1200 [00:03<04:57,  3.97it/s][A
+Processing episode:   2%|▏         | 21/1200 [00:03<05:09,  3.81it/s][A
+Processing episode:   2%|▏         | 22/1200 [00:04<05:20,  3.68it/s][A
+Processing episode:   2%|▏         | 23/1200 [00:04<05:31,  3.55it/s][A
+Processing episode:   2%|▏         | 24/1200 [00:04<05:39,  3.46it/s][A
+Processing episode:   2%|▏         | 25/1200 [00:05<05:44,  3.41it/s][A
+Processing episode:   2%|▏         | 26/1200 [00:05<05:49,  3.36it/s][A
+Processing episode:   2%|▏         | 27/1200 [00:05<05:54,  3.31it/s][A
+Processing episode:   2%|▏         | 28/1200 [00:05<05:56,  3.29it/s][A
+Processing episode:   2%|▏         | 29/1200 [00:06<06:01,  3.24it/s][A
+Processing episode:   2%|▎         | 30/1200 [00:06<06:09,  3.17it/s][A
+Processing episode:   3%|▎         | 31/1200 [00:06<06:22,  3.06it/s][A
+Processing episode:   3%|▎         | 32/1200 [00:07<06:28,  3.01it/s][A
+Processing episode:   3%|▎         | 33/1200 [00:07<06:37,  2.94it/s][A
+Processing episode:   3%|▎         | 34/1200 [00:08<06:47,  2.86it/s][A
+Processing episode:   3%|▎         | 35/1200 [00:08<06:59,  2.78it/s][A
+Processing episode:   3%|▎         | 36/1200 [00:08<07:08,  2.71it/s][A
+Processing episode:   3%|▎         | 37/1200 [00:09<07:13,  2.68it/s][A
+Processing episode:   3%|▎         | 38/1200 [00:09<07:20,  2.64it/s][A
+Processing episode:   3%|▎         | 39/1200 [00:10<07:21,  2.63it/s][A
+Processing episode:   3%|▎         | 40/1200 [00:10<07:28,  2.58it/s][A
+Processing episode:   3%|▎         | 41/1200 [00:10<07:41,  2.51it/s][A
+Processing episode:   4%|▎         | 42/1200 [00:11<07:44,  2.49it/s][A
+Processing episode:   4%|▎         | 43/1200 [00:11<07:44,  2.49it/s][A
+Processing episode:   4%|▎         | 44/1200 [00:12<07:46,  2.48it/s][A
+Processing episode:   4%|▍         | 45/1200 [00:12<07:52,  2.44it/s][A
+Processing episode:   4%|▍         | 46/1200 [00:12<07:54,  2.43it/s][A
+Processing episode:   4%|▍         | 47/1200 [00:13<07:54,  2.43it/s][A
+Processing episode:   4%|▍         | 48/1200 [00:13<07:58,  2.41it/s][A
+Processing episode:   4%|▍         | 49/1200 [00:14<08:06,  2.37it/s][A
+Processing episode:   4%|▍         | 50/1200 [00:14<08:06,  2.36it/s][A
+Processing episode:   4%|▍         | 51/1200 [00:15<08:13,  2.33it/s][A

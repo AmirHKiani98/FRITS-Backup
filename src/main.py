@@ -37,7 +37,7 @@ def main():
     parser.add_argument("--gui", type=bool, default=False)
     parser.add_argument("--noised-edge", type=str, default="CR30_LR_8")
     parser.add_argument("--noise-added", type=bool, default=False)
-    parser.add_argument("--simulation-time", type=int, default=100)
+    parser.add_argument("--simulation-time", type=int, default=1200)
     parser.add_argument("--run-per-alpha", type=int, default=3)
     parser.add_argument("--delta-time", type=int, default=3)
     parser.add_argument("--nu", type=float, default=0.5)
@@ -52,7 +52,7 @@ def main():
     seed = 7
     num_episodes = args.num_episodes
     if args.noise_added:
-        reward_fn = diff_waiting_time_reward_noised
+        reward_fn = lambda ts: diff_waiting_time_reward_noised(ts, args.noised_edge)
         attack_state = "attacked"
     else:
         reward_fn = diff_waiting_time_reward_normal
