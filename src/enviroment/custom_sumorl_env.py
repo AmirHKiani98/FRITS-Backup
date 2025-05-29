@@ -16,6 +16,8 @@ from sumo_rl import SumoEnvironment
 import traci
 
 from src.enviroment.traffic_signal import TrafficSignalCustom
+def empty_vehicle_df():
+    return pd.DataFrame({}, columns=["time", "veh_id"])
 
 class CustomSUMORLEnv(SumoEnvironment):
 
@@ -57,7 +59,7 @@ class CustomSUMORLEnv(SumoEnvironment):
         self.df = pd.DataFrame({})
         self.turn_vehicles = defaultdict(list)
         self.flow_data = defaultdict(list)
-        self.dataframes = defaultdict(lambda: pd.DataFrame({}, columns=["time", "veh_id"]))
+        self.dataframes = defaultdict(empty_vehicle_df)
         self.vehicles_arrived_area_detector = defaultdict(list)
         self.vehicles_arrived_loop_detector = defaultdict(list)
         self.loop_detectors_edges = {}

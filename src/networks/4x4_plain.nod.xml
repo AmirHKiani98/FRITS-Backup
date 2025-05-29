@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2025-05-29 14:29:24 by Eclipse SUMO netconvert Version 1.23.1
-<netconvertConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
+<!-- generated on 2025-05-29 17:55:38 by Eclipse SUMO netconvert Version 1.20.0
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
 
     <input>
-        <sumo-net-file value="H:\GitHub\FRITS-Backup\src/networks/4x4.net.xml"/>
+        <sumo-net-file value="/Users/cavelab/Documents/Github/FRITS-Backup/src/networks/4x4.net.xml"/>
     </input>
 
     <output>
-        <plain-output-prefix value="H:\GitHub\FRITS-Backup\src/networks/4x4_plain"/>
+        <plain-output-prefix value="/Users/cavelab/Documents/Github/FRITS-Backup/src/networks/4x4_plain"/>
     </output>
 
     <processing>
         <geometry.min-radius.fix.railways value="false"/>
-        <geometry.avoid-overlap value="false"/>
         <geometry.max-grade.fix value="false"/>
         <offset.disable-normalization value="true"/>
         <lefthand value="0"/>
@@ -30,7 +29,7 @@
         <walkingareas value="0"/>
     </pedestrian>
 
-</netconvertConfiguration>
+</configuration>
 -->
 
 <nodes version="1.20" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/nodes_file.xsd">

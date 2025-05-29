@@ -19,6 +19,9 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 def no_encode(state, ts_id):
     return tuple(state)
 
+def run_alpha_unpack(args):
+    return run_alpha(*args)
+
 def main():
     """
     Main function to parse arguments and run the application.
@@ -30,11 +33,11 @@ def main():
     parser.add_argument('--net', type=str, default=BASE_DIR + r"/networks/4x4.net.xml")
     parser.add_argument('--route', type=str, default=BASE_DIR + r'/routes/4x4c2c1.rou.xml')
     parser.add_argument("--intersection-id", type=str, default="10")
-    parser.add_argument("--num-episodes", type=int, default=3)
+    parser.add_argument("--num-episodes", type=int, default=1)
     parser.add_argument("--gui", type=bool, default=False)
     parser.add_argument("--noised-edge", type=str, default="CR30_LR_8")
     parser.add_argument("--noise-added", type=bool, default=False)
-    parser.add_argument("--simulation-time", type=int, default=1200)
+    parser.add_argument("--simulation-time", type=int, default=100)
     parser.add_argument("--run-per-alpha", type=int, default=3)
     parser.add_argument("--delta-time", type=int, default=3)
     parser.add_argument("--nu", type=float, default=0.5)
@@ -132,6 +135,7 @@ def main():
                 output_folder
             ]
             )
+        
             # run_alpha(
             #     net=args.net,
             #     route=args.route,
@@ -146,7 +150,7 @@ def main():
             #     output_folder=output_folder
             # )
     with Pool(processes=cpu_count()) as pool:
-        for _ in tqdm(pool.starmap(run_alpha, alpha_tasks), desc="Alpha Tasks"):
+        for _ in tqdm(pool.imap_unordered(run_alpha_unpack, alpha_tasks), total=len(alpha_tasks), desc="Alpha Tasks"):
             pass
     metadata = {
         "net_file": args.net,
@@ -172,7 +176,7 @@ def run_episode(env, simulation_time, agents, distance_matrix, distance_mean,
                 omega, cutoff, nu, batch_size, connectivity, reward_fn):
     episode_rewards = []
     state = env.reset()
-    for _ in tqdm(range(simulation_time), desc="Processing"):
+    for _ in tqdm(range(simulation_time), desc="Processing episode"):
         actions = {ts: agent.act(state[ts]) for ts, agent in agents.items()}
         new_state, reward, _, _ = env.step(action=actions)
         reward = {ts: diff_waiting_time_reward_normal_phase_continuity(env.traffic_signals[ts], reward_fn) for ts in env.ts_ids} # type: ignore
