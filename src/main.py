@@ -10,7 +10,7 @@ import pandas as pd
 from tqdm import tqdm
 from src.enviroment.custom_sumorl_env import CustomSUMORLEnv
 from src.enviroment.state_env import ArrivalDepartureState
-from src.enviroment.utility import blend_rewards, blend_rewards_neighborhood, diff_waiting_time_reward_normal_phase_continuity, get_connectivity_network, get_intersections_distance_matrix, get_neighbours
+from src.enviroment.utility import blend_rewards, blend_rewards_neighborhood, diff_waiting_time_reward_noised, diff_waiting_time_reward_normal, diff_waiting_time_reward_normal_phase_continuity, get_connectivity_network, get_intersections_distance_matrix, get_neighbours
 from src.rl.dql import DQLAgent
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -32,6 +32,7 @@ def main():
     parser.add_argument("--num-episodes", type=int, default=5)
     parser.add_argument("--gui", type=bool, default=False)
     parser.add_argument("--noised-edge", type=str, default="CR30_LR_8")
+    parser.add_argument("--noise-added", type=bool, default=False)
     parser.add_argument("--simulation-time", type=int, default=1200)
     parser.add_argument("--run-per-alpha", type=int, default=5)
     parser.add_argument("--delta-time", type=int, default=3)
@@ -43,11 +44,15 @@ def main():
 
     args = parser.parse_args()
 
-
     batch_size = 64
     seed = 7
     num_episodes = args.num_episodes
-    
+    if args.noise_added:
+        reward_fn = diff_waiting_time_reward_noised
+        attack_state = "attacked"
+    else:
+        reward_fn = diff_waiting_time_reward_normal
+        attack_state = "no_attack"
 
     env = CustomSUMORLEnv(
         net_file=args.net,
@@ -62,7 +67,7 @@ def main():
         random_flow=False,
         real_data_type=False,
         percentage_added=0.1,
-        reward_fn=diff_waiting_time_reward_normal_phase_continuity
+        reward_fn=diff_waiting_time_reward_normal
     )
 
     env.reset()
@@ -92,7 +97,8 @@ def main():
             args.cutoff,
             args.nu,
             batch_size,
-            connectivity
+            connectivity,
+            reward_fn=reward_fn
         )
         all_rewards[episode] = episode_rewards
 
@@ -102,7 +108,7 @@ def main():
         agent.epsilon_end = 0.0
         agent.q_network.eval()
     output_folder = (
-        BASE_DIR + f"/output/i4-cyber_attack/rl/without_frl/{args.attack_state}/"
+        BASE_DIR + f"/output/i4-cyber_attack/rl/without_frl/{attack_state}/"
         f"off-peak/diff_waiting_time_reward_normal_phase_continuity/"
         f"omega_{args.omega}_cutoff_{args.cutoff}_nu_{args.nu}/"
     )
@@ -120,7 +126,7 @@ def main():
                 run=run,
                 observation_class=ArrivalDepartureState, # type: ignore
                 agents=agents,
-                attack_state=args.attack_state,
+                attack_state=attack_state,
                 output_folder=output_folder
             )
     metadata = {
@@ -139,31 +145,40 @@ def main():
         "omega": args.omega,
         "distance_mean": distance_mean
     }
-    env.save_metadata(metadata, output_folder, file_name=f"metadata_{args.attack_state}.csv")
+    env.save_metadata(metadata, output_folder, file_name=f"metadata_{attack_state}.csv")
 
     
 
-def run_episode(env, simulation_time, agents, distance_matrix, distance_mean, omega, cutoff, nu, batch_size, connectivity):
+def run_episode(env, simulation_time, agents, distance_matrix, distance_mean, 
+                omega, cutoff, nu, batch_size, connectivity, reward_fn):
     episode_rewards = []
     state = env.reset()
     for _ in tqdm(range(simulation_time), desc="Processing"):
-        
         actions = {ts: agent.act(state[ts]) for ts, agent in agents.items()}
         new_state, reward, _, _ = env.step(action=actions)
+        reward = {ts: diff_waiting_time_reward_normal_phase_continuity(env.traffic_signals[ts], reward_fn) for ts in env.ts_ids} # type: ignore
         if not isinstance(reward, dict):
             raise ValueError("Reward should be a dictionary with traffic signal IDs as keys.")
+        
         if omega > 0:
-            reward = blend_rewards_neighborhood(reward, get_neighbours(distance_mean * omega, distance_matrix), nu)
+            reward = blend_rewards_neighborhood(
+                reward, get_neighbours(distance_mean * omega, distance_matrix), nu
+            )
         elif cutoff > 0:
             reward = blend_rewards_neighborhood(reward, connectivity, nu)
         else:
             reward = blend_rewards(reward, nu)
+        
         for ts, agent in agents.items():
-            agent.memory.push(new_state[ts], actions[ts], reward[ts], env.encode(state[ts], ts))
+            agent.memory.push(
+                new_state[ts], actions[ts], reward[ts], env.encode(state[ts], ts)
+            )
             if len(agent.memory) > batch_size:
                 agent.update(batch_size)
-        state = new_state # Ask navid about this line
+        
+        state = new_state
         episode_rewards.append(sum(reward.values()))
+    
     return episode_rewards
 
 def run_alpha(net,
@@ -191,7 +206,7 @@ def run_alpha(net,
                 random_flow=False,
                 real_data_type=False,
                 percentage_added=0.1,
-                reward_fn=diff_waiting_time_reward_normal_phase_continuity
+                reward_fn=diff_waiting_time_reward_normal
             )
     state = env.reset()
     if not isinstance(state, dict):

@@ -15,16 +15,6 @@ def diff_waiting_time_reward_normal(ts:TrafficSignalCustom):
     ts.last_measure = ts_wait
     return reward
 
-def diff_waiting_time_reward_noised(ts:TrafficSignalCustom, target_intersection_id: list[str]):
-    if ts.id in target_intersection_id:
-        noise = random.uniform(0.8,1.2)
-    else:
-        noise = 1
-
-    no_noised_reward = diff_waiting_time_reward_normal(ts)
-    reward = noise*(no_noised_reward)
-    return reward
-
 def diff_waiting_time_reward_normal_phase_continuity(ts:TrafficSignalCustom, reward_fn: Callable):
     reward = reward_fn(ts)
 
@@ -112,3 +102,13 @@ def get_connectivity_network(net, cutoff=2):
     for node in G.nodes:
         connectivity[node] = [v for v in list(nx.single_source_shortest_path_length(G, node, cutoff=cutoff).keys()) if v != node] 
     return connectivity
+
+def diff_waiting_time_reward_noised(ts:TrafficSignalCustom, iot_id):
+    if ts.id == iot_id:
+        noise = random.uniform(0.8,1.2)
+    else:
+        noise = 1
+
+    no_noised_reward = diff_waiting_time_reward_normal(ts)
+    reward = noise*(no_noised_reward)
+    return reward
