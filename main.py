@@ -380,7 +380,6 @@ if True:
     
     for alpha in alphas:
         for run in range(args.run_per_alpha):
-            print("alpha", alpha, "run", run)
             env = CustomSUMORLEnv(
                 net_file=args.net,
                 route_file=args.route,

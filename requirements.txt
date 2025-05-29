@@ -5,3 +5,4 @@ sumo-rl
 numpy
 gym[all]
 pandas
+networkx

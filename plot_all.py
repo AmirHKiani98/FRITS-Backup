@@ -12,7 +12,7 @@ is_windows = platform.system() == "Windows"
 folder_oi = "./output/i4-cyber_attack/rl/without_frl/attacked/off-peak"
 
 for folder in glob(folder_oi + "/*"):
-    if folder.split(os.sep)[-1].startswith("omega_"):
-        omega = folder.split(os.sep)[-1].split("_")[1]
-        print(f"Processing folder: {folder} with omega: {omega}")
-        os.system(f'python plot.py "{folder}" "img/omega/plot_mu_{omega}.png" "attacked" "omega" "{omega}"')
+    if folder.split(os.sep)[-1].startswith("cutoff_") or "cutoff" in folder:
+        cutoff = folder.split(os.sep)[-1].split("_")[1]
+        print(f"Processing folder: {folder} with cutoff: {cutoff}")
+        os.system(f'python plot.py "{folder}" "img/cutoff/plot_mu_{cutoff}.png" "attacked" "cutoff" "{cutoff}"')

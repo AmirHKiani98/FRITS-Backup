@@ -12,7 +12,7 @@ main_script = os.path.join(script_directory, "main.py")
 # Find Python executable in .venv
 venv_dir = os.path.join(script_directory, ".venv", "Scripts" if is_windows else "bin")
 python_exec = os.path.join(venv_dir, "python.exe" if is_windows else "python3")
-
+os.environ["SUMO_HOME"] = r"F:\Applications\Sumo\bin"
 # Confirm the .venv Python exists
 if not os.path.exists(python_exec):
     raise FileNotFoundError(f"Python interpreter not found in virtual environment: {python_exec}")
