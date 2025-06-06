@@ -15,7 +15,7 @@ from sumo_rl.environment.observations import DefaultObservationFunction, Observa
 from sumo_rl import SumoEnvironment
 import traci
 
-from src.models.fedlight.enviroment.traffic_signal import TrafficSignalCustom
+from src.enviroment.traffic_signal import TrafficSignalCustom
 def empty_vehicle_df():
     return pd.DataFrame({}, columns=["time", "veh_id"])
 

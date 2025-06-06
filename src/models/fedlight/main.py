@@ -5,14 +5,17 @@ Main entry point for the application.
 import argparse
 from multiprocessing import Pool, cpu_count
 import os
+
+import torch
 import traci
 import numpy as np
 import pandas as pd
 from tqdm import tqdm
-from src.enviroment.custom_sumorl_env import CustomSUMORLEnv
-from src.enviroment.state_env import ArrivalDepartureState
-from src.enviroment.utility import blend_rewards, blend_rewards_neighborhood, diff_waiting_time_reward_noised, diff_waiting_time_reward_normal, diff_waiting_time_reward_normal_phase_continuity, get_connectivity_network, get_intersections_distance_matrix, get_neighbours
-from src.rl.dql import DQLAgent
+from src.models.fedlight.enviroment.custom_sumorl_env import CustomSUMORLEnv
+from src.models.fedlight.enviroment.state_env import ArrivalDepartureState
+from src.models.fedlight.enviroment.utility import diff_waiting_time_reward_normal, get_connectivity_network, get_intersections_distance_matrix
+from src.models.fedlight.agent import Agent as FedLightAgent
+from src.models.fedlight.cloud import FedLightCloud
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -44,19 +47,13 @@ def main():
     parser.add_argument("--distance-threshold", type=int, default=200)
     parser.add_argument("--omega", type=float, default=0.0)
     parser.add_argument("--cutoff", type=int, default=2)
+    parser.add_argument("--gamma", type=float, default=0.95)
 
 
     args = parser.parse_args()
 
-    batch_size = 64
-    seed = 7
     num_episodes = args.num_episodes
-    if args.noise_added:
-        reward_fn = lambda ts: diff_waiting_time_reward_noised(ts, args.noised_edge)
-        attack_state = "attacked"
-    else:
-        reward_fn = diff_waiting_time_reward_normal
-        attack_state = "no_attack"
+    
 
     env = CustomSUMORLEnv(
         net_file=args.net,
@@ -79,14 +76,16 @@ def main():
     distance_matrix, distance_mean = get_intersections_distance_matrix()
 
     agents = {
-        ts: DQLAgent(
-            len(set(traci.trafficlight.getControlledLanes(ts))) * 2,
-            env.traffic_signals[ts].action_space.n, # type: ignore
-            hidden_dim=100,
-            seed=seed
+        ts: FedLightAgent(
+            state_dim=env.traffic_signals[ts].observation_space.shape[0],
+            action_dim=int(env.traffic_signals[ts].action_space.n),
+            hidden_dim=64,
+            actor_lr=0.0001,
+            critic_lr=0.0002
         )
         for ts in env.ts_ids
     }
+    
     connectivity = get_connectivity_network(args.net, cutoff=args.cutoff)
     for episode in tqdm(range(num_episodes), desc="Episodes"):
         all_rewards = {}
@@ -95,27 +94,20 @@ def main():
             env,
             args.simulation_time,
             agents,
-            distance_matrix,
-            distance_mean,
-            args.omega,
-            args.cutoff,
-            args.nu,
-            batch_size,
-            connectivity,
-            reward_fn=reward_fn
+            args.gamma
         )
         all_rewards[episode] = episode_rewards
 
     alphas = list(range(6)) # change value of this list
     for _, agent in agents.items():
-        agent.epsilon = 0.0
-        agent.epsilon_end = 0.0
-        agent.q_network.eval()
+        # agent.epsilon = 0.0
+        # agent.epsilon_end = 0.0
+        agent.actor.eval()
     output_folder = (
-        BASE_DIR + f"/output/i4-cyber_attack/rl/without_frl/{attack_state}/"
-        f"off-peak/diff_waiting_time_reward_normal_phase_continuity/"
-        f"omega_{args.omega}_cutoff_{args.cutoff}_nu_{args.nu}/"
+        BASE_DIR + f"/output/i4-fedlight/"
     )
+    for ts, agent in agents.items():
+        agent.save_policy(idx=ts)
     alpha_tasks = []
     
     for alpha in alphas:
@@ -131,7 +123,6 @@ def main():
                 run,
                 ArrivalDepartureState, # type: ignore
                 agents,
-                attack_state,
                 output_folder
             ]
             )
@@ -157,51 +148,55 @@ def main():
     }
     env.save_metadata(metadata, output_folder, file_name=f"metadata_{attack_state}.csv")
 
-    
 
-def run_episode(env, simulation_time, agents, distance_matrix, distance_mean, 
-                omega, cutoff, nu, batch_size, connectivity, reward_fn):
+
+
+
+def run_episode(env, simulation_time, agents, gamma):
     episode_rewards = []
     state = env.reset()
+    trajectory = {ts: [] for ts in agents}
     for _ in tqdm(range(simulation_time), desc="Processing episode"):
-        actions = {ts: agent.act(state[ts]) for ts, agent in agents.items()}
+        action_probs = {ts: agents[ts].actor(torch.FloatTensor(state[ts]).unsqueeze(0)) for ts in agents}
+        actions = {ts: torch.distributions.Categorical(action_probs[ts]).sample().item() for ts in agents}
         new_state, reward, _, _ = env.step(action=actions)
-        reward = {ts: diff_waiting_time_reward_normal_phase_continuity(env.traffic_signals[ts], reward_fn) for ts in env.ts_ids} # type: ignore
-        if not isinstance(reward, dict):
-            raise ValueError("Reward should be a dictionary with traffic signal IDs as keys.")
-        
-        if omega > 0:
-            reward = blend_rewards_neighborhood(
-                reward, get_neighbours(distance_mean * omega, distance_matrix), nu
-            )
-        elif cutoff > 0:
-            reward = blend_rewards_neighborhood(reward, connectivity, nu)
-        else:
-            reward = blend_rewards(reward, nu)
-        
-        for ts, agent in agents.items():
-            agent.memory.push(
-                new_state[ts], actions[ts], reward[ts], env.encode(state[ts], ts)
-            )
-            if len(agent.memory) > batch_size:
-                agent.update(batch_size)
-        
+        for ts in agents:
+            s = torch.FloatTensor(state[ts])
+            a = actions[ts]
+            r = reward[ts]
+            s_ = torch.FloatTensor(new_state[ts])
+            a_ = torch.distributions.Categorical(agents[ts].actor(s_.unsqueeze(0))).sample().item()
+            
+            td_target = r + gamma * agents[ts].critic(s_).item()
+            advantage = td_target - agents[ts].critic(s).item()
+            trajectory[ts].append((s, a, td_target, advantage))
         state = new_state
         episode_rewards.append(sum(reward.values()))
+    for ts in agents:
+        agents[ts].compute_gradients(trajectory[ts])
+    cloud = FedLightCloud()
+
+    for ts in agents:
+        cloud.collect(ts, agents[ts].get_gradients())
+
+    avg_grads = cloud.average_and_dispatch()
+
+    for ts in agents:
+        agents[ts].apply_gradients(avg_grads)
+        agents[ts].step()
     
     return episode_rewards
 
 def run_alpha(net,
-                route,
-                gui,
-                simulation_time,
-                delta_time,
-                alpha,
-                run,
-                observation_class,
-                agents,
-                attack_state,
-                output_folder
+               route,
+               gui,
+               simulation_time,
+               delta_time,
+               alpha,
+               run,
+               observation_class,
+               agents,
+               output_folder
                 ):
     env = CustomSUMORLEnv(
                 net_file=net,
