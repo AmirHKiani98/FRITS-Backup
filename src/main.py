@@ -35,7 +35,7 @@ def main():
     parser.add_argument("--intersection-id", type=str, default="10")
     parser.add_argument("--num-episodes", type=int, default=1)
     parser.add_argument("--gui", type=bool, default=False)
-    parser.add_argument("--noised-edge", type=str, default="CR30_LR_8")
+    parser.add_argument("--noised-edge", type=str, default="10")
     parser.add_argument("--noise-added", type=bool, default=False)
     parser.add_argument("--simulation-time", type=int, default=1200)
     parser.add_argument("--run-per-alpha", type=int, default=3)

@@ -111,3 +111,15 @@ def diff_waiting_time_reward_noised(ts:TrafficSignalCustom, iot_id):
     no_noised_reward = diff_waiting_time_reward_normal(ts)
     reward = noise*(no_noised_reward)
     return reward
+
+
+def get_pressure(ts: TrafficSignalCustom, iot_ts, noise_added=False):
+    """
+    Calculate the pressure for a traffic signal.
+    If noise_added is True, apply a random noise factor to the pressure.
+    """
+    pressure = ts.get_pressure()
+    if noise_added:
+        noise = random.uniform(0.8, 1.2)
+        pressure *= noise
+    return pressure

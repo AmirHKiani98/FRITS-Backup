@@ -17,8 +17,9 @@ class Agent:
                  hidden_dim: int = 64, 
                  actor_lr: float = 0.001,
                  critic_lr: float = 0.001,
-                 seed: Optional[int] = None):
+                 ):
         
+        self.state_dim = state_dim
         self.actor = ActorNetwork(state_dim, action_dim, hidden_dim)
         self.critic = CriticNetwork(state_dim, hidden_dim)
 

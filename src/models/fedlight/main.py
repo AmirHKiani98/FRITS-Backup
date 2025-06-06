@@ -15,6 +15,9 @@ from src.models.fedlight.enviroment.custom_sumorl_env import CustomSUMORLEnv
 from src.models.fedlight.enviroment.state_env import ArrivalDepartureState
 from src.models.fedlight.agent import Agent as FedLightAgent
 from src.models.fedlight.cloud import FedLightCloud
+from src.models.fedlight.enviroment.utility import (
+    get_pressure
+)
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -31,9 +34,10 @@ def main():
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     parser = argparse.ArgumentParser(description="Run the main application.")
 
-    parser.add_argument('--net', type=str, default=BASE_DIR + r"/networks/4x4.net.xml")
-    parser.add_argument('--route', type=str, default=BASE_DIR + r'/routes/4x4c2c1.rou.xml')
+    parser.add_argument('--net', type=str, default=BASE_DIR + r"/../../networks/4x4.net.xml")
+    parser.add_argument('--route', type=str, default=BASE_DIR + r'/../../routes/4x4c2c1.rou.xml')
     parser.add_argument("--num-episodes", type=int, default=1)
+    parser.add_argument("--edge-id", type=str, default="10")
     parser.add_argument("--gui", type=bool, default=False)
     parser.add_argument("--simulation-time", type=int, default=1200)
     parser.add_argument("--run-per-alpha", type=int, default=3)
@@ -44,6 +48,7 @@ def main():
     args = parser.parse_args()
 
     num_episodes = args.num_episodes
+    reward_fn = lambda ts: get_pressure(ts, args.noised_edge, args.noise_added)
     
 
     env = CustomSUMORLEnv(
@@ -59,7 +64,7 @@ def main():
         random_flow=False,
         real_data_type=False,
         percentage_added=0.1,
-        reward_fn="pressure"
+        reward_fn=reward_fn
     )
 
     env.reset()
@@ -112,7 +117,8 @@ def main():
                 run,
                 ArrivalDepartureState, # type: ignore
                 agents,
-                output_folder
+                output_folder,
+                reward_fn
             ]
             )
         
@@ -179,7 +185,8 @@ def run_alpha(net,
                run,
                observation_class,
                agents,
-               output_folder
+               output_folder,
+               reward_fn
                 ):
     env = CustomSUMORLEnv(
                 net_file=net,
@@ -194,7 +201,7 @@ def run_alpha(net,
                 random_flow=False,
                 real_data_type=False,
                 percentage_added=0.1,
-                reward_fn="pressure"
+                reward_fn=reward_fn
             )
     state = env.reset()
     if not isinstance(state, dict):
