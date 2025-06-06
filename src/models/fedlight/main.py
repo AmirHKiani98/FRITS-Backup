@@ -13,7 +13,6 @@ import pandas as pd
 from tqdm import tqdm
 from src.models.fedlight.enviroment.custom_sumorl_env import CustomSUMORLEnv
 from src.models.fedlight.enviroment.state_env import ArrivalDepartureState
-from src.models.fedlight.enviroment.utility import diff_waiting_time_reward_normal, get_connectivity_network, get_intersections_distance_matrix
 from src.models.fedlight.agent import Agent as FedLightAgent
 from src.models.fedlight.cloud import FedLightCloud
 
@@ -31,22 +30,14 @@ def main():
     """
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     parser = argparse.ArgumentParser(description="Run the main application.")
-    parser.add_argument('--config', type=str, default='config.yaml', help='Path to the configuration file')
 
     parser.add_argument('--net', type=str, default=BASE_DIR + r"/networks/4x4.net.xml")
     parser.add_argument('--route', type=str, default=BASE_DIR + r'/routes/4x4c2c1.rou.xml')
-    parser.add_argument("--intersection-id", type=str, default="10")
     parser.add_argument("--num-episodes", type=int, default=1)
     parser.add_argument("--gui", type=bool, default=False)
-    parser.add_argument("--noised-edge", type=str, default="CR30_LR_8")
-    parser.add_argument("--noise-added", type=bool, default=False)
     parser.add_argument("--simulation-time", type=int, default=1200)
     parser.add_argument("--run-per-alpha", type=int, default=3)
     parser.add_argument("--delta-time", type=int, default=3)
-    parser.add_argument("--nu", type=float, default=0.5)
-    parser.add_argument("--distance-threshold", type=int, default=200)
-    parser.add_argument("--omega", type=float, default=0.0)
-    parser.add_argument("--cutoff", type=int, default=2)
     parser.add_argument("--gamma", type=float, default=0.95)
 
 
@@ -68,12 +59,11 @@ def main():
         random_flow=False,
         real_data_type=False,
         percentage_added=0.1,
-        reward_fn=diff_waiting_time_reward_normal
+        reward_fn="pressure"
     )
 
     env.reset()
 
-    distance_matrix, distance_mean = get_intersections_distance_matrix()
 
     agents = {
         ts: FedLightAgent(
@@ -86,7 +76,6 @@ def main():
         for ts in env.ts_ids
     }
     
-    connectivity = get_connectivity_network(args.net, cutoff=args.cutoff)
     for episode in tqdm(range(num_episodes), desc="Episodes"):
         all_rewards = {}
 
@@ -106,8 +95,8 @@ def main():
     output_folder = (
         BASE_DIR + f"/output/i4-fedlight/"
     )
-    for ts, agent in agents.items():
-        agent.save_policy(idx=ts)
+    # for ts, agent in agents.items():
+    #     agent.save_policy(idx=ts)
     alpha_tasks = []
     
     for alpha in alphas:
@@ -133,20 +122,14 @@ def main():
     metadata = {
         "net_file": args.net,
         "route_file": args.route,
-        "noise_added":  args.noise_added,
-        "intersection_id": args.intersection_id,
         "num_episodes": args.num_episodes,
         "gui": args.gui,
-        "noised_edge": args.noised_edge,
         "simulation_time": args.simulation_time,
         "run_per_alpha": args.run_per_alpha,
         "delta_time": args.delta_time,
-        "nu": args.nu,
-        "distance_threshold": args.distance_threshold,
-        "omega": args.omega,
-        "distance_mean": distance_mean
+        "gamma": args.gamma,
     }
-    env.save_metadata(metadata, output_folder, file_name=f"metadata_{attack_state}.csv")
+    env.save_metadata(metadata, output_folder, file_name=f"metadata.csv")
 
 
 
@@ -211,7 +194,7 @@ def run_alpha(net,
                 random_flow=False,
                 real_data_type=False,
                 percentage_added=0.1,
-                reward_fn=diff_waiting_time_reward_normal
+                reward_fn="pressure"
             )
     state = env.reset()
     if not isinstance(state, dict):
@@ -241,7 +224,7 @@ def run_alpha(net,
 
     # here implement what we want to show as result
         
-    file_name = f"data_{attack_state}_alpha_{alpha}_run_{run}.csv"
+    file_name = f"data_fedlight_alpha_{alpha}_run_{run}.csv"
     env.custom_save_data(output_folder, file_name=file_name)
     env.delete_cache()
 
