@@ -1,0 +1,1 @@
+{"net_file": "/Users/cavelab/Documents/Github/FRITS-Backup/src/models/fedlight/../../networks/4x4.net.xml", "route_file": "/Users/cavelab/Documents/Github/FRITS-Backup/src/models/fedlight/../../routes/4x4c2c1.rou.xml", "num_episodes": 1, "gui": false, "simulation_time": 1200, "run_per_alpha": 3, "delta_time": 3, "gamma": 0.95}

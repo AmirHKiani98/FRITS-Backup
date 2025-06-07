@@ -37,8 +37,9 @@ def main():
     parser.add_argument('--net', type=str, default=BASE_DIR + r"/../../networks/4x4.net.xml")
     parser.add_argument('--route', type=str, default=BASE_DIR + r'/../../routes/4x4c2c1.rou.xml')
     parser.add_argument("--num-episodes", type=int, default=1)
-    parser.add_argument("--edge-id", type=str, default="10")
-    parser.add_argument("--gui", type=bool, default=False)
+    parser.add_argument("--noised-edge", type=str, default="10")
+    parser.add_argument("--noise-added", type=float, default=0.1)
+    parser.add_argument("--gui", action="store_true")
     parser.add_argument("--simulation-time", type=int, default=1200)
     parser.add_argument("--run-per-alpha", type=int, default=3)
     parser.add_argument("--delta-time", type=int, default=3)
@@ -118,7 +119,9 @@ def main():
                 ArrivalDepartureState, # type: ignore
                 agents,
                 output_folder,
-                reward_fn
+                args.noised_edge,
+                args.noise_added
+                
             ]
             )
         
@@ -186,8 +189,10 @@ def run_alpha(net,
                observation_class,
                agents,
                output_folder,
-               reward_fn
-                ):
+               noised_edge,
+               noise_added
+               ):
+    reward_fn = lambda ts: get_pressure(ts, noised_edge, noise_added)
     env = CustomSUMORLEnv(
                 net_file=net,
                 route_file=route,
