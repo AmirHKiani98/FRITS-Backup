@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2025-05-29 14:29:24 by Eclipse SUMO netconvert Version 1.23.1
+<!-- generated on 2025-06-07 11:55:14 by Eclipse SUMO netconvert Version v1_22_0+1469-7f242b8e1f3
 -->
 
 <netconvertConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
 
     <input>
-        <node-files value="H:\GitHub\FRITS-Backup\src/networks/4x4_plain.nod.xml"/>
-        <edge-files value="H:\GitHub\FRITS-Backup\src/networks/4x4_plain.edg.xml"/>
-        <connection-files value="H:\GitHub\FRITS-Backup\src/networks/4x4_plain.con.xml"/>
-        <tllogic-files value="H:\GitHub\FRITS-Backup\src/networks/4x4_plain.tll.xml"/>
+        <node-files value="/Users/amirhosseinkiani/Documents/Github/FRITS-Backup/src/networks/4x4_plain.nod.xml"/>
+        <edge-files value="/Users/amirhosseinkiani/Documents/Github/FRITS-Backup/src/networks/4x4_plain.edg.xml"/>
+        <connection-files value="/Users/amirhosseinkiani/Documents/Github/FRITS-Backup/src/networks/4x4_plain.con.xml"/>
+        <tllogic-files value="/Users/amirhosseinkiani/Documents/Github/FRITS-Backup/src/networks/4x4_plain.tll.xml"/>
     </input>
 
     <processing>
         <geometry.min-radius.fix.railways value="false"/>
-        <geometry.avoid-overlap value="false"/>
         <geometry.max-grade.fix value="false"/>
         <offset.disable-normalization value="true"/>
         <lefthand value="0"/>
