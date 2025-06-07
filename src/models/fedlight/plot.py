@@ -21,8 +21,8 @@ if not os.path.exists(output_parent_path):
 attack_state = sys.argv[3]
 label = sys.argv[4]
 CWD = os.getcwd()
-DATA_PATH = os.path.join(CWD, f'{path_to_data}')
-DATA_PATH_NEW = DATA_PATH.replace("attacked", "no_attack").replace("'", "").replace('"', "")
+DATA_PATH = "/Users/cavelab/Documents/Github/FRITS-Backup/src/models/fedlight/output/i4-fedlight"
+# DATA_PATH_NEW =
 attribute_oi = "system_total_stopped"
 def pad_or_truncate(arr, target_length):
     if len(arr) > target_length:
@@ -37,12 +37,12 @@ if __name__ == '__main__':
     wt = defaultdict(list)
     wt_new = defaultdict(list)  # For the new data
     colors = ['blue', 'green', 'red', 'purple', 'orange', 'cyan']
-    target_length = 2400  # Define the target length for all arrays
+    target_length = 2500  # Define the target length for all arrays
 
     # Load and process the original data
     for a in alpha:
         for rep in range(reps):
-            file_name = 'data_{}_alpha_{}_run_{}.csv'.format("attacked",a, rep)
+            file_name = 'data_{}_alpha_{}_run_{}.csv'.format("fedlight",a, rep)
             file_path = os.path.join(DATA_PATH, file_name)
             if not os.path.isfile(file_path):
                 print("File not found:", file_path)
@@ -56,30 +56,30 @@ if __name__ == '__main__':
             wt[a].append(pad_or_truncate(df[attribute_oi].values, target_length))
     
     # Load and process the new data from the new folder
-    for a in alpha:
-        for rep in range(reps):
-            file_name = 'data_{}_alpha_{}_run_{}.csv'.format("no_attack",a, rep)
-            file_path_new = os.path.join(DATA_PATH_NEW, file_name)
-            if not os.path.isfile(file_path_new):
-                print("File not found:", file_path_new)
-                continue
-            df_new = pd.read_csv(file_path_new, header=0)
-            # print(df_new.shape, file_name)
-            # if df_new.shape[0] != 18000 and df_new.shape[0] != 600:
-            #     continue
-            df_new = df_new.head(target_length)
-            wt_new[a].append(pad_or_truncate(df_new[attribute_oi].values, target_length))
+    # for a in alpha:
+    #     for rep in range(reps):
+    #         file_name = 'data_{}_alpha_{}_run_{}.csv'.format("",a, rep)
+    #         file_path_new = os.path.join(DATA_PATH_NEW, file_name)
+    #         if not os.path.isfile(file_path_new):
+    #             print("File not found:", file_path_new)
+    #             continue
+    #         df_new = pd.read_csv(file_path_new, header=0)
+    #         # print(df_new.shape, file_name)
+    #         # if df_new.shape[0] != 18000 and df_new.shape[0] != 600:
+    #         #     continue
+    #         df_new = df_new.head(target_length)
+    #         wt_new[a].append(pad_or_truncate(df_new[attribute_oi].values, target_length))
 
     # Stack the arrays for easier manipulation
     for a in alpha:
         # print(len(wt[a]), a)
-        print(len(wt[a]), len(wt_new[a]), a)
+        # print(len(wt[a]), len(wt_new[a]), a)
         wt[a] = np.stack(wt[a], axis=0)
         # print(len(wt_new[a]), a)
-        wt_new[a] = np.stack(wt_new[a], axis=0)
+        # wt_new[a] = np.stack(wt_new[a], axis=0)
     
     # --------------------------------------------------------------------
-    df = pd.read_csv('4x4_fixed.csv')
+    df = pd.read_csv('/Users/cavelab/Documents/Github/FRITS-Backup/4x4_fixed.csv')
     
     fixed = df[attribute_oi].values
     fixed = pad_or_truncate(fixed, target_length)
@@ -96,12 +96,12 @@ if __name__ == '__main__':
         plt.fill_between(x_ax, lb, ub, color=colors[a], alpha=0.2)
 
     # Plot the new data with dashed lines
-    for a in alpha:
-        lb_new = np.percentile(wt_new[a], 0.25, axis=0)
-        ub_new = np.percentile(wt_new[a], 99.75, axis=0)
-        mean_new = wt_new[a].mean(axis=0)
-        plt.plot(x_ax, mean_new, '--', color=colors[a], label=r'$\alpha=$'+'{} | ${}$'.format(a, label))
-        plt.fill_between(x_ax, lb_new, ub_new, color=colors[a], alpha=0.2, linestyle='--')
+    # for a in alpha:
+        # lb_new = np.percentile(wt_new[a], 0.25, axis=0)
+        # ub_new = np.percentile(wt_new[a], 99.75, axis=0)
+        # mean_new = wt_new[a].mean(axis=0)
+        # plt.plot(x_ax, mean_new, '--', color=colors[a], label=r'$\alpha=$'+'{} | ${}$'.format(a, label))
+        # plt.fill_between(x_ax, lb_new, ub_new, color=colors[a], alpha=0.2, linestyle='--')
 
     # Plot the fixed data
     plt.plot(x_ax, fixed, color='k', label='Fixed Time')

@@ -26,6 +26,7 @@ def main():
     """
     Main function to parse arguments and run the application.
     """
+    print("This is the modular main function for the RL-based traffic signal control system.")
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     parser = argparse.ArgumentParser(description="Run the main application.")
     parser.add_argument('--config', type=str, default='config.yaml', help='Path to the configuration file')
