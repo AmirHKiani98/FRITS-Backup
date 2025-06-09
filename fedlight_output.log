@@ -1,0 +1,259 @@
+Step #0.00 (0ms ?*RT. ?UPS, TraCI: 27ms, vehicles TOT 0 ACT 0 BUF 0)                     
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+Episodes:   0%|          | 0/5 [00:00<?, ?it/s]Step #0.00 (0ms ?*RT. ?UPS, TraCI: 583ms, vehicles TOT 0 ACT 0 BUF 0)                    
+ Retrying in 1 seconds
+
+Processing episode:   0%|          | 0/1200 [00:00<?, ?it/s][A
+Processing episode:   0%|          | 4/1200 [00:00<00:35, 33.84it/s][A
+Processing episode:   1%|          | 8/1200 [00:00<00:41, 28.96it/s][A
+Processing episode:   1%|          | 11/1200 [00:00<00:47, 24.97it/s][A
+Processing episode:   1%|          | 14/1200 [00:00<00:56, 20.93it/s][A
+Processing episode:   1%|▏         | 17/1200 [00:00<01:06, 17.92it/s][A
+Processing episode:   2%|▏         | 19/1200 [00:01<01:19, 14.78it/s][A
+Processing episode:   2%|▏         | 21/1200 [00:01<01:26, 13.68it/s][A
+Processing episode:   2%|▏         | 23/1200 [00:01<01:31, 12.83it/s][A
+Processing episode:   2%|▏         | 25/1200 [00:01<01:37, 12.00it/s][A
+Processing episode:   2%|▏         | 27/1200 [00:01<01:43, 11.36it/s][A
+Processing episode:   2%|▏         | 29/1200 [00:01<01:47, 10.85it/s][A
+Processing episode:   3%|▎         | 31/1200 [00:02<01:51, 10.52it/s][A
+Processing episode:   3%|▎         | 33/1200 [00:02<01:54, 10.18it/s][A
+Processing episode:   3%|▎         | 35/1200 [00:02<01:59,  9.77it/s][A
+Processing episode:   3%|▎         | 36/1200 [00:02<02:00,  9.63it/s][A
+Processing episode:   3%|▎         | 37/1200 [00:02<02:03,  9.42it/s][A
+Processing episode:   3%|▎         | 38/1200 [00:02<02:05,  9.26it/s][A
+Processing episode:   3%|▎         | 39/1200 [00:03<02:08,  9.01it/s][A
+Processing episode:   3%|▎         | 40/1200 [00:03<02:11,  8.81it/s][A
+Processing episode:   3%|▎         | 41/1200 [00:03<02:15,  8.58it/s][A
+Processing episode:   4%|▎         | 42/1200 [00:03<02:16,  8.47it/s][A
+Processing episode:   4%|▎         | 43/1200 [00:03<02:20,  8.23it/s][A
+Processing episode:   4%|▎         | 44/1200 [00:03<02:24,  8.00it/s][A
+Processing episode:   4%|▍         | 45/1200 [00:03<02:25,  7.93it/s][A
+Processing episode:   4%|▍         | 46/1200 [00:03<02:26,  7.89it/s][A
+Processing episode:   4%|▍         | 47/1200 [00:04<02:27,  7.82it/s][A
+Processing episode:   4%|▍         | 48/1200 [00:04<02:27,  7.81it/s][A
+Processing episode:   4%|▍         | 49/1200 [00:04<02:28,  7.73it/s][A
+Processing episode:   4%|▍         | 50/1200 [00:04<02:29,  7.68it/s][A
+Processing episode:   4%|▍         | 51/1200 [00:04<02:30,  7.62it/s][A
+Processing episode:   4%|▍         | 52/1200 [00:04<02:30,  7.63it/s][A
+Processing episode:   4%|▍         | 53/1200 [00:04<02:31,  7.55it/s][A
+Processing episode:   4%|▍         | 54/1200 [00:05<02:32,  7.49it/s][A
+Processing episode:   5%|▍         | 55/1200 [00:05<02:33,  7.48it/s][A
+Processing episode:   5%|▍         | 56/1200 [00:05<02:32,  7.48it/s][A
+Processing episode:   5%|▍         | 57/1200 [00:05<02:33,  7.47it/s][A
+Processing episode:   5%|▍         | 58/1200 [00:05<02:32,  7.49it/s][A
+Processing episode:   5%|▍         | 59/1200 [00:05<02:32,  7.48it/s][A
+Processing episode:   5%|▌         | 60/1200 [00:05<02:35,  7.34it/s][A
+Processing episode:   5%|▌         | 61/1200 [00:05<02:36,  7.26it/s][A
+Processing episode:   5%|▌         | 62/1200 [00:06<02:36,  7.25it/s][A
+Processing episode:   5%|▌         | 63/1200 [00:06<02:37,  7.23it/s][A
+Processing episode:   5%|▌         | 64/1200 [00:06<02:36,  7.27it/s][A
+Processing episode:   5%|▌         | 65/1200 [00:06<02:36,  7.26it/s][A
+Processing episode:   6%|▌         | 66/1200 [00:06<02:35,  7.28it/s][A
+Processing episode:   6%|▌         | 67/1200 [00:06<02:37,  7.18it/s][A
+Processing episode:   6%|▌         | 68/1200 [00:06<02:46,  6.79it/s][A
+Processing episode:   6%|▌         | 69/1200 [00:07<02:44,  6.89it/s][A
+Processing episode:   6%|▌         | 70/1200 [00:07<02:42,  6.94it/s][A
+Processing episode:   6%|▌         | 71/1200 [00:07<02:42,  6.96it/s][A
+Processing episode:   6%|▌         | 72/1200 [00:07<02:41,  6.98it/s][A
+Processing episode:   6%|▌         | 73/1200 [00:07<02:42,  6.95it/s][A
+Processing episode:   6%|▌         | 74/1200 [00:07<02:41,  6.96it/s][A
+Processing episode:   6%|▋         | 75/1200 [00:07<02:42,  6.94it/s][A
+Processing episode:   6%|▋         | 76/1200 [00:08<02:41,  6.98it/s][A
+Processing episode:   6%|▋         | 77/1200 [00:08<02:39,  7.02it/s][A
+Processing episode:   6%|▋         | 78/1200 [00:08<02:38,  7.09it/s][A
+Processing episode:   7%|▋         | 79/1200 [00:08<02:37,  7.13it/s][A
+Processing episode:   7%|▋         | 80/1200 [00:08<02:36,  7.18it/s][A
+Processing episode:   7%|▋         | 81/1200 [00:08<02:34,  7.26it/s][A
+Processing episode:   7%|▋         | 82/1200 [00:08<02:34,  7.24it/s][A
+Processing episode:   7%|▋         | 83/1200 [00:09<02:34,  7.24it/s][A
+Processing episode:   7%|▋         | 84/1200 [00:09<02:33,  7.27it/s][A
+Processing episode:   7%|▋         | 85/1200 [00:09<02:33,  7.25it/s][A
+Processing episode:   7%|▋         | 86/1200 [00:09<02:32,  7.29it/s][A
+Processing episode:   7%|▋         | 87/1200 [00:09<02:31,  7.32it/s][A
+Processing episode:   7%|▋         | 88/1200 [00:09<02:31,  7.32it/s][A
+Processing episode:   7%|▋         | 89/1200 [00:09<02:32,  7.28it/s][A
+Processing episode:   8%|▊         | 90/1200 [00:10<02:32,  7.29it/s][A
+Processing episode:   8%|▊         | 91/1200 [00:10<02:31,  7.32it/s][A
+Processing episode:   8%|▊         | 92/1200 [00:10<02:30,  7.38it/s][A
+Processing episode:   8%|▊         | 93/1200 [00:10<02:32,  7.27it/s][A
+Processing episode:   8%|▊         | 94/1200 [00:10<02:32,  7.25it/s][A
+Processing episode:   8%|▊         | 95/1200 [00:10<02:33,  7.22it/s][A
+Processing episode:   8%|▊         | 96/1200 [00:10<02:33,  7.21it/s][A
+Processing episode:   8%|▊         | 97/1200 [00:11<02:33,  7.16it/s][A
+Processing episode:   8%|▊         | 98/1200 [00:11<02:34,  7.15it/s][A
+Processing episode:   8%|▊         | 99/1200 [00:11<02:34,  7.14it/s][A
+Processing episode:   8%|▊         | 100/1200 [00:11<02:35,  7.08it/s][A
+Processing episode:   8%|▊         | 101/1200 [00:11<02:35,  7.08it/s][A
+Processing episode:   8%|▊         | 102/1200 [00:11<02:35,  7.06it/s][A
+Processing episode:   9%|▊         | 103/1200 [00:11<02:34,  7.09it/s][A
+Processing episode:   9%|▊         | 104/1200 [00:12<02:37,  6.98it/s][A
+Processing episode:   9%|▉         | 105/1200 [00:12<02:37,  6.97it/s][A
+Processing episode:   9%|▉         | 106/1200 [00:12<02:39,  6.87it/s][A
+Processing episode:   9%|▉         | 107/1200 [00:12<02:41,  6.78it/s][A
+Processing episode:   9%|▉         | 108/1200 [00:12<02:42,  6.71it/s][A
+Processing episode:   9%|▉         | 109/1200 [00:12<02:43,  6.66it/s][A
+Processing episode:   9%|▉         | 110/1200 [00:12<02:52,  6.30it/s][A
+Processing episode:   9%|▉         | 111/1200 [00:13<02:52,  6.31it/s][A
+Processing episode:   9%|▉         | 112/1200 [00:13<02:52,  6.31it/s][A
+Processing episode:   9%|▉         | 113/1200 [00:13<02:52,  6.29it/s][A
+Processing episode:  10%|▉         | 114/1200 [00:13<02:52,  6.29it/s][A
+Processing episode:  10%|▉         | 115/1200 [00:13<02:53,  6.24it/s][A
+Processing episode:  10%|▉         | 116/1200 [00:13<02:52,  6.27it/s][A
+Processing episode:  10%|▉         | 117/1200 [00:14<02:51,  6.30it/s][A
+Processing episode:  10%|▉         | 118/1200 [00:14<02:51,  6.30it/s][A
+Processing episode:  10%|▉         | 119/1200 [00:14<02:53,  6.25it/s][A
+Processing episode:  10%|█         | 120/1200 [00:14<02:53,  6.21it/s][A
+Processing episode:  10%|█         | 121/1200 [00:14<02:55,  6.16it/s][A
+Processing episode:  10%|█         | 122/1200 [00:14<02:54,  6.18it/s][A
+Processing episode:  10%|█         | 123/1200 [00:15<02:54,  6.16it/s][A
+Processing episode:  10%|█         | 124/1200 [00:15<02:54,  6.16it/s][A
+Processing episode:  10%|█         | 125/1200 [00:15<02:55,  6.14it/s][A
+Processing episode:  10%|█         | 126/1200 [00:15<02:55,  6.13it/s][A
+Processing episode:  11%|█         | 127/1200 [00:15<02:55,  6.12it/s][A
+Processing episode:  11%|█         | 128/1200 [00:15<02:56,  6.08it/s][A
+Processing episode:  11%|█         | 129/1200 [00:16<02:57,  6.03it/s][A
+Processing episode:  11%|█         | 130/1200 [00:16<02:59,  5.96it/s][A
+Processing episode:  11%|█         | 131/1200 [00:16<03:01,  5.89it/s][A
+Processing episode:  11%|█         | 132/1200 [00:16<03:01,  5.89it/s][A
+Processing episode:  11%|█         | 133/1200 [00:16<03:00,  5.91it/s][A
+Processing episode:  11%|█         | 134/1200 [00:16<03:01,  5.89it/s][A
+Processing episode:  11%|█▏        | 135/1200 [00:17<03:01,  5.86it/s][A
+Processing episode:  11%|█▏        | 136/1200 [00:17<03:02,  5.84it/s][A
+Processing episode:  11%|█▏        | 137/1200 [00:17<03:02,  5.82it/s][A
+Processing episode:  12%|█▏        | 138/1200 [00:17<03:02,  5.83it/s][A
+Processing episode:  12%|█▏        | 139/1200 [00:17<03:02,  5.82it/s][A
+Processing episode:  12%|█▏        | 140/1200 [00:17<03:00,  5.86it/s][A
+Processing episode:  12%|█▏        | 141/1200 [00:18<03:00,  5.85it/s][A
+Processing episode:  12%|█▏        | 142/1200 [00:18<02:59,  5.89it/s][A
+Processing episode:  12%|█▏        | 143/1200 [00:18<02:58,  5.92it/s][A
+Processing episode:  12%|█▏        | 144/1200 [00:18<02:57,  5.95it/s][A
+Processing episode:  12%|█▏        | 145/1200 [00:18<02:57,  5.93it/s][A
+Processing episode:  12%|█▏        | 146/1200 [00:18<02:56,  5.95it/s][A
+Processing episode:  12%|█▏        | 147/1200 [00:19<02:56,  5.96it/s][A
+Processing episode:  12%|█▏        | 148/1200 [00:19<02:56,  5.96it/s][A
+Processing episode:  12%|█▏        | 149/1200 [00:19<02:56,  5.95it/s][A
+Processing episode:  12%|█▎        | 150/1200 [00:19<02:55,  5.97it/s][A
+Processing episode:  13%|█▎        | 151/1200 [00:19<02:56,  5.95it/s][A
+Processing episode:  13%|█▎        | 152/1200 [00:19<02:54,  6.00it/s][A
+Processing episode:  13%|█▎        | 153/1200 [00:20<02:54,  6.00it/s][A
+Processing episode:  13%|█▎        | 154/1200 [00:20<03:02,  5.74it/s][A
+Processing episode:  13%|█▎        | 155/1200 [00:20<03:00,  5.80it/s][A
+Processing episode:  13%|█▎        | 156/1200 [00:20<02:58,  5.84it/s][A
+Processing episode:  13%|█▎        | 157/1200 [00:20<02:58,  5.84it/s][A
+Processing episode:  13%|█▎        | 158/1200 [00:20<02:57,  5.88it/s][A
+Processing episode:  13%|█▎        | 159/1200 [00:21<02:55,  5.92it/s][A
+Processing episode:  13%|█▎        | 160/1200 [00:21<02:55,  5.93it/s][A
+Processing episode:  13%|█▎        | 161/1200 [00:21<02:55,  5.92it/s][A
+Processing episode:  14%|█▎        | 162/1200 [00:21<02:55,  5.91it/s][A
+Processing episode:  14%|█▎        | 163/1200 [00:21<02:56,  5.86it/s][A
+Processing episode:  14%|█▎        | 164/1200 [00:21<02:57,  5.85it/s][A
+Processing episode:  14%|█▍        | 165/1200 [00:22<02:57,  5.85it/s][A
+Processing episode:  14%|█▍        | 166/1200 [00:22<02:58,  5.79it/s][A
+Processing episode:  14%|█▍        | 167/1200 [00:22<03:00,  5.72it/s][A
+Processing episode:  14%|█▍        | 168/1200 [00:22<03:01,  5.68it/s][A
+Processing episode:  14%|█▍        | 169/1200 [00:22<03:02,  5.66it/s][A
+Processing episode:  14%|█▍        | 170/1200 [00:23<03:04,  5.59it/s][A
+Processing episode:  14%|█▍        | 171/1200 [00:23<03:05,  5.56it/s][A
+Processing episode:  14%|█▍        | 172/1200 [00:23<03:05,  5.55it/s][A
+Processing episode:  14%|█▍        | 173/1200 [00:23<03:10,  5.39it/s][A
+Processing episode:  14%|█▍        | 174/1200 [00:23<03:08,  5.44it/s][A
+Processing episode:  15%|█▍        | 175/1200 [00:23<03:07,  5.46it/s][A
+Processing episode:  15%|█▍        | 176/1200 [00:24<03:07,  5.48it/s][A
+Processing episode:  15%|█▍        | 177/1200 [00:24<03:08,  5.41it/s][A
+Processing episode:  15%|█▍        | 178/1200 [00:24<03:07,  5.45it/s][A
+Processing episode:  15%|█▍        | 179/1200 [00:24<03:06,  5.46it/s][A
+Processing episode:  15%|█▌        | 180/1200 [00:24<03:07,  5.45it/s][A
+Processing episode:  15%|█▌        | 181/1200 [00:25<03:06,  5.45it/s][A
+Processing episode:  15%|█▌        | 182/1200 [00:25<03:07,  5.43it/s][A
+Processing episode:  15%|█▌        | 183/1200 [00:25<03:09,  5.37it/s][A
+Processing episode:  15%|█▌        | 184/1200 [00:25<03:10,  5.34it/s][A
+Processing episode:  15%|█▌        | 185/1200 [00:25<03:10,  5.32it/s][A
+Processing episode:  16%|█▌        | 186/1200 [00:26<03:11,  5.30it/s][A
+Processing episode:  16%|█▌        | 187/1200 [00:26<03:13,  5.24it/s][A
+Processing episode:  16%|█▌        | 188/1200 [00:26<03:14,  5.20it/s][A
+Processing episode:  16%|█▌        | 189/1200 [00:26<03:16,  5.16it/s][A
+Processing episode:  16%|█▌        | 190/1200 [00:26<03:24,  4.95it/s][A
+Processing episode:  16%|█▌        | 191/1200 [00:27<03:23,  4.97it/s][A
+Processing episode:  16%|█▌        | 192/1200 [00:27<03:21,  5.00it/s][A
+Processing episode:  16%|█▌        | 193/1200 [00:27<03:20,  5.03it/s][A
+Processing episode:  16%|█▌        | 194/1200 [00:27<03:17,  5.08it/s][A
+Processing episode:  16%|█▋        | 195/1200 [00:27<03:16,  5.11it/s][A
+Processing episode:  16%|█▋        | 196/1200 [00:27<03:15,  5.15it/s][A
+Processing episode:  16%|█▋        | 197/1200 [00:28<03:14,  5.15it/s][A
+Processing episode:  16%|█▋        | 198/1200 [00:28<03:12,  5.19it/s][A
+Processing episode:  17%|█▋        | 199/1200 [00:28<03:12,  5.20it/s][A
+Processing episode:  17%|█▋        | 200/1200 [00:28<03:09,  5.27it/s][A
+Processing episode:  17%|█▋        | 201/1200 [00:28<03:08,  5.29it/s][A
+Processing episode:  17%|█▋        | 202/1200 [00:29<03:08,  5.30it/s][A
+Processing episode:  17%|█▋        | 203/1200 [00:29<03:05,  5.36it/s][A
+Processing episode:  17%|█▋        | 204/1200 [00:29<03:06,  5.33it/s][A
+Processing episode:  17%|█▋        | 205/1200 [00:29<03:08,  5.29it/s][A
+Processing episode:  17%|█▋        | 206/1200 [00:29<03:09,  5.25it/s][A
+Processing episode:  17%|█▋        | 207/1200 [00:30<03:15,  5.09it/s][A
+Processing episode:  17%|█▋        | 208/1200 [00:30<03:11,  5.17it/s][A
+Processing episode:  17%|█▋        | 209/1200 [00:30<03:09,  5.23it/s][A
+Processing episode:  18%|█▊        | 210/1200 [00:30<03:08,  5.24it/s][A
+Processing episode:  18%|█▊        | 211/1200 [00:30<03:06,  5.31it/s][A
+Processing episode:  18%|█▊        | 212/1200 [00:31<03:05,  5.33it/s][A
+Processing episode:  18%|█▊        | 213/1200 [00:31<03:05,  5.33it/s][A
+Processing episode:  18%|█▊        | 214/1200 [00:31<03:12,  5.13it/s][A
+Processing episode:  18%|█▊        | 215/1200 [00:31<03:09,  5.19it/s][A
+Processing episode:  18%|█▊        | 216/1200 [00:31<03:07,  5.26it/s][A
+Processing episode:  18%|█▊        | 217/1200 [00:31<03:05,  5.31it/s][A
+Processing episode:  18%|█▊        | 218/1200 [00:32<03:02,  5.37it/s][A
+Processing episode:  18%|█▊        | 219/1200 [00:32<03:01,  5.40it/s][A
+Processing episode:  18%|█▊        | 220/1200 [00:32<02:55,  5.59it/s][A
+Processing episode:  18%|█▊        | 221/1200 [00:32<02:56,  5.55it/s][A
+Processing episode:  18%|█▊        | 222/1200 [00:32<02:57,  5.52it/s][A
+Processing episode:  19%|█▊        | 223/1200 [00:33<03:01,  5.39it/s][A
+Processing episode:  19%|█▊        | 224/1200 [00:33<02:59,  5.44it/s][A
+Processing episode:  19%|█▉        | 225/1200 [00:33<02:56,  5.52it/s][A
+Processing episode:  19%|█▉        | 226/1200 [00:33<02:54,  5.59it/s][A
+Processing episode:  19%|█▉        | 227/1200 [00:33<02:55,  5.54it/s][A
+Processing episode:  19%|█▉        | 228/1200 [00:33<02:57,  5.49it/s][A
+Processing episode:  19%|█▉        | 229/1200 [00:34<02:54,  5.55it/s][A
+Processing episode:  19%|█▉        | 230/1200 [00:34<02:54,  5.57it/s][A
+Processing episode:  19%|█▉        | 231/1200 [00:34<02:54,  5.56it/s][A
+Processing episode:  19%|█▉        | 232/1200 [00:34<02:53,  5.59it/s][A
+Processing episode:  19%|█▉        | 233/1200 [00:34<02:53,  5.56it/s][A
+Processing episode:  20%|█▉        | 234/1200 [00:35<02:54,  5.52it/s][A
+Processing episode:  20%|█▉        | 235/1200 [00:35<02:56,  5.48it/s][A
+Processing episode:  20%|█▉        | 236/1200 [00:35<02:56,  5.46it/s][A
+Processing episode:  20%|█▉        | 237/1200 [00:35<02:56,  5.46it/s][A
+Processing episode:  20%|█▉        | 238/1200 [00:35<02:56,  5.45it/s][A
+Processing episode:  20%|█▉        | 239/1200 [00:36<03:06,  5.16it/s][A
+Processing episode:  20%|██        | 240/1200 [00:36<03:03,  5.24it/s][A
+Processing episode:  20%|██        | 241/1200 [00:36<03:03,  5.24it/s][A
+Processing episode:  20%|██        | 242/1200 [00:36<03:01,  5.27it/s][A
+Processing episode:  20%|██        | 243/1200 [00:36<03:00,  5.32it/s][A
+Processing episode:  20%|██        | 244/1200 [00:36<03:00,  5.30it/s][A
+Processing episode:  20%|██        | 245/1200 [00:37<02:59,  5.31it/s][A
+Processing episode:  20%|██        | 246/1200 [00:37<02:59,  5.32it/s][A
+Processing episode:  21%|██        | 247/1200 [00:37<03:00,  5.29it/s][A
+Processing episode:  21%|██        | 248/1200 [00:37<02:59,  5.29it/s][A
+Processing episode:  21%|██        | 249/1200 [00:37<03:00,  5.26it/s][A
+Processing episode:  21%|██        | 250/1200 [00:38<02:59,  5.29it/s][A
+Processing episode:  21%|██        | 251/1200 [00:38<02:59,  5.29it/s][A
+Processing episode:  21%|██        | 252/1200 [00:38<02:59,  5.27it/s][A
+Processing episode:  21%|██        | 253/1200 [00:38<02:59,  5.28it/s][A
+Processing episode:  21%|██        | 254/1200 [00:38<02:57,  5.32it/s][A
+Processing episode:  21%|██▏       | 255/1200 [00:39<02:57,  5.32it/s][A
+Processing episode:  21%|██▏       | 256/1200 [00:39<02:58,  5.30it/s][A
+Processing episode:  21%|██▏       | 257/1200 [00:39<02:58,  5.29it/s][A
+Processing episode:  22%|██▏       | 258/1200 [00:39<02:59,  5.25it/s][A
+Processing episode:  22%|██▏       | 259/1200 [00:39<03:00,  5.22it/s][A
+Processing episode:  22%|██▏       | 260/1200 [00:39<03:00,  5.21it/s][A
+Processing episode:  22%|██▏       | 261/1200 [00:40<03:01,  5.18it/s][A
+Processing episode:  22%|██▏       | 262/1200 [00:40<03:00,  5.20it/s][A
+Processing episode:  22%|██▏       | 263/1200 [00:40<03:01,  5.16it/s][A
+Processing episode:  22%|██▏       | 264/1200 [00:40<02:59,  5.21it/s][A
+Processing episode:  22%|██▏       | 265/1200 [00:40<03:01,  5.16it/s][A
+Processing episode:  22%|██▏       | 266/1200 [00:41<03:00,  5.18it/s][A
+Processing episode:  22%|██▏       | 267/1200 [00:41<03:00,  5.18it/s][A
+Processing episode:  22%|██▏       | 268/1200 [00:41<03:04,  5.04it/s][A
+Processing episode:  22%|██▏       | 269/1200 [00:41<03:02,  5.10it/s][A
+Processing episode:  22%|██▎       | 270/1200 [00:41<02:55,  5.31it/s][A
+Processing episode:  23%|██▎       | 271/1200 [00:42<02:55,  5.29it/s][A
+Processing episode:  23%|██▎       | 272/1200 [00:42<02:56,  5.26it/s][A
+Processing episode:  23%|██▎       | 273/1200 [00:42<02:56,  5.24it/s][A
