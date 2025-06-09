@@ -1,117 +1,202 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Apr 26 14:35:13 2024
-
-@author: naftabi
-"""
-
 import os
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
+from glob import glob
+import re
+import math
 from collections import defaultdict
-import sys
-path_to_data = sys.argv[1]
-output_path = sys.argv[2]
-output_parent_path = os.path.dirname(output_path)
-if not os.path.exists(output_parent_path):
-    os.makedirs(output_parent_path)
-attack_state = sys.argv[3]
-label = sys.argv[4]
-CWD = os.getcwd()
-DATA_PATH = os.path.join(CWD, f'{path_to_data}')
-data_new_path = str(DATA_PATH).replace("attacked", "no_attack")
-DATA_PATH_NEW = os.path.join(CWD, f'{data_new_path}')
-attribute_oi = "system_total_stopped"
-def pad_or_truncate(arr, target_length):
-    if len(arr) > target_length:
-        return arr[:target_length]
-    else:
-        return np.pad(arr, (0, target_length - len(arr)), 'constant')
-    
+import polars as pl
+import matplotlib.pyplot as plt
+import numpy as np
 
-if __name__ == '__main__':
-    alpha = list(range(5))
-    reps = 5
-    wt = defaultdict(list)
-    wt_new = defaultdict(list)  # For the new data
-    colors = ['blue', 'green', 'red', 'purple', 'orange', 'cyan']
-    target_length = 600  # Define the target length for all arrays
+class Plotter:
+    def __init__(self, path: dict, col_of_interest: str = "system_total_stopped", cmap: str = "viridis", fixed_path: str = "./output/4x4_fixed.csv", baseline_models_path: dict = {}):
+        self.path = path
+        if not isinstance(self.path, dict):
+            raise TypeError("Path must be a dictionary.")
+        
 
-    # Load and process the original data
-    for a in alpha:
-        for rep in range(reps):
-            file_name = 'data_{}_alpha_{}_run_{}.csv'.format("attacked",a, rep)
-            file_path = os.path.join(DATA_PATH, file_name)
-            if not os.path.isfile(file_path):
-                print(file_name)
-                continue
-            df = pd.read_csv(file_path, header=0)
-            df = df.iloc[:600]
-            # print(df.shape, file_name)
-            # if df.shape[0] != 18000 and df.shape[0] != 3600:
-            #     continue
-            df = df.head(target_length)
-            wt[a].append(pad_or_truncate(df[attribute_oi].values, target_length))
-    
-    # Load and process the new data from the new folder
-    for a in alpha:
-        for rep in range(reps):
-            file_name = 'data_{}_alpha_{}_run_{}.csv'.format("no_attack",a, rep)
-            file_path_new = os.path.join(DATA_PATH_NEW, file_name)
-            print(file_name)
-            if not os.path.isfile(file_path_new):
-                print("sh",file_name)
-                continue
-            df_new = pd.read_csv(file_path_new, header=0)
-            # print(df_new.shape, file_name)
-            # if df_new.shape[0] != 18000 and df_new.shape[0] != 600:
-            #     continue
-            df_new = df_new.head(target_length)
-            wt_new[a].append(pad_or_truncate(df_new[attribute_oi].values, target_length))
+        self.fixed_path = fixed_path
+        self.baseline_models_path = baseline_models_path
+        self.dataframes = {}
+        self.baseline_models_df = {}
+        self.col_of_interest = col_of_interest
+        self.color_map = plt.cm.get_cmap(cmap)
+        self.min_value = float('inf')  # Initialize min_value to infinity
+        self.max_value = float('-inf')  # Initialize max_value to negative infinity
+        self.read_data()
+        self.read_baseline_models()
+        self.read_fixed_data()
 
-    # Stack the arrays for easier manipulation
-    for a in alpha:
-        # print(len(wt[a]), a)
-        wt[a] = np.stack(wt[a], axis=0)
-        # print(len(wt_new[a]), a)
-        wt_new[a] = np.stack(wt_new[a], axis=0)
-    
-    # --------------------------------------------------------------------
-    df = pd.read_csv('4x4_fixed.csv')
-    
-    fixed = df[attribute_oi].values
-    fixed = pad_or_truncate(fixed, target_length)
-    #---------------------------------------------------------------------
-    x_ax = np.arange(target_length)
-    plt.figure(figsize=(18,10))
-    
-    # Plot the original data with solid lines
-    for a in alpha:
-        lb = np.percentile(wt[a], 0.25, axis=0)
-        ub = np.percentile(wt[a], 99.75, axis=0)
-        mean = wt[a].mean(axis=0)
-        plt.plot(x_ax, mean, '-', color=colors[a], label=r'$\alpha=$'+'{}'.format(a))
-        plt.fill_between(x_ax, lb, ub, color=colors[a], alpha=0.2)
+    def read_data(self):
+        """
+        Reads data from the specified path.
+        The path should be a dictionary with keys 'fixed', 'str', and 'dict'.
+        """
+        for key, value in self.path.items():
+            if not isinstance(value, str):
+                raise TypeError(f"Value for key '{key}' must be a string.")
+            
+            if os.path.isfile(value):
+                df = pl.read_csv(value)
+                self.dataframes[key] = df
 
-    # Plot the new data with dashed lines
-    for a in alpha:
-        lb_new = np.percentile(wt_new[a], 0.25, axis=0)
-        ub_new = np.percentile(wt_new[a], 99.75, axis=0)
-        mean_new = wt_new[a].mean(axis=0)
-        plt.plot(x_ax, mean_new, '--', color=colors[a], label=r'$\alpha=$'+'{} | ${}$'.format(a, label))
-        plt.fill_between(x_ax, lb_new, ub_new, color=colors[a], alpha=0.2, linestyle='--')
+            elif os.path.isdir(value):
+                files = list(glob(os.path.join(value, "*.csv")))
+                self.dataframes[key] = defaultdict(lambda: pl.DataFrame())
+                for file in files:
+                    alpha_number_search = re.search(r'alpha_(\d+)', file)
+                    if alpha_number_search:
+                        alpha_number = int(alpha_number_search.group(1))
+                        df = pl.read_csv(file)
+                        _max = df[self.col_of_interest].max()
+                        min_value = df[self.col_of_interest].min()
+                        if min_value is not None and isinstance(min_value, (int, float)) and min_value < self.min_value:
+                            self.min_value = min_value
+                        
+                        if _max is not None and isinstance(_max, (int, float)) and _max > self.max_value:
+                            self.max_value = _max
+                        
+                        self.dataframes[key][alpha_number] = pl.concat([self.dataframes[key][alpha_number], df])
+                        print("Length of data for alpha", alpha_number, ":", len(self.dataframes[key][alpha_number]))
+                    else:
+                        raise ValueError(f"File '{file}' does not contain 'alpha' in its name.")
 
-    # Plot the fixed data
-    plt.plot(x_ax, fixed, color='k', label='Fixed Time')
+    def read_baseline_models(self):
+        """
+        Reads baseline models data from the specified path.
+        The path should be a dictionary with keys representing model names and values as paths.
+        """
+        for key, value in self.baseline_models_path.items():
+            if not os.path.isdir(value):
+                raise ValueError(f"Path for baseline model '{key}' is not a directory: {value}")
+            files = list(glob(os.path.join(value, "*.csv")))
+            self.baseline_models_df[key] = defaultdict(lambda: pl.DataFrame())
+            for file in files:
+                alpha_number_search = re.search(r'alpha_(\d+)', file)
+                if alpha_number_search:
+                    alpha_number = int(alpha_number_search.group(1))
+                    df = pl.read_csv(file)
+                    _max = df[self.col_of_interest].max()
+                    min_value = df[self.col_of_interest].min()
+                    if min_value is not None and isinstance(min_value, (int, float)) and min_value < self.min_value:
+                        self.min_value = min_value
+                    
+                    if _max is not None and isinstance(_max, (int, float)) and _max > self.max_value:
+                        self.max_value = _max
+                    
+                    self.baseline_models_df[key][alpha_number] = pl.concat([self.baseline_models_df[key][alpha_number], df])
+                else:
+                    raise ValueError(f"File '{file}' does not contain 'alpha' in its name.")   
+
+    def read_fixed_data(self):
+        """
+        Reads fixed data from the specified path.
+        """
+        if not os.path.isfile(self.fixed_path):
+            raise FileNotFoundError(f"Fixed file '{self.fixed_path}' does not exist.")
+        df = pl.read_csv(self.fixed_path)
+        self.fixed_df = df
+
+    def plot_alpha_specific(self):
+        """
+        Each plot is related to a specific alpha value.
+        """
+        keys = [key for key in self.dataframes.keys() if key != 'fixed']
+        for key in keys:
+            
+            n_plots = len(self.dataframes[key])
+            ncols = 2
+            nrows = math.ceil(n_plots / ncols)
+
+            fig, axs = plt.subplots(nrows=nrows, ncols=ncols, figsize=(14, 5 * nrows), constrained_layout=True)
+            axs = axs.flatten()
+            fig.suptitle(rf"${key}$", fontsize=16)
+            for idx, (alpha, df) in enumerate(self.dataframes[key].items()):
+                if not isinstance(df, pl.DataFrame):
+                    raise TypeError(f"Data for key '{key}' and alpha '{alpha}' must be a Polars DataFrame.")
+                df = df.sort("system_time")
+ 
+                new_df = df.group_by("system_time").agg(
+                    [
+                        pl.col(self.col_of_interest).quantile(0.9975).alias("max"),
+                        pl.col(self.col_of_interest).quantile(0.0025).alias("min"),
+                        pl.col(self.col_of_interest).mean().alias("mean")
+                    ]
+                )
+                    
+                
+                
+                colors = self.color_map(idx / len(self.dataframes[key]))  # Generate a specific color based on alpha index
+                axs[idx].plot(new_df["system_time"], new_df["mean"], label="Mean", color=colors)
+                axs[idx].fill_between(
+                    new_df["system_time"],
+                    new_df["min"],
+                    new_df["max"],
+                    color=colors,
+                    alpha=0.2,
+                    label="Quartiels 0.0025 - 0.9975"
+                )
+
+                # Fixed
+                df_fixed = self.fixed_df.clone()
+                max_time = new_df["system_time"].max()
+                if not isinstance(df_fixed, pl.DataFrame):
+                    raise TypeError("Data for 'fixed' must be a Polars DataFrame.")
+                df_fixed = df_fixed.filter(pl.col("system_time") <= max_time)
+                df_fixed = df_fixed.sort("system_time")
+                axs[idx].plot(df_fixed["system_time"], df_fixed[self.col_of_interest], label="Fixed", color='black', linestyle='--')
+                axs[idx].set_ylim(self.min_value, self.max_value)
+                # Baseline Models
+                for model_name, model_df in self.baseline_models_df.items():
+                    if alpha in model_df:
+                        model_data = model_df[alpha]
+                        if not isinstance(model_data, pl.DataFrame):
+                            raise TypeError(f"Data for model '{model_name}' and alpha '{alpha}' must be a Polars DataFrame.")
+                        model_data = model_data.sort("system_time")
+                        masked_model_data = model_data.filter(pl.col("system_time") <= max_time)
+                        grouped = masked_model_data.group_by("system_time").agg(
+                            [
+                                pl.col(self.col_of_interest).quantile(0.9975).alias("max"),
+                                pl.col(self.col_of_interest).quantile(0.0025).alias("min"),
+                                pl.col(self.col_of_interest).mean().alias("mean")
+                            ]
+                        )
+                        axs[idx].plot(grouped["system_time"], grouped["mean"], label=f"Mean of {model_name}", linestyle='--', color="red")
+                        axs[idx].fill_between(
+                            grouped["system_time"],
+                            grouped["min"],
+                            grouped["max"],
+                            color="red",
+                            alpha=0.2,
+                            label=f"Quartiles 0.0025 - 0.9975 of {model_name}"
+                        )
+                axs[idx].set_title(rf"$\alpha$ = {alpha}")
+                axs[idx].set_xlabel("System Time")
+                axs[idx].grid(True)
+                axs[idx].set_ylabel(self.col_of_interest)
+                axs[idx].legend()
+            plt.gca().get_yaxis().get_offset_text().set_fontsize(18)
+            plt.show()
+
+
+    def plot_alpha_all(self):
+        """
+        Each plot contains all alpha values.
+        """
+        pass
+
+
+
+if __name__ == "__main__":
+    path = {
+        "fixed": "./output/4x4_fixed.csv",
+        r'\nu = 0.4': "./output/i4-cyber_attack/rl/without_frl/attacked/off-peak/nu_0.4",
+        
+    }
+
+    baseline_models_path = {
+        "FedLight": "./src/models/fedlight/output/i4-fedlight",
+    }
     
-    # Customize and save the plot
-    plt.grid(True)
-    plt.legend(loc='upper left', fontsize=20)
-    plt.xlabel('Time (s)', fontsize=25)
-    plt.ylabel('Total Stopped Vehicles', fontsize=25)
-    plt.tick_params(axis='both', which='major', labelsize=18)
-    plt.gca().get_yaxis().get_offset_text().set_size(18)
-    plt.savefig(output_path, format='png', dpi=100, bbox_inches='tight')
-    print("Figure saved")
-    # plt.show()
+    plotter = Plotter(path, baseline_models_path=baseline_models_path)
+    plotter.plot_alpha_specific()
+    # plotter.plot_alpha_all()  # Uncomment to plot all alpha values in one plot
