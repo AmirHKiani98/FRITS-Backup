@@ -34,7 +34,7 @@ def main():
     parser.add_argument('--net', type=str, default=BASE_DIR + r"/networks/4x4.net.xml")
     parser.add_argument('--route', type=str, default=BASE_DIR + r'/routes/4x4c2c1.rou.xml')
     parser.add_argument("--intersection-id", type=str, default="10")
-    parser.add_argument("--num-episodes", type=int, default=1)
+    parser.add_argument("--num-episodes", type=int, default=10)
     parser.add_argument("--gui", type=bool, default=False)
     parser.add_argument("--noised-edge", type=str, default="10")
     parser.add_argument("--noise-added", type=bool, default=True)
