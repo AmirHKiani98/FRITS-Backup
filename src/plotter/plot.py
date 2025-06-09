@@ -5,8 +5,8 @@ import math
 from collections import defaultdict
 import polars as pl
 import matplotlib.pyplot as plt
-import numpy as np
-
+import matplotlib.colors as mcolors
+palette = list(mcolors.TABLEAU_COLORS.values())
 class Plotter:
     def __init__(self, path: dict, col_of_interest: str = "system_total_stopped", cmap: str = "viridis", fixed_path: str = "./output/4x4_fixed.csv", baseline_models_path: dict = {}):
         self.path = path
@@ -56,7 +56,6 @@ class Plotter:
                             self.max_value = _max
                         
                         self.dataframes[key][alpha_number] = pl.concat([self.dataframes[key][alpha_number], df])
-                        print("Length of data for alpha", alpha_number, ":", len(self.dataframes[key][alpha_number]))
                     else:
                         raise ValueError(f"File '{file}' does not contain 'alpha' in its name.")
 
@@ -125,7 +124,7 @@ class Plotter:
                     
                 
                 
-                colors = self.color_map(idx / len(self.dataframes[key]))  # Generate a specific color based on alpha index
+                colors = palette[idx % len(palette)]  # Generate a specific color based on alpha index
                 axs[idx].plot(new_df["system_time"], new_df["mean"], label="Mean", color=colors)
                 axs[idx].fill_between(
                     new_df["system_time"],
@@ -143,7 +142,7 @@ class Plotter:
                     raise TypeError("Data for 'fixed' must be a Polars DataFrame.")
                 df_fixed = df_fixed.filter(pl.col("system_time") <= max_time)
                 df_fixed = df_fixed.sort("system_time")
-                axs[idx].plot(df_fixed["system_time"], df_fixed[self.col_of_interest], label="Fixed", color='black', linestyle='--')
+                axs[idx].plot(df_fixed["system_time"], df_fixed[self.col_of_interest], label="Fixed", color='grey', linestyle='--')
                 axs[idx].set_ylim(self.min_value, self.max_value)
                 # Baseline Models
                 for model_name, model_df in self.baseline_models_df.items():
@@ -160,12 +159,12 @@ class Plotter:
                                 pl.col(self.col_of_interest).mean().alias("mean")
                             ]
                         )
-                        axs[idx].plot(grouped["system_time"], grouped["mean"], label=f"Mean of {model_name}", linestyle='--', color="red")
+                        axs[idx].plot(grouped["system_time"], grouped["mean"], label=f"Mean of {model_name}", linestyle='--', color="darkred")
                         axs[idx].fill_between(
                             grouped["system_time"],
                             grouped["min"],
                             grouped["max"],
-                            color="red",
+                            color="darkred",
                             alpha=0.2,
                             label=f"Quartiles 0.0025 - 0.9975 of {model_name}"
                         )
@@ -175,7 +174,10 @@ class Plotter:
                 axs[idx].set_ylabel(self.col_of_interest)
                 axs[idx].legend()
             plt.gca().get_yaxis().get_offset_text().set_fontsize(18)
-            plt.show()
+            safe_key = key.replace(" ", "").replace("\\", "").replace(",", "_")
+            plt.savefig(f'./figures/{safe_key}_alpha_specific.png', dpi=300, bbox_inches='tight')
+            # plt.show()
+            plt.close()
 
 
     def plot_alpha_all(self):
@@ -189,7 +191,13 @@ class Plotter:
 if __name__ == "__main__":
     path = {
         "fixed": "./output/4x4_fixed.csv",
-        r'\nu = 0.4': "./output/i4-cyber_attack/rl/without_frl/attacked/off-peak/nu_0.4",
+        r'\mu = 0.4': "./output/i4-cyber_attack/rl/without_frl/attacked/off-peak/nu_0.4",
+        r'\mu = 0.6': "./output/i4-cyber_attack/rl/without_frl/attacked/off-peak/nu_0.6",
+        r'\omega = 1, \mu = 0.5': "./src/output/i4-cyber_attack/rl/without_frl/attacked/off-peak/diff_waiting_time_reward_normal_phase_continuity/omega_1.0_cutoff_4_nu_0.5",
+        r'k = 2, \mu = 0.5': "./src/output/i4-cyber_attack/rl/without_frl/attacked/off-peak/diff_waiting_time_reward_normal_phase_continuity/omega_0.0_cutoff_2_nu_0.5",
+        r'k = 4, \mu = 0.5': "./src/output/i4-cyber_attack/rl/without_frl/attacked/off-peak/diff_waiting_time_reward_normal_phase_continuity/omega_0.0_cutoff_4_nu_0.5",
+        r'k = 1, \mu = 0.5': "./src/output/i4-cyber_attack/rl/without_frl/attacked/off-peak/diff_waiting_time_reward_normal_phase_continuity/omega_0.0_cutoff_1_nu_0.5",
+
         
     }
 
