@@ -25,7 +25,6 @@ for omega in [0.5, 1.0, 1.5]:
             "python", "-m" "src.main",
             "--omega", str(omega),
             "--nu", str(nu),
-            "--cutoff", str(cutoff)
         ]
         print(f"\n➡️ Running: {' '.join(command)}\n")
     
