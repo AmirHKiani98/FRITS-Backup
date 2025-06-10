@@ -6,9 +6,18 @@ from collections import defaultdict
 import polars as pl
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
+
 palette = list(mcolors.TABLEAU_COLORS.values())
 class Plotter:
-    def __init__(self, path: dict, col_of_interest: str = "system_total_stopped", cmap: str = "viridis", fixed_path: str = "./output/4x4_fixed.csv", baseline_models_path: dict = {}):
+    def __init__(
+        self, 
+        path: dict, 
+        col_of_interest: str = "system_total_stopped", 
+        cmap: str = "viridis", 
+        fixed_path: str = "./output/4x4_fixed.csv", 
+        baseline_models_path: dict = {}, 
+        target_time: int = 600
+    ):
         self.path = path
         if not isinstance(self.path, dict):
             raise TypeError("Path must be a dictionary.")
@@ -22,6 +31,7 @@ class Plotter:
         self.color_map = plt.cm.get_cmap(cmap)
         self.min_value = float('inf')  # Initialize min_value to infinity
         self.max_value = float('-inf')  # Initialize max_value to negative infinity
+        self.target_time = target_time
         self.read_data()
         self.read_baseline_models()
         self.read_fixed_data()
@@ -173,6 +183,8 @@ class Plotter:
                 axs[idx].set_xlabel("System Time")
                 axs[idx].grid(True)
                 axs[idx].set_ylabel(self.col_of_interest)
+                if self.target_time != 0:
+                    axs[idx].set_xlim(0, self.target_time)
                 axs[idx].legend()
             plt.gca().get_yaxis().get_offset_text().set_fontsize(18)
             safe_key = key.replace(" ", "").replace("\\", "").replace(",", "_")
@@ -194,13 +206,13 @@ if __name__ == "__main__":
         "fixed": "./output/4x4_fixed.csv",
         r'\mu = 0.4': "./output/i4-cyber_attack/rl/without_frl/attacked/off-peak/nu_0.4",
         r'\mu = 0.6': "./output/i4-cyber_attack/rl/without_frl/attacked/off-peak/nu_0.6",
-        r'\omega = 1, \mu = 0.5': "./src/output/i4-cyber_attack/rl/without_frl/attacked/off-peak/diff_waiting_time_reward_normal_phase_continuity/omega_1.0_cutoff_4_nu_0.5",
+        # r'\omega = 1, \mu = 0.5': "./src/output/i4-cyber_attack/rl/without_frl/attacked/off-peak/diff_waiting_time_reward_normal_phase_continuity/omega_1.0_cutoff_4_nu_0.5",
         r'k = 2, \mu = 0.5': "./src/output/i4-cyber_attack/rl/without_frl/attacked/off-peak/diff_waiting_time_reward_normal_phase_continuity/omega_0.0_cutoff_2_nu_0.5",
         r'k = 4, \mu = 0.5': "./src/output/i4-cyber_attack/rl/without_frl/attacked/off-peak/diff_waiting_time_reward_normal_phase_continuity/omega_0.0_cutoff_4_nu_0.5",
         r'k = 1, \mu = 0.5': "./src/output/i4-cyber_attack/rl/without_frl/attacked/off-peak/diff_waiting_time_reward_normal_phase_continuity/omega_0.0_cutoff_1_nu_0.5",
-        r'omega = 1.0, \mu = 0.5': r"./output/i4-cyber_attack/rl/without_frl/attacked/off-peak/omega_1.0"
-
-        
+        r'omega = 1.0, \mu = 0.5': r"./output/i4-cyber_attack/rl/without_frl/attacked/off-peak/omega_1.0",
+        r'\omega = 1.0, \mu = 0.5' : r"./src/output/i4-cyber_attack/rl/without_frl/attacked/off-peak/diff_waiting_time_reward_normal_phase_continuity/omega_1.0_cutoff_4_nu_0.5",
+        r'k = 3, \mu = 1': r"./src/output/i4-cyber_attack/rl/without_frl/attacked/off-peak/diff_waiting_time_reward_normal_phase_continuity/omega_0.0_cutoff_3_nu_1.0"
     }
 
     baseline_models_path = {

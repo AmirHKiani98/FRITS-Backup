@@ -1213,3 +1213,8 @@ Step #0.00 (0ms ?*RT. ?UPS, TraCI: 16ms, vehicles TOT 0 ACT 0 BUF 0)
 Step #0.00 (0ms ?*RT. ?UPS, TraCI: 17ms, vehicles TOT 0 ACT 0 BUF 0)                     
 Step #0.00 (0ms ?*RT. ?UPS, TraCI: 16ms, vehicles TOT 0 ACT 0 BUF 0)                     
 Step #0.00 (0ms ?*RT. ?UPS, TraCI: 16ms, vehicles TOT 0 ACT 0 BUF 0)                     
+Alpha Tasks:   6%|▌         | 1/18 [24:18<6:53:10, 1458.28s/it]Step #0.00 (0ms ?*RT. ?UPS, TraCI: 56ms, vehicles TOT 0 ACT 0 BUF 0)                     
+Alpha Tasks:  11%|█         | 2/18 [25:22<2:50:09, 638.10s/it] Step #0.00 (0ms ?*RT. ?UPS, TraCI: 54ms, vehicles TOT 0 ACT 0 BUF 0)                     
+Alpha Tasks:  17%|█▋        | 3/18 [28:50<1:50:30, 442.00s/it]Step #0.00 (0ms ?*RT. ?UPS, TraCI: 54ms, vehicles TOT 0 ACT 0 BUF 0)                     
+Alpha Tasks:  22%|██▏       | 4/18 [29:11<1:04:19, 275.65s/it]Step #0.00 (0ms ?*RT. ?UPS, TraCI: 55ms, vehicles TOT 0 ACT 0 BUF 0)                     
+Alpha Tasks:  28%|██▊       | 5/18 [30:41<45:11, 208.58s/it]  Alpha Tasks:  33%|███▎      | 6/18 [31:38<31:23, 157.00s/it]Alpha Tasks:  39%|███▉      | 7/18 [32:23<22:05, 120.47s/it]Alpha Tasks:  44%|████▍     | 8/18 [33:22<16:51, 101.10s/it]
