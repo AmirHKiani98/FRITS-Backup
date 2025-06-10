@@ -109,6 +109,7 @@ class Plotter:
             fig, axs = plt.subplots(nrows=nrows, ncols=ncols, figsize=(14, 5 * nrows), constrained_layout=True)
             axs = axs.flatten()
             fig.suptitle(rf"${key}$", fontsize=16)
+            self.dataframes[key] = dict(sorted(self.dataframes[key].items(), key=lambda item: item[0]))  # Sort by alpha value
             for idx, (alpha, df) in enumerate(self.dataframes[key].items()):
                 if not isinstance(df, pl.DataFrame):
                     raise TypeError(f"Data for key '{key}' and alpha '{alpha}' must be a Polars DataFrame.")
@@ -197,7 +198,7 @@ if __name__ == "__main__":
         r'k = 2, \mu = 0.5': "./src/output/i4-cyber_attack/rl/without_frl/attacked/off-peak/diff_waiting_time_reward_normal_phase_continuity/omega_0.0_cutoff_2_nu_0.5",
         r'k = 4, \mu = 0.5': "./src/output/i4-cyber_attack/rl/without_frl/attacked/off-peak/diff_waiting_time_reward_normal_phase_continuity/omega_0.0_cutoff_4_nu_0.5",
         r'k = 1, \mu = 0.5': "./src/output/i4-cyber_attack/rl/without_frl/attacked/off-peak/diff_waiting_time_reward_normal_phase_continuity/omega_0.0_cutoff_1_nu_0.5",
-        # r'omega = 1.0, \mu = 0.5': r"./output/i4-cyber_attack/rl/without_frl/attacked/off-peak/omega_1.0"
+        r'omega = 1.0, \mu = 0.5': r"./output/i4-cyber_attack/rl/without_frl/attacked/off-peak/omega_1.0"
 
         
     }
