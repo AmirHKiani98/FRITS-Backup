@@ -14660,3 +14660,5 @@ Warning: Environment variable SUMO_HOME is not set properly, disabling XML valid
 Processing episode:   5%|▍         | 55/1200 [00:16<07:28,  2.55it/s][A
 Processing episode:   5%|▍         | 56/1200 [00:17<07:26,  2.56it/s][A
 Processing episode:   5%|▍         | 57/1200 [00:17<07:25,  2.57it/s][A
+Processing episode:   5%|▍         | 58/1200 [00:18<07:27,  2.55it/s][A
+Processing episode:   5%|▍         | 59/1200 [00:18<08:08,  2.33it/s][A
