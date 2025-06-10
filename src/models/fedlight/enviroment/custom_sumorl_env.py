@@ -18,6 +18,7 @@ import traci
 from src.enviroment.traffic_signal import TrafficSignalCustom
 def empty_vehicle_df():
     return pd.DataFrame({}, columns=["time", "veh_id"])
+LIBSUMO = "LIBSUMO_AS_TRACI" in os.environ
 
 class CustomSUMORLEnv(SumoEnvironment):
 
@@ -325,3 +326,22 @@ class CustomSUMORLEnv(SumoEnvironment):
             return self._compute_observations()[self.ts_ids[0]], self._compute_info()
         else:
             return self._compute_observations()
+        
+    def close(self):
+        if self.sumo is None:
+            return
+        try:
+            if not LIBSUMO:
+                traci.switch(self.label)
+            traci.close()
+        except traci.TraCIException as e:
+            if "is not known" in str(e):
+                pass  # Already closed
+            else:
+                raise
+
+        if self.disp is not None:
+            self.disp.stop()
+            self.disp = None
+
+        self.sumo = None
