@@ -1,0 +1,78 @@
+Step #0.00 (0ms ?*RT. ?UPS, TraCI: 38ms, vehicles TOT 0 ACT 0 BUF 0)                     
+Success.
+This is the modular main function for the RL-based traffic signal control system.
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+Episodes:   0%|          | 0/1 [00:00<?, ?it/s] Retrying in 1 seconds
+
+Processing episode:   0%|          | 0/1200 [00:00<?, ?it/s][A
+Processing episode:   0%|          | 2/1200 [00:00<01:02, 19.02it/s][A
+Processing episode:   0%|          | 4/1200 [00:00<01:14, 16.09it/s][A
+Processing episode:   0%|          | 6/1200 [00:00<01:22, 14.51it/s][A
+Processing episode:   1%|          | 8/1200 [00:00<01:31, 13.05it/s][A
+Processing episode:   1%|          | 10/1200 [00:00<01:41, 11.68it/s][A
+Processing episode:   1%|          | 12/1200 [00:00<01:52, 10.60it/s][A
+Processing episode:   1%|          | 14/1200 [00:01<02:02,  9.66it/s][A
+Processing episode:   1%|▏         | 16/1200 [00:01<02:15,  8.76it/s][A
+Processing episode:   1%|▏         | 17/1200 [00:01<02:22,  8.33it/s][A
+Processing episode:   2%|▏         | 18/1200 [00:01<02:30,  7.88it/s][A
+Processing episode:   2%|▏         | 19/1200 [00:01<02:38,  7.43it/s][A
+Processing episode:   2%|▏         | 20/1200 [00:02<02:45,  7.11it/s][A
+Processing episode:   2%|▏         | 21/1200 [00:02<02:51,  6.86it/s][A
+Processing episode:   2%|▏         | 22/1200 [00:02<02:57,  6.65it/s][A
+Processing episode:   2%|▏         | 23/1200 [00:02<03:04,  6.37it/s][A
+Processing episode:   2%|▏         | 24/1200 [00:02<03:11,  6.13it/s][A
+Processing episode:   2%|▏         | 25/1200 [00:03<03:20,  5.87it/s][A
+Processing episode:   2%|▏         | 26/1200 [00:03<03:24,  5.74it/s][A
+Processing episode:   2%|▏         | 27/1200 [00:03<03:29,  5.59it/s][A
+Processing episode:   2%|▏         | 28/1200 [00:03<03:33,  5.49it/s][A
+Processing episode:   2%|▏         | 29/1200 [00:03<03:38,  5.35it/s][A
+Processing episode:   2%|▎         | 30/1200 [00:03<03:42,  5.26it/s][A
+Processing episode:   3%|▎         | 31/1200 [00:04<03:48,  5.12it/s][A
+Processing episode:   3%|▎         | 32/1200 [00:04<03:49,  5.10it/s][A
+Processing episode:   3%|▎         | 33/1200 [00:04<03:53,  5.00it/s][A
+Processing episode:   3%|▎         | 34/1200 [00:04<03:57,  4.90it/s][A
+Processing episode:   3%|▎         | 35/1200 [00:05<04:02,  4.81it/s][A
+Processing episode:   3%|▎         | 36/1200 [00:05<04:04,  4.76it/s][A
+Processing episode:   3%|▎         | 37/1200 [00:05<04:09,  4.66it/s][A
+Processing episode:   3%|▎         | 38/1200 [00:05<04:11,  4.61it/s][A
+Processing episode:   3%|▎         | 39/1200 [00:05<04:17,  4.52it/s][A
+Processing episode:   3%|▎         | 40/1200 [00:06<04:19,  4.48it/s][A
+Processing episode:   3%|▎         | 41/1200 [00:06<04:21,  4.43it/s][A
+Processing episode:   4%|▎         | 42/1200 [00:06<04:21,  4.43it/s][A
+Processing episode:   4%|▎         | 43/1200 [00:06<04:23,  4.39it/s][A
+Processing episode:   4%|▎         | 44/1200 [00:07<04:25,  4.36it/s][A
+Processing episode:   4%|▍         | 45/1200 [00:07<04:26,  4.34it/s][A
+Processing episode:   4%|▍         | 46/1200 [00:07<04:25,  4.35it/s][A
+Processing episode:   4%|▍         | 47/1200 [00:07<04:31,  4.25it/s][A
+Processing episode:   4%|▍         | 48/1200 [00:07<04:32,  4.22it/s][A
+Processing episode:   4%|▍         | 49/1200 [00:08<04:34,  4.20it/s][A
+Processing episode:   4%|▍         | 50/1200 [00:08<04:34,  4.18it/s][A
+Processing episode:   4%|▍         | 51/1200 [00:08<04:40,  4.09it/s][A
+Processing episode:   4%|▍         | 52/1200 [00:08<04:44,  4.04it/s][A
+Processing episode:   4%|▍         | 53/1200 [00:09<04:40,  4.09it/s][A
+Processing episode:   4%|▍         | 54/1200 [00:09<04:40,  4.08it/s][A
+Processing episode:   5%|▍         | 55/1200 [00:09<04:40,  4.08it/s][A
+Processing episode:   5%|▍         | 56/1200 [00:09<04:44,  4.02it/s][A
+Processing episode:   5%|▍         | 57/1200 [00:10<04:47,  3.97it/s][A
+Processing episode:   5%|▍         | 58/1200 [00:10<04:49,  3.94it/s][A
+Processing episode:   5%|▍         | 59/1200 [00:10<04:50,  3.93it/s][A
+Processing episode:   5%|▌         | 60/1200 [00:11<04:52,  3.90it/s][A
+Processing episode:   5%|▌         | 61/1200 [00:11<04:54,  3.86it/s][A
+Processing episode:   5%|▌         | 62/1200 [00:11<04:56,  3.84it/s][A
+Processing episode:   5%|▌         | 63/1200 [00:11<05:00,  3.78it/s][A
+Processing episode:   5%|▌         | 64/1200 [00:12<05:03,  3.75it/s][A
+Processing episode:   5%|▌         | 65/1200 [00:12<05:28,  3.46it/s][A
+Processing episode:   6%|▌         | 66/1200 [00:12<05:37,  3.36it/s][A
+Processing episode:   6%|▌         | 67/1200 [00:13<05:46,  3.27it/s][A
+Processing episode:   6%|▌         | 68/1200 [00:13<05:54,  3.20it/s][A
+Processing episode:   6%|▌         | 69/1200 [00:13<06:00,  3.14it/s][A
+Processing episode:   6%|▌         | 70/1200 [00:14<06:04,  3.10it/s][A
+Processing episode:   6%|▌         | 71/1200 [00:14<06:07,  3.08it/s][A
+Processing episode:   6%|▌         | 72/1200 [00:14<06:06,  3.08it/s][A
+Processing episode:   6%|▌         | 73/1200 [00:15<06:07,  3.07it/s][A
+Processing episode:   6%|▌         | 74/1200 [00:15<06:09,  3.05it/s][A
+Processing episode:   6%|▋         | 75/1200 [00:15<06:11,  3.03it/s][A
+Processing episode:   6%|▋         | 76/1200 [00:16<06:12,  3.02it/s][A
+Processing episode:   6%|▋         | 77/1200 [00:16<06:12,  3.01it/s][A
+Processing episode:   6%|▋         | 78/1200 [00:16<06:09,  3.03it/s][A
