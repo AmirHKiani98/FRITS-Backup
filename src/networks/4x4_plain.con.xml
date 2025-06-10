@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<<<<<<< HEAD
 <!-- generated on 2025-06-10 07:32:06 by Eclipse SUMO netconvert Version 1.20.0
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
 
@@ -9,6 +10,17 @@
 
     <output>
         <plain-output-prefix value="/Users/cavelab/Documents/Github/FRITS-Backup/src/networks/4x4_plain"/>
+=======
+<!-- generated on 2025-06-10 07:14:07 by Eclipse SUMO netconvert Version v1_21_0+2143-fc8bfb330ab
+<netconvertConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
+
+    <input>
+        <sumo-net-file value="/Users/kiani014/Documents/Github/FRITS-Backup/src/networks/4x4.net.xml"/>
+    </input>
+
+    <output>
+        <plain-output-prefix value="/Users/kiani014/Documents/Github/FRITS-Backup/src/networks/4x4_plain"/>
+>>>>>>> 930d125fca560665e320d22fc100258a09979b4f
     </output>
 
     <processing>
