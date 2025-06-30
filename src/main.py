@@ -185,7 +185,7 @@ def run_episode(env, simulation_time, agents, distance_matrix, distance_mean,
         
         for ts, agent in agents.items():
             agent.memory.push(
-                new_state[ts], actions[ts], reward[ts], env.encode(state[ts], ts)
+                env.encode(state[ts], ts), actions[ts], reward[ts], new_state[ts]
             )
             if len(agent.memory) > batch_size:
                 agent.update(batch_size)
@@ -238,13 +238,14 @@ def run_alpha(net,
             break
         
         if alpha > 0:
+            # Apply noise to the state for the agents, but keep the actual environment state
+            noisy_state = {}
             for ts, agent in agents.items():
                 _m = agent.state_dim
                 _alpha = np.random.normal(alpha, 1, _m)
-                # if alpha == 1 or alpha == 2:
                 _alpha = np.abs(_alpha)
-                state[ts] = [new_state[ts][i] + _alpha[i] for i in range((_m))] 
-
+                noisy_state[ts] = [new_state[ts][i] + _alpha[i] for i in range(_m)]
+            state = noisy_state
         else:
             state = new_state
 

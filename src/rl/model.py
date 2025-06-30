@@ -30,4 +30,4 @@ class QNetwork(nn.Module):
         x = self.norm1(x)
         x = F.selu(self.fc2(x))
         x = self.norm2(x)
-        return F.softmax(self.fc3(x), dim=1)
+        return self.fc3(x)  # No activation function for Q-values
