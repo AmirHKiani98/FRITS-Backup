@@ -5,7 +5,7 @@ import os
 # for cutoff in [2, 3, 4]:
 #     for nu in [0.0, 0.5, 1.0]:
 #         command = [
-#             "python", "-m" "src.main",
+#             "python", "-m", "src.main",
 #             "--cutoff", str(cutoff),
 #             "--nu", str(nu)
 #         ]

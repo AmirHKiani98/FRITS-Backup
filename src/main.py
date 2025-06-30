@@ -10,7 +10,7 @@ import numpy as np
 import pandas as pd
 from tqdm import tqdm
 from src.enviroment.custom_sumorl_env import CustomSUMORLEnv
-from src.enviroment.state_env import ArrivalDepartureState
+from src.enviroment.state_env import create_arrival_departure_state
 from src.enviroment.utility import blend_rewards, blend_rewards_neighborhood, diff_waiting_time_reward_noised, diff_waiting_time_reward_normal, diff_waiting_time_reward_normal_phase_continuity, get_connectivity_network, get_intersections_distance_matrix, get_neighbours
 from src.rl.dql import DQLAgent
 
@@ -34,17 +34,18 @@ def main():
     parser.add_argument('--net', type=str, default=BASE_DIR + r"/networks/4x4.net.xml")
     parser.add_argument('--route', type=str, default=BASE_DIR + r'/routes/4x4c2c1.rou.xml')
     parser.add_argument("--intersection-id", type=str, default="10")
-    parser.add_argument("--num-episodes", type=int, default=10)
+    parser.add_argument("--num-episodes", type=int, default=1)
     parser.add_argument("--gui", type=bool, default=False)
     parser.add_argument("--noised-edge", type=str, default="10")
     parser.add_argument("--noise-added", type=bool, default=True)
-    parser.add_argument("--simulation-time", type=int, default=1200)
+    parser.add_argument("--alpha", type=float, default=5, help="Noise level for the state perturbation (0 for no noise).")
+    parser.add_argument("--simulation-time", type=int, default=300)
     parser.add_argument("--run-per-alpha", type=int, default=3)
     parser.add_argument("--delta-time", type=int, default=3)
     parser.add_argument("--nu", type=float, default=0.5)
     parser.add_argument("--distance-threshold", type=int, default=200)
     parser.add_argument("--omega", type=float, default=0.0)
-    parser.add_argument("--cutoff", type=int, default=2)
+    parser.add_argument("--cutoff", type=int, default=0)
 
 
     args = parser.parse_args()
@@ -58,7 +59,7 @@ def main():
     else:
         reward_fn = diff_waiting_time_reward_normal
         attack_state = "no_attack"
-
+    custom_obs_class = create_arrival_departure_state(alpha=args.alpha, noise_added=args.noise_added)
     env = CustomSUMORLEnv(
         net_file=args.net,
         route_file=args.route,
@@ -67,7 +68,7 @@ def main():
         min_green=5,
         yellow_time=2,
         delta_time=args.delta_time,
-        observation_class=ArrivalDepartureState, # type: ignore
+        observation_class=custom_obs_class, # type: ignore
         encode_function=no_encode,
         random_flow=False,
         real_data_type=False,
@@ -113,8 +114,7 @@ def main():
         agent.epsilon_end = 0.0
         agent.q_network.eval()
     output_folder = (
-        BASE_DIR + f"/output/i4-cyber_attack/rl/without_frl/{attack_state}/"
-        f"off-peak/diff_waiting_time_reward_normal_phase_continuity/"
+        BASE_DIR + f"/output_modification/4x4/{attack_state}/"
         f"omega_{args.omega}_cutoff_{args.cutoff}_nu_{args.nu}/"
     )
     output_folder += f"_omega_{args.omega}" if args.omega > 0 else ""
@@ -122,8 +122,9 @@ def main():
     output_folder += f"_nu_{args.nu}" if args.nu > 0 else ""
     alpha_tasks = []
     
+    if not attack_state == "attacked":
+        alphas = [0] # If no attack, only run alpha = 0
     for alpha in alphas:
-        
         for run in range(args.run_per_alpha):
             alpha_tasks.append([
                 args.net,
@@ -133,7 +134,7 @@ def main():
                 args.delta_time,
                 alpha,
                 run,
-                ArrivalDepartureState, # type: ignore
+                custom_obs_class, # type: ignore
                 agents,
                 attack_state,
                 output_folder
@@ -167,7 +168,7 @@ def run_episode(env, simulation_time, agents, distance_matrix, distance_mean,
                 omega, cutoff, nu, batch_size, connectivity, reward_fn):
     episode_rewards = []
     state = env.reset()
-    for _ in tqdm(range(simulation_time), desc="Processing episode"):
+    for _ in range(simulation_time):
         actions = {ts: agent.act(state[ts]) for ts, agent in agents.items()}
         new_state, reward, _, _ = env.step(action=actions)
         reward = {ts: diff_waiting_time_reward_normal_phase_continuity(env.traffic_signals[ts], reward_fn) for ts in env.ts_ids} # type: ignore
@@ -185,14 +186,13 @@ def run_episode(env, simulation_time, agents, distance_matrix, distance_mean,
         
         for ts, agent in agents.items():
             agent.memory.push(
-                env.encode(state[ts], ts), actions[ts], reward[ts], new_state[ts]
+                env.encode(state[ts], ts), actions[ts], reward[ts], new_state[ts], False
             )
             if len(agent.memory) > batch_size:
                 agent.update(batch_size)
         
         state = new_state
         episode_rewards.append(sum(reward.values()))
-    
     return episode_rewards
 
 def run_alpha(net,
@@ -242,7 +242,7 @@ def run_alpha(net,
             noisy_state = {}
             for ts, agent in agents.items():
                 _m = agent.state_dim
-                _alpha = np.random.normal(alpha, 1, _m)
+                _alpha = np.random.randint(0, alpha, _m).astype(int)
                 _alpha = np.abs(_alpha)
                 noisy_state[ts] = [new_state[ts][i] + _alpha[i] for i in range(_m)]
             state = noisy_state

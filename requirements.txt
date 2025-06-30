@@ -1,9 +1,0 @@
-matplotlib
-tqdm
-torch
-sumo-rl
-numpy
-gym[all]
-pandas
-networkx
-polars

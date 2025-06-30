@@ -11,30 +11,70 @@ palette = list(mcolors.TABLEAU_COLORS.values())
 class Plotter:
     def __init__(
         self, 
-        path: dict, 
+        main_path: str, 
         col_of_interest: str = "system_total_stopped", 
         cmap: str = "viridis", 
-        fixed_path: str = "./output/4x4_fixed.csv", 
+        fixed_path: str = "./output_modification/fixed/4x4/4x4c2c1.csv", 
         baseline_models_path: dict = {}, 
         target_time: int = 600
     ):
-        self.path = path
-        if not isinstance(self.path, dict):
-            raise TypeError("Path must be a dictionary.")
-        
+        self.main_path = main_path
+        if not isinstance(self.main_path, str):
+            raise TypeError("Path must be a string.")
 
         self.fixed_path = fixed_path
         self.baseline_models_path = baseline_models_path
         self.dataframes = {}
         self.baseline_models_df = {}
         self.col_of_interest = col_of_interest
-        self.color_map = plt.cm.get_cmap(cmap)
+        self.color_map = plt.get_cmap(cmap)
         self.min_value = float('inf')  # Initialize min_value to infinity
         self.max_value = float('-inf')  # Initialize max_value to negative infinity
         self.target_time = target_time
+        self.path = {}
+        self.shape_path(self.main_path)
         self.read_data()
         self.read_baseline_models()
         self.read_fixed_data()
+
+    def shape_path(self, main_path: str):
+        """
+        Shapes the main path
+        """
+        self.path = {}
+        print(f"Looking for paths matching: {main_path}")  # Debug output
+        
+        # If main_path is a directory, look for subdirectories
+        if os.path.isdir(main_path):
+            # Look for subdirectories that match the pattern
+            subdirs = [d for d in glob(os.path.join(main_path, "*")) if os.path.isdir(d)]
+            
+            for path in subdirs:
+                name_list = os.path.basename(path).replace("_nu_", "_mu_").replace("_cutoff_", "_beta_").split("_")
+                new_name_list = []
+                for i in range(0, len(name_list), 2):
+                    if name_list[i+1] == "0.0" or name_list[i+1] == "0" or name_list[i+1] == 0:
+                        pass
+                    else:
+                        new_name_list.append(name_list[i])
+                        new_name_list.append(name_list[i + 1])
+                key = (" ".join([f"\\{name} " if i % 2 == 0 else "= " + name + ", " for i, name in enumerate(new_name_list)])).strip(", ")
+                self.path[key] = list(glob(path + "/*"))[0]
+            
+        else:
+            # Original logic for glob patterns
+            for path in glob(main_path):
+                name_list = path.replace("_nu_", "_mu_").split(os.sep)[-1].split("_")
+                key = " ".join([f"\\{name}" if i % 2 == 0 else name for i, name in enumerate(name_list)])
+                path_to_alphas = list(glob(path))[0]
+                if os.path.isdir(path_to_alphas):
+                    self.path[key] = path_to_alphas
+        
+
+
+        
+
+
 
     def read_data(self):
         """
@@ -67,7 +107,9 @@ class Plotter:
                         
                         self.dataframes[key][alpha_number] = pl.concat([self.dataframes[key][alpha_number], df])
                     else:
-                        raise ValueError(f"File '{file}' does not contain 'alpha' in its name.")
+                        print(f"Warning: File '{file}' does not contain 'alpha' in its name.")
+            else:
+                print(f"Warning: Path '{value}' is neither a file nor a directory.")
 
     def read_baseline_models(self):
         """
@@ -113,12 +155,16 @@ class Plotter:
         for key in keys:
             
             n_plots = len(self.dataframes[key])
+            if n_plots == 0:
+                print(f"Warning: No data found for key '{key}'. Skipping plot.")
+                continue
+                
             ncols = 2
             nrows = math.ceil(n_plots / ncols)
 
             fig, axs = plt.subplots(nrows=nrows, ncols=ncols, figsize=(14, 5 * nrows), constrained_layout=True)
             axs = axs.flatten()
-            fig.suptitle(rf"${key}$", fontsize=16)
+            fig.suptitle(rf"${key.strip(',')}$", fontsize=16)
             self.dataframes[key] = dict(sorted(self.dataframes[key].items(), key=lambda item: item[0]))  # Sort by alpha value
             for idx, (alpha, df) in enumerate(self.dataframes[key].items()):
                 if not isinstance(df, pl.DataFrame):
@@ -188,7 +234,11 @@ class Plotter:
                 axs[idx].legend()
             plt.gca().get_yaxis().get_offset_text().set_fontsize(18)
             safe_key = key.replace(" ", "").replace("\\", "").replace(",", "_")
-            plt.savefig(f'./figures/{safe_key}_alpha_specific.png', dpi=300, bbox_inches='tight')
+            
+            # Create figures directory if it doesn't exist
+            os.makedirs('./figures', exist_ok=True)
+            
+            plt.savefig(f'./figures/{safe_key}_alpha_specific.png', dpi=100, bbox_inches='tight')
             # plt.show()
             plt.close()
 
@@ -202,18 +252,7 @@ class Plotter:
 
 
 if __name__ == "__main__":
-    path = {
-        "fixed": "./output/4x4_fixed.csv",
-        r'\mu = 0.4': "./output/i4-cyber_attack/rl/without_frl/attacked/off-peak/nu_0.4",
-        r'\mu = 0.6': "./output/i4-cyber_attack/rl/without_frl/attacked/off-peak/nu_0.6",
-        # r'\omega = 1, \mu = 0.5': "./src/output/i4-cyber_attack/rl/without_frl/attacked/off-peak/diff_waiting_time_reward_normal_phase_continuity/omega_1.0_cutoff_4_nu_0.5",
-        r'k = 2, \mu = 0.5': "./src/output/i4-cyber_attack/rl/without_frl/attacked/off-peak/diff_waiting_time_reward_normal_phase_continuity/omega_0.0_cutoff_2_nu_0.5",
-        r'k = 4, \mu = 0.5': "./src/output/i4-cyber_attack/rl/without_frl/attacked/off-peak/diff_waiting_time_reward_normal_phase_continuity/omega_0.0_cutoff_4_nu_0.5",
-        r'k = 1, \mu = 0.5': "./src/output/i4-cyber_attack/rl/without_frl/attacked/off-peak/diff_waiting_time_reward_normal_phase_continuity/omega_0.0_cutoff_1_nu_0.5",
-        r'omega = 1.0, \mu = 0.5': r"./output/i4-cyber_attack/rl/without_frl/attacked/off-peak/omega_1.0",
-        r'\omega = 1.0, \mu = 0.5' : r"./src/output/i4-cyber_attack/rl/without_frl/attacked/off-peak/diff_waiting_time_reward_normal_phase_continuity/omega_1.0_cutoff_4_nu_0.5",
-        r'k = 3, \mu = 1': r"./src/output/i4-cyber_attack/rl/without_frl/attacked/off-peak/diff_waiting_time_reward_normal_phase_continuity/omega_0.0_cutoff_3_nu_1.0"
-    }
+    path = "/Users/cavelab/Documents/Github/FRITS-Backup/src/output_modification/4x4/attacked"
 
     baseline_models_path = {
         "FedLight": "./src/models/fedlight/output/i4-fedlight",
