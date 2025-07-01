@@ -15,12 +15,22 @@ import traci
 @dataclass
 class SimulationConfig:
     """Configuration class for SUMO simulation parameters."""
-    simulation_time: int
-    net_file: str
-    route_file: str
-    output_file: str
-    use_gui: bool
-    step_length: float
+    def __init__(
+        self,
+        simulation_time: int,
+        net_file: str,
+        route_file: str,
+        output_file: str,
+        use_gui: bool,
+        step_length: float
+    ):
+        
+        self.net_file = net_file
+        self.route_file = route_file
+        self.output_file = output_file
+        self.use_gui = use_gui
+        self.step_length = step_length
+        self.simulation_time = int(simulation_time/self.step_length)
 
     @staticmethod
     def from_args(args) -> "SimulationConfig":

@@ -5,15 +5,11 @@ from src.enviroment.traffic_signal import TrafficSignalCustom
 from gym import spaces
 import traci
 
-def create_arrival_departure_state(alpha=0.0, noise_added=False):
-    """Factory function that returns ArrivalDepartureState class with preset parameters"""
-    class ConfiguredArrivalDepartureState(ArrivalDepartureState):
-        def __init__(self, ts: TrafficSignalCustom):
-            super().__init__(ts, alpha=alpha, noise_added=noise_added)
-    
-    return ConfiguredArrivalDepartureState
-
-class ArrivalDepartureState(ObservationFunction):
+class ConfigurableArrivalDepartureState(ObservationFunction):
+    """
+    A configurable arrival-departure state observation class that supports noise injection.
+    This is a top-level class that can be pickled for multiprocessing.
+    """
     def __init__(self, ts: TrafficSignalCustom, alpha=0.0, noise_added=False):
         super().__init__(ts)
         
@@ -38,7 +34,7 @@ class ArrivalDepartureState(ObservationFunction):
         self.intersection_pos = traci.junction.getPosition(self.ts.id)
     
     def __call__(self):
-        """Subclasses must override this method."""
+        """Calculate the arrival-departure state with optional noise."""
         arrival = []
         departure = []
         for index, arrival_lane in enumerate(self.incoming_lanes):
@@ -55,7 +51,6 @@ class ArrivalDepartureState(ObservationFunction):
         if self.noise_added and self.alpha > 0:
             state = self.add_noise_to_state(state)
             
-        print(f"Arrival: {arrival}, Departure: {departure}, Alpha: {self.alpha}, Noise: {self.noise_added}, Ts Id: {self.ts.id}, State: {state}")
         return state
     
     def add_noise_to_state(self, state):
@@ -87,10 +82,34 @@ class ArrivalDepartureState(ObservationFunction):
         return summation
 
     def observation_space(self):
-        """Subclasses must override this method."""
+        """Return the observation space for this state representation."""
         return spaces.Box(
             low=0,
             high=500,
             shape=self.state_dim
         )
+
+class ObservationClassFactory:
+    """
+    A pickleable factory class for creating observation classes with specific parameters.
+    This can be passed to multiprocessing workers.
+    """
+    def __init__(self, alpha=0.0, noise_added=False):
+        self.alpha = alpha
+        self.noise_added = noise_added
     
+    def create_observation_class(self, ts):
+        """Create an observation class instance with the stored parameters."""
+        return ConfigurableArrivalDepartureState(ts, alpha=self.alpha, noise_added=self.noise_added)
+    
+    def __call__(self, ts):
+        """Make the factory callable."""
+        return self.create_observation_class(ts)
+
+def create_arrival_departure_state(alpha=0.0, noise_added=False):
+    """
+    Factory function that returns an ObservationClassFactory.
+    This approach is pickleable and works with multiprocessing.
+    """
+    return ObservationClassFactory(alpha=alpha, noise_added=noise_added)
+

@@ -53,11 +53,13 @@ class SUMOController:
             self.sumo_binary,
             "-n", str(net_path),
             "-r", str(route_path),
-            "--step-length", str(self.config.step_length)
+            "--step-length", str(self.config.step_length),
+            "--no-warnings",  # Suppress all warnings
+            "--verbose", "false"  # Reduce verbosity
         ]
         
         if not self.config.use_gui:
-            cmd.extend(["--no-warnings", "--no-step-log"])
+            cmd.extend(["--no-step-log"])  # Remove step logging for non-GUI
         
         return cmd
     

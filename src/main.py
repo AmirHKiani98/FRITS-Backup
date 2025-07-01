@@ -10,7 +10,7 @@ import numpy as np
 import pandas as pd
 from tqdm import tqdm
 from src.enviroment.custom_sumorl_env import CustomSUMORLEnv
-from src.enviroment.state_env import create_arrival_departure_state
+from src.enviroment.state_env import create_arrival_departure_state, ObservationClassFactory
 from src.enviroment.utility import blend_rewards, blend_rewards_neighborhood, diff_waiting_time_reward_noised, diff_waiting_time_reward_normal, diff_waiting_time_reward_normal_phase_continuity, get_connectivity_network, get_intersections_distance_matrix, get_neighbours
 from src.rl.dql import DQLAgent
 
@@ -34,7 +34,7 @@ def main():
     parser.add_argument('--net', type=str, default=BASE_DIR + r"/networks/4x4.net.xml")
     parser.add_argument('--route', type=str, default=BASE_DIR + r'/routes/4x4c2c1.rou.xml')
     parser.add_argument("--intersection-id", type=str, default="10")
-    parser.add_argument("--num-episodes", type=int, default=1)
+    parser.add_argument("--num-episodes", type=int, default=5)
     parser.add_argument("--gui", type=bool, default=False)
     parser.add_argument("--noised-edge", type=str, default="10")
     parser.add_argument("--noise-added", type=bool, default=True)
@@ -59,7 +59,8 @@ def main():
     else:
         reward_fn = diff_waiting_time_reward_normal
         attack_state = "no_attack"
-    custom_obs_class = create_arrival_departure_state(alpha=args.alpha, noise_added=args.noise_added)
+    # Create a pickleable observation factory for multiprocessing
+    custom_obs_factory = ObservationClassFactory(alpha=args.alpha, noise_added=True)
     env = CustomSUMORLEnv(
         net_file=args.net,
         route_file=args.route,
@@ -68,7 +69,7 @@ def main():
         min_green=5,
         yellow_time=2,
         delta_time=args.delta_time,
-        observation_class=custom_obs_class, # type: ignore
+        observation_class=custom_obs_factory, # type: ignore
         encode_function=no_encode,
         random_flow=False,
         real_data_type=False,
@@ -134,7 +135,7 @@ def main():
                 args.delta_time,
                 alpha,
                 run,
-                custom_obs_class, # type: ignore
+                custom_obs_factory, # type: ignore
                 agents,
                 attack_state,
                 output_folder
@@ -144,6 +145,8 @@ def main():
     with Pool(processes=cpu_count()) as pool:
         for _ in tqdm(pool.imap_unordered(run_alpha_unpack, alpha_tasks), total=len(alpha_tasks), desc="Alpha Tasks"):
             pass
+    if traci.isLoaded():
+        traci.close()    
     metadata = {
         "net_file": args.net,
         "route_file": args.route,
@@ -202,7 +205,7 @@ def run_alpha(net,
                 delta_time,
                 alpha,
                 run,
-                observation_class,
+                observation_factory,
                 agents,
                 attack_state,
                 output_folder
@@ -215,7 +218,7 @@ def run_alpha(net,
                 min_green=5,
                 yellow_time=2,
                 delta_time=delta_time,
-                observation_class=observation_class,
+                observation_class=observation_factory,
                 encode_function=no_encode,
                 random_flow=False,
                 real_data_type=False,

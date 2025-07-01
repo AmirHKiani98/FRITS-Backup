@@ -18,6 +18,7 @@ import traci
 from src.models.fedlight.enviroment.traffic_signal import TrafficSignalCustom
 def empty_vehicle_df():
     return pd.DataFrame({}, columns=["time", "veh_id"])
+LIBSUMO = "LIBSUMO_AS_TRACI" in os.environ
 
 class CustomSUMORLEnv(SumoEnvironment):
 
@@ -51,7 +52,8 @@ class CustomSUMORLEnv(SumoEnvironment):
         traffic_flow_choices=[300,200],
         random_flow = False,
         real_data_type = False,
-        percentage_added=None) -> None:
+        percentage_added=None,
+        step_length=0.1) -> None:
         super().__init__(net_file, route_file, out_csv_name, use_gui, virtual_display, begin_time, num_seconds, max_depart_delay, waiting_time_memory, time_to_teleport, delta_time, yellow_time, min_green, max_green, single_agent, reward_fn, observation_class, add_system_info, add_per_agent_info, sumo_seed, fixed_ts, sumo_warnings, additional_sumo_cmd, render_mode)
         if not encode_function == None:
             self.encode = encode_function
@@ -71,6 +73,7 @@ class CustomSUMORLEnv(SumoEnvironment):
             self.percentage_added = percentage_added
             self.load_real_data_detectors()
         self.vehicles_waiting_time = defaultdict(lambda: 0)
+        self.step_length = step_length
 
              
     def get_vehicles_distribution(self, flow_rate):
@@ -325,3 +328,54 @@ class CustomSUMORLEnv(SumoEnvironment):
             return self._compute_observations()[self.ts_ids[0]], self._compute_info()
         else:
             return self._compute_observations()
+    def _start_simulation(self):
+        sumo_cmd = [
+            self._sumo_binary,
+            "-n",
+            self._net,
+            "-r",
+            self._route,
+            "--max-depart-delay",
+            str(self.max_depart_delay),
+            "--waiting-time-memory",
+            str(self.waiting_time_memory),
+            "--time-to-teleport",
+            str(self.time_to_teleport),
+            "--no-step-log",
+            "--step-length", str(self.step_length),
+            "--no-warnings",
+        ]
+        if self.begin_time > 0:
+            sumo_cmd.append(f"-b {self.begin_time}")
+        if self.sumo_seed == "random":
+            sumo_cmd.append("--random")
+        else:
+            sumo_cmd.extend(["--seed", str(self.sumo_seed)])
+        if not self.sumo_warnings:
+            sumo_cmd.append("--no-warnings")
+        if self.additional_sumo_cmd is not None:
+            sumo_cmd.extend(self.additional_sumo_cmd.split())
+        if self.use_gui or self.render_mode is not None:
+            sumo_cmd.extend(["--start", "--quit-on-end"])
+            ## Following part is erronous
+            # if self.render_mode == "rgb_array":
+            #     sumo_cmd.extend(["--window-size", f"{self.virtual_display[0]},{self.virtual_display[1]}"])
+            #     from pyvirtualdisplay.smartdisplay import SmartDisplay
+
+            #     print("Creating a virtual display.")
+            #     self.disp = SmartDisplay(size=self.virtual_display)
+            #     self.disp.start()
+            #     print("Virtual display started.")
+
+
+        if LIBSUMO:
+            traci.start(sumo_cmd)
+            self.sumo = traci
+        else:
+            traci.start(sumo_cmd, label=self.label)
+            self.sumo = traci.getConnection(self.label)
+
+        if self.use_gui or self.render_mode is not None:
+            if "DEFAULT_VIEW" not in dir(traci.gui):  # traci.gui.DEFAULT_VIEW is not defined in libsumo
+                traci.gui.DEFAULT_VIEW = "View #0"
+            self.sumo.gui.setSchema(traci.gui.DEFAULT_VIEW, "real world")
