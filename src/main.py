@@ -22,6 +22,14 @@ def no_encode(state, ts_id):
 def run_alpha_unpack(args):
     return run_alpha(*args)
 
+class NoisedRewardFunction:
+    """A pickleable reward function class for noised scenarios."""
+    def __init__(self, noised_edge):
+        self.noised_edge = noised_edge
+    
+    def __call__(self, ts):
+        return diff_waiting_time_reward_noised(ts, self.noised_edge)
+
 def main():
     """
     Main function to parse arguments and run the application.
@@ -34,9 +42,9 @@ def main():
     parser.add_argument('--net', type=str, default=BASE_DIR + r"/networks/4x4.net.xml")
     parser.add_argument('--route', type=str, default=BASE_DIR + r'/routes/4x4c2c1.rou.xml')
     parser.add_argument("--intersection-id", type=str, default="10")
-    parser.add_argument("--num-episodes", type=int, default=5)
+    parser.add_argument("--num-episodes", type=int, default=10)
     parser.add_argument("--gui", type=bool, default=False)
-    parser.add_argument("--noised-edge", type=str, default="10")
+    parser.add_argument("--noised-edge", type=str, default="all")
     parser.add_argument("--noise-added", type=bool, default=True)
     parser.add_argument("--alpha", type=float, default=5, help="Noise level for the state perturbation (0 for no noise).")
     parser.add_argument("--simulation-time", type=int, default=300)
@@ -54,7 +62,7 @@ def main():
     seed = 7
     num_episodes = args.num_episodes
     if args.noise_added:
-        reward_fn = lambda ts: diff_waiting_time_reward_noised(ts, args.noised_edge)
+        reward_fn = NoisedRewardFunction(args.noised_edge)
         attack_state = "attacked"
     else:
         reward_fn = diff_waiting_time_reward_normal
@@ -74,7 +82,7 @@ def main():
         random_flow=False,
         real_data_type=False,
         percentage_added=0.1,
-        reward_fn=diff_waiting_time_reward_normal
+        reward_fn=reward_fn
     )
 
     env.reset()
@@ -138,7 +146,8 @@ def main():
                 custom_obs_factory, # type: ignore
                 agents,
                 attack_state,
-                output_folder
+                output_folder,
+                reward_fn
             ]
             )
         
@@ -174,7 +183,7 @@ def run_episode(env, simulation_time, agents, distance_matrix, distance_mean,
     for _ in range(simulation_time):
         actions = {ts: agent.act(state[ts]) for ts, agent in agents.items()}
         new_state, reward, _, _ = env.step(action=actions)
-        reward = {ts: diff_waiting_time_reward_normal_phase_continuity(env.traffic_signals[ts], reward_fn) for ts in env.ts_ids} # type: ignore
+        reward = {ts_id: reward_fn(ts) for ts_id, ts in env.traffic_signals.items()}
         if not isinstance(reward, dict):
             raise ValueError("Reward should be a dictionary with traffic signal IDs as keys.")
         
@@ -208,7 +217,8 @@ def run_alpha(net,
                 observation_factory,
                 agents,
                 attack_state,
-                output_folder
+                output_folder,
+                reward_fn
                 ):
     env = CustomSUMORLEnv(
                 net_file=net,
@@ -223,7 +233,7 @@ def run_alpha(net,
                 random_flow=False,
                 real_data_type=False,
                 percentage_added=0.1,
-                reward_fn=diff_waiting_time_reward_normal
+                reward_fn=reward_fn
             )
     state = env.reset()
     if not isinstance(state, dict):

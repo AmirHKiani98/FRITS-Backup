@@ -1,0 +1,115 @@
+Step #0.00 (0ms ?*RT. ?UPS, TraCI: 38ms, vehicles TOT 0 ACT 0 BUF 0)                     
+Success.
+This is the modular main function for the RL-based traffic signal control system.
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+Episodes:   0%|          | 0/10 [00:00<?, ?it/s]Episodes:  10%|█         | 1/10 [10:00<1:30:04, 600.48s/it]Episodes:  20%|██        | 2/10 [18:01<1:10:41, 530.21s/it]Episodes:  30%|███       | 3/10 [24:45<55:09, 472.73s/it]  Episodes:  40%|████      | 4/10 [34:39<52:03, 520.59s/it]Episodes:  50%|█████     | 5/10 [44:37<45:41, 548.38s/it]Episodes:  60%|██████    | 6/10 [54:59<38:13, 573.37s/it]Episodes:  70%|███████   | 7/10 [1:04:54<29:01, 580.62s/it]Episodes:  80%|████████  | 8/10 [1:15:09<19:42, 591.40s/it]Episodes:  90%|█████████ | 9/10 [1:25:59<10:09, 609.71s/it]Episodes: 100%|██████████| 10/10 [1:36:22<00:00, 613.79s/it]Episodes: 100%|██████████| 10/10 [1:36:22<00:00, 578.22s/it]
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+Alpha Tasks:   0%|          | 0/18 [00:00<?, ?it/s]Step #0.00 (0ms ?*RT. ?UPS, TraCI: 39ms, vehicles TOT 0 ACT 0 BUF 0)                     
+Step #0.00 (0ms ?*RT. ?UPS, TraCI: 40ms, vehicles TOT 0 ACT 0 BUF 0)                     
+Step #0.00 (0ms ?*RT. ?UPS, TraCI: 39ms, vehicles TOT 0 ACT 0 BUF 0)                     
+Step #0.00 (0ms ?*RT. ?UPS, TraCI: 37ms, vehicles TOT 0 ACT 0 BUF 0)                     
+Step #0.00 (0ms ?*RT. ?UPS, TraCI: 36ms, vehicles TOT 0 ACT 0 BUF 0)                     
+Step #0.00 (0ms ?*RT. ?UPS, TraCI: 35ms, vehicles TOT 0 ACT 0 BUF 0)                     
+Step #0.00 (0ms ?*RT. ?UPS, TraCI: 35ms, vehicles TOT 0 ACT 0 BUF 0)                     
+Step #0.00 (0ms ?*RT. ?UPS, TraCI: 36ms, vehicles TOT 0 ACT 0 BUF 0)                     
+Step #0.00 (0ms ?*RT. ?UPS, TraCI: 34ms, vehicles TOT 0 ACT 0 BUF 0)                     
+Step #0.00 (0ms ?*RT. ?UPS, TraCI: 18ms, vehicles TOT 0 ACT 0 BUF 0)                     
+Step #0.00 (0ms ?*RT. ?UPS, TraCI: 23ms, vehicles TOT 0 ACT 0 BUF 0)                     
+Step #0.00 (0ms ?*RT. ?UPS, TraCI: 23ms, vehicles TOT 0 ACT 0 BUF 0)                     
+Step #0.00 (0ms ?*RT. ?UPS, TraCI: 31ms, vehicles TOT 0 ACT 0 BUF 0)                     
+Step #0.00 (0ms ?*RT. ?UPS, TraCI: 31ms, vehicles TOT 0 ACT 0 BUF 0)                     
+Alpha Tasks:   6%|▌         | 1/18 [31:52<9:01:46, 1912.17s/it]Step #0.00 (0ms ?*RT. ?UPS, TraCI: 67ms, vehicles TOT 0 ACT 0 BUF 0)                     
+Alpha Tasks:  11%|█         | 2/18 [33:07<3:41:49, 831.83s/it] Step #0.00 (0ms ?*RT. ?UPS, TraCI: 65ms, vehicles TOT 0 ACT 0 BUF 0)                     
+Alpha Tasks:  17%|█▋        | 3/18 [35:05<2:06:24, 505.60s/it]Step #0.00 (0ms ?*RT. ?UPS, TraCI: 64ms, vehicles TOT 0 ACT 0 BUF 0)                     
+Alpha Tasks:  22%|██▏       | 4/18 [36:54<1:21:31, 349.36s/it]Step #0.00 (0ms ?*RT. ?UPS, TraCI: 67ms, vehicles TOT 0 ACT 0 BUF 0)                     
+Alpha Tasks:  28%|██▊       | 5/18 [37:17<50:07, 231.33s/it]  Alpha Tasks:  33%|███▎      | 6/18 [37:27<31:14, 156.21s/it]Alpha Tasks:  39%|███▉      | 7/18 [37:37<19:52, 108.42s/it]Alpha Tasks:  44%|████▍     | 8/18 [38:21<14:40, 88.03s/it] Alpha Tasks:  50%|█████     | 9/18 [38:46<10:14, 68.23s/it]Alpha Tasks:  56%|█████▌    | 10/18 [38:50<06:27, 48.50s/it]Alpha Tasks:  61%|██████    | 11/18 [38:52<03:59, 34.15s/it]Alpha Tasks:  67%|██████▋   | 12/18 [39:16<03:06, 31.08s/it]Alpha Tasks:  72%|███████▏  | 13/18 [40:13<03:14, 38.82s/it]Alpha Tasks:  78%|███████▊  | 14/18 [40:21<01:57, 29.47s/it]Alpha Tasks:  83%|████████▎ | 15/18 [49:30<09:19, 186.36s/it]Alpha Tasks:  89%|████████▉ | 16/18 [50:19<04:49, 144.82s/it]Alpha Tasks:  94%|█████████▍| 17/18 [51:47<02:07, 127.79s/it]Alpha Tasks: 100%|██████████| 18/18 [51:58<00:00, 92.72s/it] Alpha Tasks: 100%|██████████| 18/18 [51:58<00:00, 173.25s/it]
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+Error: tcpip::Socket::recvAndCheck @ recv: peer shutdown
+Quitting (on error).
+Error: tcpip::Socket::recvAndCheck @ recv: peer shutdown
+Quitting (on error).
+Error: tcpip::Socket::recvAndCheck @ recv: peer shutdown
+Quitting (on error).
+Error: tcpip::Socket::recvAndCheck @ recv: peer shutdown
+Quitting (on error).
+Error: tcpip::Socket::recvAndCheck @ recv: peer shutdown
+Quitting (on error).
+Error: tcpip::Socket::recvAndCheck @ recv: peer shutdown
+Quitting (on error).
+Error: tcpip::Socket::recvAndCheck @ recv: peer shutdown
+Quitting (on error).
+Error: tcpip::Socket::recvAndCheck @ recv: peer shutdown
+Quitting (on error).
+Error: tcpip::Socket::recvAndCheck @ recv: peer shutdown
+Error: tcpip::Socket::recvAndCheck @ recv: peer shutdown
+Quitting (on error).
+Quitting (on error).
+Error: tcpip::Socket::recvAndCheck @ recv: peer shutdown
+Quitting (on error).
+Error: tcpip::Socket::recvAndCheck @ recv: peer shutdown
+Quitting (on error).
+Error: tcpip::Socket::recvAndCheck @ recv: peer shutdown
+Quitting (on error).
+Error: tcpip::Socket::recvAndCheck @ recv: peer shutdown
+Quitting (on error).
+Simulation completed and TraCI closed.
+Exception ignored in: <function SumoEnvironment.__del__ at 0x1117cbd30>
+Traceback (most recent call last):
+  File "/Users/cavelab/Documents/Github/FRITS-Backup/.venv/lib/python3.9/site-packages/sumo_rl/environment/env.py", line 461, in __del__
+    self.close()
+  File "/Users/cavelab/Documents/Github/FRITS-Backup/.venv/lib/python3.9/site-packages/sumo_rl/environment/env.py", line 450, in close
+    traci.switch(self.label)
+  File "/Users/cavelab/Documents/Github/FRITS-Backup/.venv/lib/python3.9/site-packages/traci/main.py", line 270, in switch
+    connection.switch(label)
+  File "/Users/cavelab/Documents/Github/FRITS-Backup/.venv/lib/python3.9/site-packages/traci/connection.py", line 60, in switch
+    con = get(label)
+  File "/Users/cavelab/Documents/Github/FRITS-Backup/.venv/lib/python3.9/site-packages/traci/connection.py", line 55, in get
+    raise TraCIException("Connection '%s' is not known." % label)
+traci.exceptions.TraCIException: Connection '0' is not known.
+Step #0.00 (0ms ?*RT. ?UPS, TraCI: 39ms, vehicles TOT 0 ACT 0 BUF 0)                     
+Success.
+This is the modular main function for the RL-based traffic signal control system.
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+Episodes:   0%|          | 0/10 [00:00<?, ?it/s]Episodes:  10%|█         | 1/10 [07:01<1:03:14, 421.63s/it]Episodes:  20%|██        | 2/10 [16:15<1:06:34, 499.29s/it]
