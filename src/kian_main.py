@@ -219,12 +219,12 @@ def run_episode(env, simulation_time, agents, distance_matrix, distance_mean,
         else:
             reward = blend_rewards(reward, nu)
         
-        for ts, agent in agents.items():
-            agent.memory.push(
-                env.encode(state[ts], ts), actions[ts], reward[ts], new_state[ts], False
-            )
-            if len(agent.memory) > batch_size:
-                agent.update(batch_size)
+        # for ts, agent in agents.items():
+        #     agent.memory.push(
+        #         env.encode(state[ts], ts), actions[ts], reward[ts], new_state[ts], False
+        #     )
+        #     if len(agent.memory) > batch_size:
+        #         agent.update(batch_size)
         
         state = new_state
         episode_rewards.append(sum(reward.values()))

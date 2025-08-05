@@ -12,7 +12,7 @@ for attacked_intersections in ["10"]:
             )
             output_folder += f"nu_{nu}"
             command = [
-                "python", "-m", "src.main",
+                "python", "-m", "src.kian_main",
                 "--cutoff", str(cutoff),
                 "--nu", str(nu),
                 "--intersection-id", str(attacked_intersections),
