@@ -1467,4 +1467,189 @@ Step #0.00 (0ms ?*RT. ?UPS, TraCI: 31ms, vehicles TOT 0 ACT 0 BUF 0)
 Alpha Tasks:  33%|███▎      | 6/18 [04:21<03:42, 18.56s/it]Step #0.00 (0ms ?*RT. ?UPS, TraCI: 31ms, vehicles TOT 0 ACT 0 BUF 0)                     
 Alpha Tasks:  39%|███▉      | 7/18 [04:23<02:23, 13.09s/it]Step #0.00 (0ms ?*RT. ?UPS, TraCI: 31ms, vehicles TOT 0 ACT 0 BUF 0)                     
 Alpha Tasks:  44%|████▍     | 8/18 [04:26<01:40, 10.06s/it]Alpha Tasks:  50%|█████     | 9/18 [04:27<01:05,  7.25s/it]Step #0.00 (0ms ?*RT. ?UPS, TraCI: 32ms, vehicles TOT 0 ACT 0 BUF 0)                     
-Alpha Tasks:  56%|█████▌    | 10/18 [04:28<00:41,  5.22s/it]Alpha Tasks:  61%|██████    | 11/18 [04:29<00:26,  3.82s/it]Alpha Tasks:  67%|██████▋   | 12/18 [04:30<00:18,  3.06s/it]Alpha Tasks:  72%|███████▏  | 13/18 [04:31<00:12,  2.47s/it]Alpha Tasks:  78%|███████▊  | 14/18 [04:32<00:07,  1.81s/it]Alpha Tasks:  83%|████████▎ | 15/18 [04:36<00:07,  2.51s/it]Alpha Tasks:  89%|████████▉ | 16/18 [04:36<00:04,  2.01s/it]Alpha Tasks:  94%|█████████▍| 17/18 [04:42<00:02,  2.94s/it]
+Alpha Tasks:  56%|█████▌    | 10/18 [04:28<00:41,  5.22s/it]Alpha Tasks:  61%|██████    | 11/18 [04:29<00:26,  3.82s/it]Alpha Tasks:  67%|██████▋   | 12/18 [04:30<00:18,  3.06s/it]Alpha Tasks:  72%|███████▏  | 13/18 [04:31<00:12,  2.47s/it]Alpha Tasks:  78%|███████▊  | 14/18 [04:32<00:07,  1.81s/it]Alpha Tasks:  83%|████████▎ | 15/18 [04:36<00:07,  2.51s/it]Alpha Tasks:  89%|████████▉ | 16/18 [04:36<00:04,  2.01s/it]Alpha Tasks:  94%|█████████▍| 17/18 [04:42<00:02,  2.94s/it]Alpha Tasks: 100%|██████████| 18/18 [06:04<00:00, 26.96s/it]Alpha Tasks: 100%|██████████| 18/18 [06:04<00:00, 20.28s/it]
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+Error: tcpip::Socket::recvAndCheck @ recv: peer shutdown
+Quitting (on error).
+Error: tcpip::Socket::recvAndCheck @ recv: peer shutdown
+Quitting (on error).
+Error: tcpip::Socket::recvAndCheck @ recv: peer shutdown
+Quitting (on error).
+Error: tcpip::Socket::recvAndCheck @ recv: peer shutdown
+Quitting (on error).
+Error: tcpip::Socket::recvAndCheck @ recv: peer shutdown
+Quitting (on error).
+Error: tcpip::Socket::recvAndCheck @ recv: peer shutdown
+Error: tcpip::Socket::recvAndCheck @ recv: peer shutdown
+Error: tcpip::Socket::recvAndCheck @ recv: peer shutdown
+Quitting (on error).
+Quitting (on error).
+Error: tcpip::Socket::recvAndCheck @ recv: peer shutdown
+Quitting (on error).
+Error: tcpip::Socket::recvAndCheck @ recv: peer shutdown
+Quitting (on error).
+Quitting (on error).
+Error: tcpip::Socket::recvAndCheck @ recv: peer shutdown
+Quitting (on error).
+Simulation completed and TraCI closed.
+Exception ignored in: <function SumoEnvironment.__del__ at 0x113e16a70>
+Traceback (most recent call last):
+  File "/Users/amirhosseinkiani/Documents/Github/FRITS-Backup/.venv/lib/python3.10/site-packages/sumo_rl/environment/env.py", line 460, in __del__
+    self.close()
+  File "/Users/amirhosseinkiani/Documents/Github/FRITS-Backup/.venv/lib/python3.10/site-packages/sumo_rl/environment/env.py", line 449, in close
+    traci.switch(self.label)
+  File "/Users/amirhosseinkiani/Documents/Github/FRITS-Backup/.venv/lib/python3.10/site-packages/traci/main.py", line 272, in switch
+    connection.switch(label)
+  File "/Users/amirhosseinkiani/Documents/Github/FRITS-Backup/.venv/lib/python3.10/site-packages/traci/connection.py", line 60, in switch
+    con = get(label)
+  File "/Users/amirhosseinkiani/Documents/Github/FRITS-Backup/.venv/lib/python3.10/site-packages/traci/connection.py", line 55, in get
+    raise TraCIException("Connection '%s' is not known." % label)
+traci.exceptions.TraCIException: Connection '0' is not known.
+Step #0.00 (0ms ?*RT. ?UPS, TraCI: 32ms, vehicles TOT 0 ACT 0 BUF 0)                     
+Success.
+This is the modular main function for the RL-based traffic signal control system.
+ Retrying in 1 seconds
+ Retrying in 1 seconds
+Episodes:   0%|          | 0/5 [00:00<?, ?it/s] Retrying in 1 seconds
+
+Run the episode:   0%|          | 0/300 [00:00<?, ?it/s][A
+Run the episode:   1%|▏         | 4/300 [00:00<00:08, 34.13it/s][A
+Run the episode:   3%|▎         | 8/300 [00:00<00:11, 25.06it/s][A
+Run the episode:   4%|▎         | 11/300 [00:00<00:13, 21.24it/s][A
+Run the episode:   5%|▍         | 14/300 [00:00<00:16, 17.82it/s][A
+Run the episode:   5%|▌         | 16/300 [00:00<00:17, 15.81it/s][A
+Run the episode:   6%|▌         | 18/300 [00:01<00:19, 14.21it/s][A
+Run the episode:   7%|▋         | 20/300 [00:01<00:22, 12.54it/s][A
+Run the episode:   7%|▋         | 22/300 [00:01<00:24, 11.24it/s][A
+Run the episode:   8%|▊         | 24/300 [00:01<00:26, 10.35it/s][A
+Run the episode:   9%|▊         | 26/300 [00:01<00:28,  9.69it/s][A
+Run the episode:   9%|▉         | 27/300 [00:02<00:29,  9.39it/s][A
+Run the episode:   9%|▉         | 28/300 [00:02<00:29,  9.09it/s][A
+Run the episode:  10%|▉         | 29/300 [00:02<00:30,  8.82it/s][A
+Run the episode:  10%|█         | 30/300 [00:02<00:31,  8.53it/s][A
+Run the episode:  10%|█         | 31/300 [00:02<00:32,  8.24it/s][A
+Run the episode:  11%|█         | 32/300 [00:02<00:33,  8.07it/s][A
+Run the episode:  11%|█         | 33/300 [00:02<00:33,  7.86it/s][A
+Run the episode:  11%|█▏        | 34/300 [00:02<00:34,  7.69it/s][A
+Run the episode:  12%|█▏        | 35/300 [00:03<00:35,  7.54it/s][A
+Run the episode:  12%|█▏        | 36/300 [00:03<00:35,  7.44it/s][A
+Run the episode:  12%|█▏        | 37/300 [00:03<00:36,  7.29it/s][A
+Run the episode:  13%|█▎        | 38/300 [00:03<00:37,  7.05it/s][A
+Run the episode:  13%|█▎        | 39/300 [00:03<00:37,  6.97it/s][A
+Run the episode:  13%|█▎        | 40/300 [00:03<00:37,  6.90it/s][A
+Run the episode:  14%|█▎        | 41/300 [00:04<00:37,  6.82it/s][A
+Run the episode:  14%|█▍        | 42/300 [00:04<00:38,  6.77it/s][A
+Run the episode:  14%|█▍        | 43/300 [00:04<00:38,  6.68it/s][A
+Run the episode:  15%|█▍        | 44/300 [00:04<00:38,  6.64it/s][A
+Run the episode:  15%|█▌        | 45/300 [00:04<00:39,  6.53it/s][A
+Run the episode:  15%|█▌        | 46/300 [00:04<00:39,  6.38it/s][A
+Run the episode:  16%|█▌        | 47/300 [00:04<00:39,  6.33it/s][A
+Run the episode:  16%|█▌        | 48/300 [00:05<00:40,  6.19it/s][A
+Run the episode:  16%|█▋        | 49/300 [00:05<00:41,  6.07it/s][A
+Run the episode:  17%|█▋        | 50/300 [00:05<00:41,  6.05it/s][A
+Run the episode:  17%|█▋        | 51/300 [00:05<00:42,  5.91it/s][A
+Run the episode:  17%|█▋        | 52/300 [00:05<00:42,  5.83it/s][A
+Run the episode:  18%|█▊        | 53/300 [00:06<00:44,  5.49it/s][A
+Run the episode:  18%|█▊        | 54/300 [00:06<00:44,  5.50it/s][A
+Run the episode:  18%|█▊        | 55/300 [00:06<00:44,  5.54it/s][A
+Run the episode:  19%|█▊        | 56/300 [00:06<00:43,  5.60it/s][A
+Run the episode:  19%|█▉        | 57/300 [00:06<00:43,  5.64it/s][A
+Run the episode:  19%|█▉        | 58/300 [00:06<00:42,  5.66it/s][A
+Run the episode:  20%|█▉        | 59/300 [00:07<00:42,  5.63it/s][A
+Run the episode:  20%|██        | 60/300 [00:07<00:42,  5.62it/s][A
+Run the episode:  20%|██        | 61/300 [00:07<00:42,  5.58it/s][A
+Run the episode:  21%|██        | 62/300 [00:07<00:42,  5.56it/s][A
+Run the episode:  21%|██        | 63/300 [00:07<00:43,  5.49it/s][A
+Run the episode:  21%|██▏       | 64/300 [00:07<00:42,  5.54it/s][A
+Run the episode:  22%|██▏       | 65/300 [00:08<00:44,  5.23it/s][A
+Run the episode:  22%|██▏       | 66/300 [00:08<00:45,  5.17it/s][A
+Run the episode:  22%|██▏       | 67/300 [00:08<00:45,  5.10it/s][A
+Run the episode:  23%|██▎       | 68/300 [00:08<00:45,  5.07it/s][A
+Run the episode:  23%|██▎       | 69/300 [00:09<00:45,  5.04it/s][A
+Run the episode:  23%|██▎       | 70/300 [00:09<00:45,  5.02it/s][A
+Run the episode:  24%|██▎       | 71/300 [00:09<00:45,  5.00it/s][A
+Run the episode:  24%|██▍       | 72/300 [00:09<00:46,  4.92it/s][A
+Run the episode:  24%|██▍       | 73/300 [00:09<00:47,  4.77it/s][A
+Run the episode:  25%|██▍       | 74/300 [00:10<00:47,  4.74it/s][A
+Run the episode:  25%|██▌       | 75/300 [00:10<00:47,  4.74it/s][A
+Run the episode:  25%|██▌       | 76/300 [00:10<00:47,  4.75it/s][A
+Run the episode:  26%|██▌       | 77/300 [00:10<00:47,  4.74it/s][A
+Run the episode:  26%|██▌       | 78/300 [00:10<00:46,  4.76it/s][A
+Run the episode:  26%|██▋       | 79/300 [00:11<00:48,  4.60it/s][A
+Run the episode:  27%|██▋       | 80/300 [00:11<00:47,  4.64it/s][A
+Run the episode:  27%|██▋       | 81/300 [00:11<00:47,  4.65it/s][A
+Run the episode:  27%|██▋       | 82/300 [00:11<00:46,  4.66it/s][A
+Run the episode:  28%|██▊       | 83/300 [00:12<00:47,  4.59it/s][A
+Run the episode:  28%|██▊       | 84/300 [00:12<00:47,  4.58it/s][A
+Run the episode:  28%|██▊       | 85/300 [00:12<00:49,  4.33it/s][A
+Run the episode:  29%|██▊       | 86/300 [00:12<00:49,  4.35it/s][A
+Run the episode:  29%|██▉       | 87/300 [00:12<00:48,  4.36it/s][A
+Run the episode:  29%|██▉       | 88/300 [00:13<00:47,  4.42it/s][A
+Run the episode:  30%|██▉       | 89/300 [00:13<00:47,  4.45it/s][A
+Run the episode:  30%|███       | 90/300 [00:13<00:46,  4.48it/s][A
+Run the episode:  30%|███       | 91/300 [00:13<00:46,  4.48it/s][A
+Run the episode:  31%|███       | 92/300 [00:14<00:47,  4.37it/s][A
+Run the episode:  31%|███       | 93/300 [00:14<00:47,  4.38it/s][A
+Run the episode:  31%|███▏      | 94/300 [00:14<00:47,  4.35it/s][A
+Run the episode:  32%|███▏      | 95/300 [00:14<00:47,  4.35it/s][A
+Run the episode:  32%|███▏      | 96/300 [00:14<00:46,  4.37it/s][A
+Run the episode:  32%|███▏      | 97/300 [00:15<00:46,  4.37it/s][A
+Run the episode:  33%|███▎      | 98/300 [00:15<00:45,  4.41it/s][A
+Run the episode:  33%|███▎      | 99/300 [00:15<00:45,  4.38it/s][A
+Run the episode:  33%|███▎      | 100/300 [00:15<00:45,  4.40it/s][A
+Run the episode:  34%|███▎      | 101/300 [00:16<00:44,  4.44it/s][A
+Run the episode:  34%|███▍      | 102/300 [00:16<00:45,  4.37it/s][A
+Run the episode:  34%|███▍      | 103/300 [00:16<00:44,  4.40it/s][A
+Run the episode:  35%|███▍      | 104/300 [00:16<00:44,  4.42it/s][A
+Run the episode:  35%|███▌      | 105/300 [00:17<00:44,  4.43it/s][A
+Run the episode:  35%|███▌      | 106/300 [00:17<00:43,  4.44it/s][A
+Run the episode:  36%|███▌      | 107/300 [00:17<00:43,  4.44it/s][A
+Run the episode:  36%|███▌      | 108/300 [00:17<00:44,  4.33it/s][A
+Run the episode:  36%|███▋      | 109/300 [00:17<00:43,  4.35it/s][A
+Run the episode:  37%|███▋      | 110/300 [00:18<00:43,  4.41it/s][A
+Run the episode:  37%|███▋      | 111/300 [00:18<00:43,  4.38it/s][A
+Run the episode:  37%|███▋      | 112/300 [00:18<00:43,  4.37it/s][A
+Run the episode:  38%|███▊      | 113/300 [00:18<00:42,  4.37it/s][A
+Run the episode:  38%|███▊      | 114/300 [00:19<00:42,  4.41it/s][A
+Run the episode:  38%|███▊      | 115/300 [00:19<00:41,  4.45it/s][A
+Run the episode:  39%|███▊      | 116/300 [00:19<00:41,  4.48it/s][A
+Run the episode:  39%|███▉      | 117/300 [00:19<00:40,  4.49it/s][A
+Run the episode:  39%|███▉      | 118/300 [00:19<00:40,  4.54it/s][A
+Run the episode:  40%|███▉      | 119/300 [00:20<00:40,  4.44it/s][A
+Run the episode:  40%|████      | 120/300 [00:20<00:41,  4.37it/s][A
+Run the episode:  40%|████      | 121/300 [00:20<00:40,  4.37it/s][A
+Run the episode:  41%|████      | 122/300 [00:20<00:40,  4.39it/s][A
+Run the episode:  41%|████      | 123/300 [00:21<00:40,  4.40it/s][A
+Run the episode:  41%|████▏     | 124/300 [00:21<00:40,  4.37it/s][A
+Run the episode:  42%|████▏     | 125/300 [00:21<00:39,  4.42it/s][A
+Run the episode:  42%|████▏     | 126/300 [00:21<00:39,  4.40it/s][A
+Run the episode:  42%|████▏     | 127/300 [00:22<00:39,  4.36it/s][A
