@@ -16,8 +16,12 @@ class Plotter:
         cmap: str = "viridis", 
         fixed_path: str = "./output_modification/fixed/4x4/4x4c2c1.csv", 
         baseline_models_path: dict = {}, 
+<<<<<<< HEAD
         target_time: int = 600,
         ignore: list = []
+=======
+        target_time: int = 600
+>>>>>>> 5b3b8e77810482cc57dd29426482d8b7081626db
     ):
         self.main_path = main_path
         if not isinstance(self.main_path, str):
@@ -33,7 +37,10 @@ class Plotter:
         self.max_value = float('-inf')  # Initialize max_value to negative infinity
         self.target_time = target_time
         self.path = {}
+<<<<<<< HEAD
         self.ignore = ignore
+=======
+>>>>>>> 5b3b8e77810482cc57dd29426482d8b7081626db
         self.shape_path(self.main_path)
         self.read_data()
         self.read_baseline_models()
@@ -52,6 +59,7 @@ class Plotter:
             subdirs = [d for d in glob(os.path.join(main_path, "*")) if os.path.isdir(d)]
             
             for path in subdirs:
+<<<<<<< HEAD
                 for value in self.ignore:
                     if value in path:
                         continue
@@ -66,6 +74,17 @@ class Plotter:
                 #         new_name_list.append(name_list[i + 1])
                 # key = (" ".join([f"\\{name} " if i % 2 == 0 else "= " + name + ", " for i, name in enumerate(new_name_list)])).strip(", ")
                 key = os.path.basename(path)
+=======
+                name_list = os.path.basename(path).replace("_nu_", "_mu_").replace("_cutoff_", "_beta_").split("_")
+                new_name_list = []
+                for i in range(0, len(name_list), 2):
+                    if name_list[i+1] == "0.0" or name_list[i+1] == "0" or name_list[i+1] == 0:
+                        pass
+                    else:
+                        new_name_list.append(name_list[i])
+                        new_name_list.append(name_list[i + 1])
+                key = (" ".join([f"\\{name} " if i % 2 == 0 else "= " + name + ", " for i, name in enumerate(new_name_list)])).strip(", ")
+>>>>>>> 5b3b8e77810482cc57dd29426482d8b7081626db
                 self.path[key] = list(glob(path + "/*"))[0]
             
         else:
@@ -171,7 +190,11 @@ class Plotter:
 
             fig, axs = plt.subplots(nrows=nrows, ncols=ncols, figsize=(14, 5 * nrows), constrained_layout=True)
             axs = axs.flatten()
+<<<<<<< HEAD
             fig.suptitle(rf"{key}", fontsize=16)
+=======
+            fig.suptitle(rf"${key.strip(',')}$", fontsize=16)
+>>>>>>> 5b3b8e77810482cc57dd29426482d8b7081626db
             self.dataframes[key] = dict(sorted(self.dataframes[key].items(), key=lambda item: item[0]))  # Sort by alpha value
             for idx, (alpha, df) in enumerate(self.dataframes[key].items()):
                 if not isinstance(df, pl.DataFrame):
@@ -259,8 +282,13 @@ class Plotter:
 
 
 if __name__ == "__main__":
+<<<<<<< HEAD
     path = "/Users/cavelab/Documents/Github/FRITS-Backup/src/output_modification/4x4"
     ignore = ["attacked"]
+=======
+    path = "/Users/cavelab/Documents/Github/FRITS-Backup/src/output_modification/4x4/attacked"
+
+>>>>>>> 5b3b8e77810482cc57dd29426482d8b7081626db
     baseline_models_path = {
         "FedLight-1 and 5": "./src/models/fedlight/output/1_5",
         "FedLight-6 and 11": "./src/models/fedlight/output/6_11",

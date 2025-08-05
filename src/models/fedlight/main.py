@@ -37,7 +37,11 @@ def main():
     parser.add_argument('--net', type=str, default=BASE_DIR + r"/../../networks/4x4.net.xml")
     parser.add_argument('--route', type=str, default=BASE_DIR + r'/../../routes/4x4c2c1.rou.xml')
     parser.add_argument("--num-episodes", type=int, default=3)
+<<<<<<< HEAD
     parser.add_argument("--noised-edge", type=str, default="6,11")
+=======
+    parser.add_argument("--noised-edge", type=str, default="all")
+>>>>>>> 5b3b8e77810482cc57dd29426482d8b7081626db
     parser.add_argument("--noise-added", type=float, default=0.1)
     parser.add_argument("--gui", action="store_true")
     parser.add_argument("--simulation-time", type=int, default=300)
