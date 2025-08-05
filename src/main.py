@@ -10,11 +10,7 @@ import numpy as np
 import pandas as pd
 from tqdm import tqdm
 from src.enviroment.custom_sumorl_env import CustomSUMORLEnv
-<<<<<<< HEAD
 from src.enviroment.state_env import create_arrival_departure_state
-=======
-from src.enviroment.state_env import create_arrival_departure_state, ObservationClassFactory
->>>>>>> 5b3b8e77810482cc57dd29426482d8b7081626db
 from src.enviroment.utility import blend_rewards, blend_rewards_neighborhood, diff_waiting_time_reward_noised, diff_waiting_time_reward_normal, diff_waiting_time_reward_normal_phase_continuity, get_connectivity_network, get_intersections_distance_matrix, get_neighbours
 from src.rl.dql import DQLAgent
 
@@ -58,13 +54,10 @@ def main():
     parser.add_argument("--distance-threshold", type=int, default=30)
     parser.add_argument("--omega", type=float, default=0.0)
     parser.add_argument("--cutoff", type=int, default=0)
-<<<<<<< HEAD
     parser.add_argument("--output-dir", type=str, default="")
     ## Run the next two simulations first
     # TODO: Don't the next TODO first. Do this TODO first. This TODO is to run different simulations for different mu for only one intersection (10)
     # TODO: Try running the simulation for when we only have mu but for two intersections (1,5)
-=======
->>>>>>> 5b3b8e77810482cc57dd29426482d8b7081626db
 
 
 
@@ -88,11 +81,7 @@ def main():
         reward_fn = diff_waiting_time_reward_normal
         attack_state = "no_attack"
     # Create a pickleable observation factory for multiprocessing
-<<<<<<< HEAD
     custom_obs_factory = create_arrival_departure_state(alpha=3.0, noise_added=True, attacked_ts=args.noised_edge)
-=======
-    custom_obs_factory = ObservationClassFactory(alpha=args.alpha, noise_added=True)
->>>>>>> 5b3b8e77810482cc57dd29426482d8b7081626db
     env = CustomSUMORLEnv(
         net_file=args.net,
         route_file=args.route,
@@ -146,18 +135,8 @@ def main():
         agent.epsilon = 0.0
         agent.epsilon_end = 0.0
         agent.q_network.eval()
-<<<<<<< HEAD
     output_folder = args.output_dir
     
-=======
-    output_folder = (
-        BASE_DIR + f"/output_modification/4x4/{attack_state}/"
-        f"omega_{args.omega}_cutoff_{args.cutoff}_nu_{args.nu}/"
-    )
-    output_folder += f"_omega_{args.omega}" if args.omega > 0 else ""
-    output_folder += f"_cutoff_{args.cutoff}" if args.cutoff > 0 else ""
-    output_folder += f"_nu_{args.nu}" if args.nu > 0 else ""
->>>>>>> 5b3b8e77810482cc57dd29426482d8b7081626db
     alpha_tasks = []
     
     if not attack_state == "attacked":
@@ -209,11 +188,7 @@ def run_episode(env, simulation_time, agents, distance_matrix, distance_mean,
                 omega, cutoff, nu, batch_size, connectivity, reward_fn):
     episode_rewards = []
     state = env.reset()
-<<<<<<< HEAD
     for _ in tqdm(range(simulation_time), desc=f"Run the episode", total=simulation_time):
-=======
-    for _ in range(simulation_time):
->>>>>>> 5b3b8e77810482cc57dd29426482d8b7081626db
         actions = {ts: agent.act(state[ts]) for ts, agent in agents.items()}
         new_state, reward, _, _ = env.step(action=actions)
         reward = {ts_id: reward_fn(ts) for ts_id, ts in env.traffic_signals.items()}

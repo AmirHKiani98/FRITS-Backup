@@ -10,11 +10,7 @@ class ConfigurableArrivalDepartureState(ObservationFunction):
     A configurable arrival-departure state observation class that supports noise injection.
     This is a top-level class that can be pickled for multiprocessing.
     """
-<<<<<<< HEAD
     def __init__(self, ts: TrafficSignalCustom, alpha=0.0, noise_added=False, attacked_ts=""):
-=======
-    def __init__(self, ts: TrafficSignalCustom, alpha=0.0, noise_added=False):
->>>>>>> 5b3b8e77810482cc57dd29426482d8b7081626db
         super().__init__(ts)
         
         # Store the noise parameters
@@ -54,12 +50,8 @@ class ConfigurableArrivalDepartureState(ObservationFunction):
         
         # Apply noise if enabled
         if self.noise_added and self.alpha > 0:
-<<<<<<< HEAD
             if str(self.ts.id) in self.attacked_ts or self.attacked_ts == "all":
                 state = self.add_noise_to_state(state)
-=======
-            state = self.add_noise_to_state(state)
->>>>>>> 5b3b8e77810482cc57dd29426482d8b7081626db
             
         return state
     
@@ -69,10 +61,7 @@ class ConfigurableArrivalDepartureState(ObservationFunction):
         for value in state:
             # Generate noise based on alpha
             noise = random.randint(0, int(self.alpha))
-<<<<<<< HEAD
             # TODO: Capture the flow and 
-=======
->>>>>>> 5b3b8e77810482cc57dd29426482d8b7081626db
             noisy_value = max(0, value + noise)  # Ensure non-negative values
             noisy_state.append(int(noisy_value))
         return noisy_state
@@ -108,7 +97,6 @@ class ObservationClassFactory:
     A pickleable factory class for creating observation classes with specific parameters.
     This can be passed to multiprocessing workers.
     """
-<<<<<<< HEAD
     def __init__(self, alpha=0.0, noise_added=False, attacked_ts=""):
         self.alpha = alpha
         self.noise_added = noise_added
@@ -117,32 +105,15 @@ class ObservationClassFactory:
     def create_observation_class(self, ts):
         """Create an observation class instance with the stored parameters."""
         return ConfigurableArrivalDepartureState(ts, alpha=self.alpha, noise_added=self.noise_added, attacked_ts=self.attacked_ts)
-=======
-    def __init__(self, alpha=0.0, noise_added=False):
-        self.alpha = alpha
-        self.noise_added = noise_added
-    
-    def create_observation_class(self, ts):
-        """Create an observation class instance with the stored parameters."""
-        return ConfigurableArrivalDepartureState(ts, alpha=self.alpha, noise_added=self.noise_added)
->>>>>>> 5b3b8e77810482cc57dd29426482d8b7081626db
     
     def __call__(self, ts):
         """Make the factory callable."""
         return self.create_observation_class(ts)
 
-<<<<<<< HEAD
 def create_arrival_departure_state(alpha=0.0, noise_added=False, attacked_ts=""):
-=======
-def create_arrival_departure_state(alpha=0.0, noise_added=False):
->>>>>>> 5b3b8e77810482cc57dd29426482d8b7081626db
     """
     Factory function that returns an ObservationClassFactory.
     This approach is pickleable and works with multiprocessing.
     """
-<<<<<<< HEAD
     return ObservationClassFactory(alpha=alpha, noise_added=noise_added, attacked_ts=attacked_ts)
-=======
-    return ObservationClassFactory(alpha=alpha, noise_added=noise_added)
->>>>>>> 5b3b8e77810482cc57dd29426482d8b7081626db
 

@@ -53,11 +53,7 @@ class CustomSUMORLEnv(SumoEnvironment):
         random_flow = False,
         real_data_type = False,
         percentage_added=None,
-<<<<<<< HEAD
         step_length=1) -> None:
-=======
-        step_length=0.1) -> None:
->>>>>>> 5b3b8e77810482cc57dd29426482d8b7081626db
         super().__init__(net_file, route_file, out_csv_name, use_gui, virtual_display, begin_time, num_seconds, max_depart_delay, waiting_time_memory, time_to_teleport, delta_time, yellow_time, min_green, max_green, single_agent, reward_fn, observation_class, add_system_info, add_per_agent_info, sumo_seed, fixed_ts, sumo_warnings, additional_sumo_cmd, render_mode)
         if not encode_function == None:
             self.encode = encode_function
