@@ -3,9 +3,9 @@ import os
 import numpy as np
 
 # With cutoff
-for attacked_intersections in ["10"]:
+for attacked_intersections in ["1,5"]:
     for cutoff in [0]:
-        for nu in np.arange(0.1, 1, 0.1):
+        for nu in np.arange(0.3, 1, 0.7):
             nu = float(nu)
             BASE_DIR = os.path.dirname(os.path.abspath(__file__))
             output_folder = (
