@@ -193,18 +193,20 @@ def run_episode(env, simulation_time, agents, distance_matrix, distance_mean,
     for _ in tqdm(range(simulation_time), desc=f"Run the episode", total=simulation_time):
         action_probs = {ts: agents[ts].actor(torch.FloatTensor(state[ts]).unsqueeze(0)) for ts in agents}
         actions = {ts: torch.distributions.Categorical(action_probs[ts]).sample().item() for ts in agents}
-        new_state, reward, _, _ = env.step(action=actions)
+        new_state, _, _, _ = env.step(action=actions)
+        
+        # Use consistent reward function for both actor-critic and DQL
+        reward = {ts_id: reward_fn(ts) for ts_id, ts in env.traffic_signals.items()}
         gamma = 0.95
 
         for ts in agents:
             s = torch.FloatTensor(state[ts])
             a = actions[ts]
-            r = reward[ts]
+            r = reward[ts]  # Now using the same reward as DQL
             s_ = torch.FloatTensor(new_state[ts])            
             td_target = r + gamma * agents[ts].critic(s_).item()
             advantage = td_target - agents[ts].critic(s).item()
             trajectory[ts].append((s, a, td_target, advantage))
-        reward = {ts_id: reward_fn(ts) for ts_id, ts in env.traffic_signals.items()}
         if not isinstance(reward, dict):
             raise ValueError("Reward should be a dictionary with traffic signal IDs as keys.")
         
