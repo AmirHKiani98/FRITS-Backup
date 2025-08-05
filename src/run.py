@@ -4,7 +4,7 @@ import os
 # With cutoff
 for attacked_intersections in ["10"]:
     for cutoff in [0]:
-        for nu in [0.1 ,0.2,0.5,0.6, 0.7, 0.9]:
+        for nu in [0.5]:
             BASE_DIR = os.path.dirname(os.path.abspath(__file__))
             output_folder = (
                 BASE_DIR + f"/output_modification/4x4/"

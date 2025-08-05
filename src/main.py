@@ -81,7 +81,7 @@ def main():
         reward_fn = diff_waiting_time_reward_normal
         attack_state = "no_attack"
     # Create a pickleable observation factory for multiprocessing
-    custom_obs_factory = create_arrival_departure_state(alpha=3.0, noise_added=True, attacked_ts=args.noised_edge)
+    custom_obs_factory = create_arrival_departure_state(alpha=0, noise_added=True, attacked_ts=args.noised_edge)
     env = CustomSUMORLEnv(
         net_file=args.net,
         route_file=args.route,
