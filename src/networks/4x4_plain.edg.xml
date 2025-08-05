@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<<<<<<< HEAD
-<!-- generated on 2025-08-04 23:28:18 by Eclipse SUMO netconvert Version 1.20.0
-=======
-<!-- generated on 2025-07-08 03:45:55 by Eclipse SUMO netconvert Version 1.20.0
->>>>>>> 5b3b8e77810482cc57dd29426482d8b7081626db
-<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
+<!-- generated on 2025-08-05 01:21:48 by Eclipse SUMO netconvert Version v1_22_0+1469-7f242b8e1f3
+<netconvertConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
 
     <input>
-        <sumo-net-file value="/Users/cavelab/Documents/Github/FRITS-Backup/src/networks/4x4.net.xml"/>
+        <sumo-net-file value="/Users/amirhosseinkiani/Documents/Github/FRITS-Backup/src/networks/4x4.net.xml"/>
     </input>
 
     <output>
-        <plain-output-prefix value="/Users/cavelab/Documents/Github/FRITS-Backup/src/networks/4x4_plain"/>
+        <plain-output-prefix value="/Users/amirhosseinkiani/Documents/Github/FRITS-Backup/src/networks/4x4_plain"/>
     </output>
 
     <processing>
@@ -33,7 +29,7 @@
         <walkingareas value="0"/>
     </pedestrian>
 
-</configuration>
+</netconvertConfiguration>
 -->
 
 <edges version="1.20" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/edges_file.xsd">

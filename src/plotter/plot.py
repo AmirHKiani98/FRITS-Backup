@@ -48,6 +48,7 @@ class Plotter:
         
         # If main_path is a directory, look for subdirectories
         if os.path.isdir(main_path):
+            print(f"'{main_path}' is a directory. Looking for subdirectories...")
             # Look for subdirectories that match the pattern
             subdirs = [d for d in glob(os.path.join(main_path, "*")) if os.path.isdir(d)]
             
@@ -259,7 +260,7 @@ class Plotter:
 
 
 if __name__ == "__main__":
-    path = "/Users/cavelab/Documents/Github/FRITS-Backup/src/output_modification/4x4"
+    path = "./src/output_modification/4x4"
     ignore = ["attacked"]
     baseline_models_path = {
         "FedLight-1 and 5": "./src/models/fedlight/output/1_5",
