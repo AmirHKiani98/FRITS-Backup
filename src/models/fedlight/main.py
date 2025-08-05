@@ -12,7 +12,7 @@ import numpy as np
 import pandas as pd
 from tqdm import tqdm
 from src.models.fedlight.enviroment.custom_sumorl_env import CustomSUMORLEnv
-from src.models.fedlight.enviroment.state_env import ArrivalDepartureState
+from src.models.fedlight.enviroment.state_env import ConfigurableArrivalDepartureState, create_arrival_departure_state
 from src.models.fedlight.agent import Agent as FedLightAgent
 from src.models.fedlight.cloud import FedLightCloud
 from src.models.fedlight.enviroment.utility import (
@@ -36,14 +36,15 @@ def main():
 
     parser.add_argument('--net', type=str, default=BASE_DIR + r"/../../networks/4x4.net.xml")
     parser.add_argument('--route', type=str, default=BASE_DIR + r'/../../routes/4x4c2c1.rou.xml')
-    parser.add_argument("--num-episodes", type=int, default=5)
-    parser.add_argument("--noised-edge", type=str, default="10")
+    parser.add_argument("--num-episodes", type=int, default=3)
+    parser.add_argument("--noised-edge", type=str, default="6,11")
     parser.add_argument("--noise-added", type=float, default=0.1)
     parser.add_argument("--gui", action="store_true")
-    parser.add_argument("--simulation-time", type=int, default=1200)
+    parser.add_argument("--simulation-time", type=int, default=300)
     parser.add_argument("--run-per-alpha", type=int, default=3)
     parser.add_argument("--delta-time", type=int, default=3)
     parser.add_argument("--gamma", type=float, default=0.95)
+    parser.add_argument("--output-dir", type=str, default="")
 
 
     args = parser.parse_args()
@@ -51,7 +52,7 @@ def main():
     num_episodes = args.num_episodes
     reward_fn = lambda ts: get_pressure(ts, args.noised_edge, args.noise_added)
     
-
+    custom_obs_factory = create_arrival_departure_state(alpha=3.0, noise_added=True, attacked_ts=args.noised_edge)
     env = CustomSUMORLEnv(
         net_file=args.net,
         route_file=args.route,
@@ -60,7 +61,7 @@ def main():
         min_green=5,
         yellow_time=2,
         delta_time=args.delta_time,
-        observation_class=ArrivalDepartureState, # type: ignore
+        observation_class=custom_obs_factory, # type: ignore
         encode_function=no_encode,
         random_flow=False,
         real_data_type=False,
@@ -98,7 +99,7 @@ def main():
         # agent.epsilon = 0.0
         # agent.epsilon_end = 0.0
         agent.actor.eval()
-    output_folder = (
+    output_folder = args.output_dir if args.output_dir != "" else (
         BASE_DIR + f"/output/i4-fedlight/"
     )
     # for ts, agent in agents.items():
@@ -116,7 +117,7 @@ def main():
                 args.delta_time,
                 alpha,
                 run,
-                ArrivalDepartureState, # type: ignore
+                custom_obs_factory, # type: ignore
                 agents,
                 output_folder,
                 args.noised_edge,

@@ -12,8 +12,8 @@ import torch.optim as optim
 
 import random
 
-from utils import Memory
-from model import QNetwork
+from .utils import Memory
+from .model import QNetwork
 
 class DQLAgent:
     def __init__(self, 
@@ -77,25 +77,27 @@ class DQLAgent:
     
     def update(self, batch_size):
         self.q_network.train()
-        state, action, reward, next_state = self.memory.sample(batch_size)
+        state, action, reward, next_state, done = self.memory.sample(batch_size)
         state = torch.FloatTensor(state)
         next_state = torch.FloatTensor(next_state)
         action = torch.LongTensor(action)
         reward = torch.FloatTensor(reward)
+        done = torch.FloatTensor(done)
         
         q_values = self.q_network(state)
         with torch.no_grad():
-            next_q_values = self.q_network(next_state)
+            next_q_values = self.target_q_network(next_state)
         
         q_value = q_values.gather(1, action.unsqueeze(1)).squeeze(1)
         max_next_q_value = next_q_values.max(1)[0]
-        expected_q_value = reward + self.gamma * max_next_q_value 
+        expected_q_value = reward + self.gamma * max_next_q_value * (1 - done)
         
         loss = self.criterion(q_value, expected_q_value)
         self.losses.append(loss.item())
         
         self.optimizer.zero_grad()
         loss.backward()
+        torch.nn.utils.clip_grad_norm_(self.q_network.parameters(), max_norm=1.0)
         self.optimizer.step()
         
         self.step_count += 1

@@ -10,7 +10,7 @@ import numpy as np
 import pandas as pd
 from tqdm import tqdm
 from src.enviroment.custom_sumorl_env import CustomSUMORLEnv
-from src.enviroment.state_env import ArrivalDepartureState
+from src.enviroment.state_env import create_arrival_departure_state
 from src.enviroment.utility import blend_rewards, blend_rewards_neighborhood, diff_waiting_time_reward_noised, diff_waiting_time_reward_normal, diff_waiting_time_reward_normal_phase_continuity, get_connectivity_network, get_intersections_distance_matrix, get_neighbours
 from src.rl.dql import DQLAgent
 
@@ -21,6 +21,14 @@ def no_encode(state, ts_id):
 
 def run_alpha_unpack(args):
     return run_alpha(*args)
+
+class NoisedRewardFunction:
+    """A pickleable reward function class for noised scenarios."""
+    def __init__(self, noised_edge):
+        self.noised_edge = noised_edge
+    
+    def __call__(self, ts):
+        return diff_waiting_time_reward_noised(ts, self.noised_edge)
 
 def main():
     """
@@ -33,19 +41,33 @@ def main():
 
     parser.add_argument('--net', type=str, default=BASE_DIR + r"/networks/4x4.net.xml")
     parser.add_argument('--route', type=str, default=BASE_DIR + r'/routes/4x4c2c1.rou.xml')
-    parser.add_argument("--intersection-id", type=str, default="10")
-    parser.add_argument("--num-episodes", type=int, default=10)
+    parser.add_argument("--intersection-id", type=str, default="1,5")
+    parser.add_argument("--num-episodes", type=int, default=5)
     parser.add_argument("--gui", type=bool, default=False)
-    parser.add_argument("--noised-edge", type=str, default="10")
+    parser.add_argument("--noised-edge", type=str, default="all")
     parser.add_argument("--noise-added", type=bool, default=True)
-    parser.add_argument("--simulation-time", type=int, default=1200)
+    parser.add_argument("--alpha", type=float, default=5, help="Noise level for the state perturbation (0 for no noise).")
+    parser.add_argument("--simulation-time", type=int, default=300)
     parser.add_argument("--run-per-alpha", type=int, default=3)
     parser.add_argument("--delta-time", type=int, default=3)
     parser.add_argument("--nu", type=float, default=0.5)
-    parser.add_argument("--distance-threshold", type=int, default=200)
+    parser.add_argument("--distance-threshold", type=int, default=30)
     parser.add_argument("--omega", type=float, default=0.0)
-    parser.add_argument("--cutoff", type=int, default=2)
+    parser.add_argument("--cutoff", type=int, default=0)
+    parser.add_argument("--output-dir", type=str, default="")
+    ## Run the next two simulations first
+    # TODO: Don't the next TODO first. Do this TODO first. This TODO is to run different simulations for different mu for only one intersection (10)
+    # TODO: Try running the simulation for when we only have mu but for two intersections (1,5)
 
+
+
+
+
+    # TODO: Make alpha proportional to the number of vehicle on the approach.
+    # TODO: Our model is not performing well without attack. Let's not use cutoff. (Reverse back)
+    # TODO: Another scenarios: Weight the reward by the distance too
+    # TODO: The issues might be because of the design of the attacks.
+    # TODO: Try changing the delta_time
 
     args = parser.parse_args()
 
@@ -53,12 +75,13 @@ def main():
     seed = 7
     num_episodes = args.num_episodes
     if args.noise_added:
-        reward_fn = lambda ts: diff_waiting_time_reward_noised(ts, args.noised_edge)
+        reward_fn = NoisedRewardFunction(args.noised_edge)
         attack_state = "attacked"
     else:
         reward_fn = diff_waiting_time_reward_normal
         attack_state = "no_attack"
-
+    # Create a pickleable observation factory for multiprocessing
+    custom_obs_factory = create_arrival_departure_state(alpha=3.0, noise_added=True, attacked_ts=args.noised_edge)
     env = CustomSUMORLEnv(
         net_file=args.net,
         route_file=args.route,
@@ -67,12 +90,12 @@ def main():
         min_green=5,
         yellow_time=2,
         delta_time=args.delta_time,
-        observation_class=ArrivalDepartureState, # type: ignore
+        observation_class=custom_obs_factory, # type: ignore
         encode_function=no_encode,
         random_flow=False,
         real_data_type=False,
         percentage_added=0.1,
-        reward_fn=diff_waiting_time_reward_normal
+        reward_fn=reward_fn
     )
 
     env.reset()
@@ -112,18 +135,13 @@ def main():
         agent.epsilon = 0.0
         agent.epsilon_end = 0.0
         agent.q_network.eval()
-    output_folder = (
-        BASE_DIR + f"/output/i4-cyber_attack/rl/without_frl/{attack_state}/"
-        f"off-peak/diff_waiting_time_reward_normal_phase_continuity/"
-        f"omega_{args.omega}_cutoff_{args.cutoff}_nu_{args.nu}/"
-    )
-    output_folder += f"_omega_{args.omega}" if args.omega > 0 else ""
-    output_folder += f"_cutoff_{args.cutoff}" if args.cutoff > 0 else ""
-    output_folder += f"_nu_{args.nu}" if args.nu > 0 else ""
+    output_folder = args.output_dir
+    
     alpha_tasks = []
     
+    if not attack_state == "attacked":
+        alphas = [0] # If no attack, only run alpha = 0
     for alpha in alphas:
-        
         for run in range(args.run_per_alpha):
             alpha_tasks.append([
                 args.net,
@@ -133,16 +151,19 @@ def main():
                 args.delta_time,
                 alpha,
                 run,
-                ArrivalDepartureState, # type: ignore
+                custom_obs_factory, # type: ignore
                 agents,
                 attack_state,
-                output_folder
+                output_folder,
+                reward_fn
             ]
             )
         
     with Pool(processes=cpu_count()) as pool:
         for _ in tqdm(pool.imap_unordered(run_alpha_unpack, alpha_tasks), total=len(alpha_tasks), desc="Alpha Tasks"):
             pass
+    if traci.isLoaded():
+        traci.close()    
     metadata = {
         "net_file": args.net,
         "route_file": args.route,
@@ -167,10 +188,10 @@ def run_episode(env, simulation_time, agents, distance_matrix, distance_mean,
                 omega, cutoff, nu, batch_size, connectivity, reward_fn):
     episode_rewards = []
     state = env.reset()
-    for _ in tqdm(range(simulation_time), desc="Processing episode"):
+    for _ in tqdm(range(simulation_time), desc=f"Run the episode", total=simulation_time):
         actions = {ts: agent.act(state[ts]) for ts, agent in agents.items()}
         new_state, reward, _, _ = env.step(action=actions)
-        reward = {ts: diff_waiting_time_reward_normal_phase_continuity(env.traffic_signals[ts], reward_fn) for ts in env.ts_ids} # type: ignore
+        reward = {ts_id: reward_fn(ts) for ts_id, ts in env.traffic_signals.items()}
         if not isinstance(reward, dict):
             raise ValueError("Reward should be a dictionary with traffic signal IDs as keys.")
         
@@ -185,14 +206,13 @@ def run_episode(env, simulation_time, agents, distance_matrix, distance_mean,
         
         for ts, agent in agents.items():
             agent.memory.push(
-                new_state[ts], actions[ts], reward[ts], env.encode(state[ts], ts)
+                env.encode(state[ts], ts), actions[ts], reward[ts], new_state[ts], False
             )
             if len(agent.memory) > batch_size:
                 agent.update(batch_size)
         
         state = new_state
         episode_rewards.append(sum(reward.values()))
-    
     return episode_rewards
 
 def run_alpha(net,
@@ -202,10 +222,11 @@ def run_alpha(net,
                 delta_time,
                 alpha,
                 run,
-                observation_class,
+                observation_factory,
                 agents,
                 attack_state,
-                output_folder
+                output_folder,
+                reward_fn
                 ):
     env = CustomSUMORLEnv(
                 net_file=net,
@@ -215,12 +236,12 @@ def run_alpha(net,
                 min_green=5,
                 yellow_time=2,
                 delta_time=delta_time,
-                observation_class=observation_class,
+                observation_class=observation_factory,
                 encode_function=no_encode,
                 random_flow=False,
                 real_data_type=False,
                 percentage_added=0.1,
-                reward_fn=diff_waiting_time_reward_normal
+                reward_fn=reward_fn
             )
     state = env.reset()
     if not isinstance(state, dict):
@@ -238,13 +259,14 @@ def run_alpha(net,
             break
         
         if alpha > 0:
+            # Apply noise to the state for the agents, but keep the actual environment state
+            noisy_state = {}
             for ts, agent in agents.items():
                 _m = agent.state_dim
-                _alpha = np.random.normal(alpha, 1, _m)
-                # if alpha == 1 or alpha == 2:
+                _alpha = np.random.randint(0, alpha, _m).astype(int)
                 _alpha = np.abs(_alpha)
-                state[ts] = [new_state[ts][i] + _alpha[i] for i in range((_m))] 
-
+                noisy_state[ts] = [new_state[ts][i] + _alpha[i] for i in range(_m)]
+            state = noisy_state
         else:
             state = new_state
 

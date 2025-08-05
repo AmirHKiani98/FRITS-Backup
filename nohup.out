@@ -34,3 +34,4 @@ KeyboardInterrupt
  Retrying in 1 seconds
  Retrying in 1 seconds
 Simulation completed and TraCI closed.
+Another interrupt signal received, hard exit.

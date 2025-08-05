@@ -103,7 +103,7 @@ def get_connectivity_network(net, cutoff=2):
     return connectivity
 
 def diff_waiting_time_reward_noised(ts:TrafficSignalCustom, iot_id):
-    if ts.id == iot_id:
+    if ts.id == iot_id or iot_id == "all":
         noise = random.uniform(0.8,1.2)
     else:
         noise = 1
