@@ -157,9 +157,7 @@ def run_episode(env, simulation_time, agents, gamma):
             s = torch.FloatTensor(state[ts])
             a = actions[ts]
             r = reward[ts]
-            s_ = torch.FloatTensor(new_state[ts])
-            a_ = torch.distributions.Categorical(agents[ts].actor(s_.unsqueeze(0))).sample().item()
-            
+            s_ = torch.FloatTensor(new_state[ts])            
             td_target = r + gamma * agents[ts].critic(s_).item()
             advantage = td_target - agents[ts].critic(s).item()
             trajectory[ts].append((s, a, td_target, advantage))

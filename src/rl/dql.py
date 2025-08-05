@@ -30,11 +30,11 @@ class DQLAgent:
                  buffer_size: int = 100000,
                  seed: Optional[int] = None):
         
-        if seed is not None:
-            random.seed(seed)
-            torch.manual_seed(seed)
-            torch.cuda.manual_seed(seed)
-            torch.cuda.manual_seed_all(seed)
+        # if seed is not None:
+        #     random.seed(seed)
+        #     torch.manual_seed(seed)
+        #     torch.cuda.manual_seed(seed)
+        #     torch.cuda.manual_seed_all(seed)
         
         self.gamma = gamma
         self.tau = tau
