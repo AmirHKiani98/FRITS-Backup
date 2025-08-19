@@ -10,7 +10,7 @@ def main():
         output_file="./output_modification/fixed/4x4/4x4c2c1.csv",
         use_gui=False,
         step_length=0.1,
-        addtional_file="../../additionals/4x4.add.xml"
+        # addtional_file="../../additionals/4x4-actuated.add.xml"
     )
     model = FixedTimingSimulation(simulation_config)
     model.run_simulation()
