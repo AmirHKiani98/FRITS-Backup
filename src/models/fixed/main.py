@@ -9,7 +9,8 @@ def main():
         route_file="../../../rou/4x4c2c1.rou.xml",
         output_file="./output_modification/fixed/4x4/4x4c2c1.csv",
         use_gui=False,
-        step_length=0.1
+        step_length=0.1,
+        addtional_file="../../additionals/4x4.add.xml"
     )
     model = FixedTimingSimulation(simulation_config)
     model.run_simulation()
