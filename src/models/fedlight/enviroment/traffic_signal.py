@@ -15,7 +15,10 @@ class TrafficSignalCustom(TrafficSignal):
         """Initializes a TrafficSignalCustom object."""
         super().__init__(env, ts_id, delta_time, yellow_time, min_green, max_green, begin_time, reward_fn, sumo)
         self.previous_green_phase = None
-    
+        self.total_vehicles = [0 for _ in range]
+
+    def update_total_vehicles(self):
+
 
     def set_next_phase(self, new_phase: int):
         """Set the next phase of the traffic signal."""

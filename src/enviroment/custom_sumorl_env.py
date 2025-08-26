@@ -10,7 +10,6 @@ from collections import defaultdict
 from typing import Callable, Optional, Tuple, Union
 import pandas as pd
 import numpy as np
-from sumo_rl.environment.traffic_signal import TrafficSignal
 from sumo_rl.environment.observations import DefaultObservationFunction, ObservationFunction
 from sumo_rl import SumoEnvironment
 import traci
@@ -147,6 +146,15 @@ class CustomSUMORLEnv(SumoEnvironment):
             pass
         self.df = pd.concat([self.df, pd.DataFrame([self._get_system_info()])], ignore_index=True)
         traci.simulationStep()
+
+    def _run_steps(self):
+        time_to_act = False
+        while not time_to_act:
+            self._sumo_step()
+            for ts in self.ts_ids:
+                self.traffic_signals[ts].update()
+                if self.traffic_signals[ts].time_to_act:
+                    time_to_act = True
         
         # self.detect_area()
         # self.loop_detector()

@@ -58,13 +58,14 @@ def main():
     parser.add_argument("--cutoff", type=int, default=0)
     parser.add_argument("--output-dir", type=str, default="")
     ## Run the next two simulations first
-    # TODO: Don't the next TODO first. Do this TODO first. This TODO is to run different simulations for different mu for only one intersection (10)
-    # TODO: Try running the simulation for when we only have mu but for two intersections (1,5)
+    # TODO: Don't the next TODO first. Do this TODO first. This TODO is to run different simulations for different mu for only one intersection (10) (DONE)
+    # TODO: Try running the simulation for when we only have mu but for two intersections (1,5) (DONE)
 
 
 
-
-
+    # TODO: Peace suggestion: Do two simulations: one for light traffic intersections, one for heavy traffic intersections. For each scenario, try different values of nu: 0.1, 0.3, 0.5, 0.7, 0.9
+    # TODO: Signal timing should be adjusted based on the Webster.
+    # TODO: increase the number of replications to 10
     # TODO: Make alpha proportional to the number of vehicle on the approach.
     # TODO: Our model is not performing well without attack. Let's not use cutoff. (Reverse back)
     # TODO: Another scenarios: Weight the reward by the distance too

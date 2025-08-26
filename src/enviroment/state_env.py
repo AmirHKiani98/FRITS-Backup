@@ -33,16 +33,20 @@ class ConfigurableArrivalDepartureState(ObservationFunction):
         self.state_dim = (len(self.incoming_lanes)*2, )
         
         self.intersection_pos = traci.junction.getPosition(self.ts.id)
-    
+        self.number_vehicles_incoming_lanes = [0 for _ in self.incoming_lanes]
+        self.number_vehicles_outgoing_lanes = [0 for _ in self.outgoing_lanes]
+
     def __call__(self):
         """Calculate the arrival-departure state with optional noise."""
         arrival = []
         departure = []
         for index, arrival_lane in enumerate(self.incoming_lanes):
             arrival_lane_vehicles = self.get_lane_vehicles(lane_id=arrival_lane)
+            self.number_vehicles_incoming_lanes[index] += arrival_lane_vehicles
             depart_lane_vehicles = 0
             for departure_lane in self.outgoing_lanes[index]:
                 depart_lane_vehicles += self.get_lane_vehicles(lane_id=departure_lane)
+                self.number_vehicles_outgoing_lanes[index] += depart_lane_vehicles
             arrival.append(arrival_lane_vehicles)
             departure.append(depart_lane_vehicles)
         
@@ -58,10 +62,14 @@ class ConfigurableArrivalDepartureState(ObservationFunction):
     def add_noise_to_state(self, state):
         """Add noise to the state based on alpha value"""
         noisy_state = []
-        for value in state:
+        for index, value in enumerate(state):
             # Generate noise based on alpha
-            noise = random.randint(0, int(self.alpha))
-            # TODO: Capture the flow and 
+            noise = random.randint(0, int(self.alpha))/10
+            # TODO: Capture the flow and
+            if index < len(self.number_vehicles_incoming_lanes):
+                noise = self.number_vehicles_incoming_lanes[index] * self.alpha
+            else:
+                noise = self.number_vehicles_outgoing_lanes[index - len(self.number_vehicles_incoming_lanes)] * self.alpha
             noisy_value = max(0, value + noise)  # Ensure non-negative values
             noisy_state.append(int(noisy_value))
         return noisy_state

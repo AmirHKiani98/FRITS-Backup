@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2025-08-05 13:35:44.774241 by tlsCycleAdaptation.py v1_22_0+1469-7f242b8e1f3
+<configuration>
+    <net-file value="./src/networks/4x4.net.xml"/>
+    <output-file value="./src/routes/4x4c2c1_webster.rou.xml"/>
+    <route-files value="./src/routes/4x4c2c1.rou.xml"/>
+    <begin value="0.0"/>
+</configuration>
+-->
+
+<additional xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/additional_file.xsd">
+</additional>
