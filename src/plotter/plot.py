@@ -56,16 +56,6 @@ class Plotter:
                 for value in self.ignore:
                     if value in path:
                         continue
-                # name_list = os.path.basename(path).replace("_nu_", "_mu_").replace("_cutoff_", "_beta_").split("_")
-                # print(name_list)
-                # new_name_list = []
-                # for i in range(0, len(name_list), 2):
-                #     if name_list[i+1] == "0.0" or name_list[i+1] == "0" or name_list[i+1] == 0:
-                #         pass
-                #     else:
-                #         new_name_list.append(name_list[i])
-                #         new_name_list.append(name_list[i + 1])
-                # key = (" ".join([f"\\{name} " if i % 2 == 0 else "= " + name + ", " for i, name in enumerate(new_name_list)])).strip(", ")
                 key = os.path.basename(path)
                 self.path[key] = list(glob(path + "/*"))[0]
             
@@ -172,7 +162,13 @@ class Plotter:
 
             fig, axs = plt.subplots(nrows=nrows, ncols=ncols, figsize=(14, 5 * nrows), constrained_layout=True)
             axs = axs.flatten()
-            fig.suptitle(rf"{key}", fontsize=16)
+            digits = re.findall(r'\d+(\.\d+)?', key)
+            if digits[1] == "":
+                key_to_put = key
+            else:
+                value = round(float(digits[1]), 2)
+                key_to_put = value
+            fig.suptitle(rf"$\mu$ = {key_to_put}", fontsize=16)
             self.dataframes[key] = dict(sorted(self.dataframes[key].items(), key=lambda item: item[0]))  # Sort by alpha value
             for idx, (alpha, df) in enumerate(self.dataframes[key].items()):
                 if not isinstance(df, pl.DataFrame):
@@ -233,7 +229,7 @@ class Plotter:
                             alpha=0.2,
                             label=f"Quartiles 0.0025 - 0.9975 of {model_name}"
                         )
-                axs[idx].set_title(rf"$\alpha$ = {alpha}")
+                axs[idx].set_title(rf"$\alpha$ = {alpha/10}")
                 axs[idx].set_xlabel("System Time")
                 axs[idx].grid(True)
                 axs[idx].set_ylabel(self.col_of_interest)

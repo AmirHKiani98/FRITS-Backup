@@ -1,6 +1,6 @@
 import random
 from sumo_rl.environment.observations import ObservationFunction
-from src.models.fedlight.enviroment.traffic_signal import TrafficSignalCustom
+from src.models.fedlight.enviroment_old.traffic_signal import TrafficSignalCustom
 from gym import spaces
 import traci
 

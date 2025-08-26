@@ -4,7 +4,7 @@ from sumo_rl.environment.observations import ObservationFunction
 from src.enviroment.traffic_signal import TrafficSignalCustom
 from gym import spaces
 import traci
-
+import math
 class ConfigurableArrivalDepartureState(ObservationFunction):
     """
     A configurable arrival-departure state observation class that supports noise injection.
@@ -64,13 +64,17 @@ class ConfigurableArrivalDepartureState(ObservationFunction):
         noisy_state = []
         for index, value in enumerate(state):
             # Generate noise based on alpha
-            noise = random.randint(0, int(self.alpha))/10
+            noise = random.randint(0, int(self.alpha))
             # TODO: Capture the flow and
-            if index < len(self.number_vehicles_incoming_lanes):
-                noise = self.number_vehicles_incoming_lanes[index] * self.alpha
+            sim_time = traci.simulation.getTime()
+            if not (isinstance(sim_time, (int, float)) and sim_time >= 0):
+                noise = 0  # fallback if sim_time is not valid
             else:
-                noise = self.number_vehicles_outgoing_lanes[index - len(self.number_vehicles_incoming_lanes)] * self.alpha
-            noisy_value = max(0, value + noise)  # Ensure non-negative values
+                if index < len(self.number_vehicles_incoming_lanes):
+                    noise = self.number_vehicles_incoming_lanes[index] * self.alpha
+                else:
+                    noise = (self.number_vehicles_outgoing_lanes[index - len(self.number_vehicles_incoming_lanes)]) * self.alpha
+            noisy_value = max(0, math.ceil(value + noise))  # Ensure non-negative values
             noisy_state.append(int(noisy_value))
         return noisy_state
     

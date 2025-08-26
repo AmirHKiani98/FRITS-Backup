@@ -64,7 +64,7 @@ def main():
 
 
     # TODO: Peace suggestion: Do two simulations: one for light traffic intersections, one for heavy traffic intersections. For each scenario, try different values of nu: 0.1, 0.3, 0.5, 0.7, 0.9
-    # TODO: Signal timing should be adjusted based on the Webster.
+    # TODO: Signal timing should be adjusted based on the Webster. (DONE)
     # TODO: increase the number of replications to 10
     # TODO: Make alpha proportional to the number of vehicle on the approach.
     # TODO: Our model is not performing well without attack. Let's not use cutoff. (Reverse back)
