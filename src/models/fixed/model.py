@@ -22,7 +22,8 @@ class SimulationConfig:
         route_file: str,
         output_file: str,
         use_gui: bool,
-        step_length: float
+        step_length: float,
+        addtional_file=None
     ):
         
         self.net_file = net_file
@@ -31,6 +32,7 @@ class SimulationConfig:
         self.use_gui = use_gui
         self.step_length = step_length
         self.simulation_time = int(simulation_time/self.step_length)
+        self.addtional_file = addtional_file
 
     @staticmethod
     def from_args(args) -> "SimulationConfig":
@@ -69,6 +71,10 @@ class SUMOController:
         if not self.config.use_gui:
             cmd.extend(["--no-warnings", "--no-step-log"])
         
+        if self.config.addtional_file:
+            additional_path = self.script_path / self.config.addtional_file
+            cmd.extend(["--additional-files", str(additional_path)])
+
         return cmd
     
     def start_simulation(self) -> None:
