@@ -49,7 +49,7 @@ def main():
     parser.add_argument("--alpha", type=float, default=5, help="Noise level for the state perturbation (0 for no noise).")
     parser.add_argument("--simulation-time", type=int, default=300)
     parser.add_argument("--run-per-alpha", type=int, default=3)
-    parser.add_argument("--delta-time", type=int, default=3)
+    parser.add_argument("--delta-time", type=int, default=10)
     parser.add_argument("--nu", type=float, default=0.5)
     parser.add_argument("--distance-threshold", type=int, default=30)
     parser.add_argument("--omega", type=float, default=0.0)
@@ -59,15 +59,6 @@ def main():
     # TODO: Don't the next TODO first. Do this TODO first. This TODO is to run different simulations for different mu for only one intersection (10)
     # TODO: Try running the simulation for when we only have mu but for two intersections (1,5)
 
-
-
-
-
-    # TODO: Make alpha proportional to the number of vehicle on the approach.
-    # TODO: Our model is not performing well without attack. Let's not use cutoff. (Reverse back)
-    # TODO: Another scenarios: Weight the reward by the distance too
-    # TODO: The issues might be because of the design of the attacks.
-    # TODO: Try changing the delta_time
 
     args = parser.parse_args()
 
