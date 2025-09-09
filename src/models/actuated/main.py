@@ -26,8 +26,8 @@ def main():
     parser.add_argument("--noised-edge", type=str, default="all")
     parser.add_argument("--noise-added", type=bool, default=True)
     parser.add_argument("--min-green", type=int, default=5)
-    parser.add_argument("--max-green", type=int, default=50)
-    parser.add_argument("--t-crit", type=float, default=3)
+    parser.add_argument("--max-green", type=int, default=25)
+    parser.add_argument("--t-crit", type=float, default=10)
     parser.add_argument("--alpha", type=float, default=5, help="Noise level for the state perturbation (0 for no noise).")
     parser.add_argument("--simulation-time", type=int, default=600)
 

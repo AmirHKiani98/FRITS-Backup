@@ -42,7 +42,7 @@ def main():
     parser.add_argument("--gui", action="store_true")
     parser.add_argument("--simulation-time", type=int, default=300)
     parser.add_argument("--run-per-alpha", type=int, default=3)
-    parser.add_argument("--delta-time", type=int, default=3)
+    parser.add_argument("--delta-time", type=int, default=10)
     parser.add_argument("--gamma", type=float, default=0.95)
     parser.add_argument("--output-dir", type=str, default="")
 
