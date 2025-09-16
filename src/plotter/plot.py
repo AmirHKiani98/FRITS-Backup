@@ -245,6 +245,174 @@ class Plotter:
             plt.savefig(f'./figures/{safe_key}_alpha_specific.png', dpi=100, bbox_inches='tight')
             # plt.show()
             plt.close()
+    
+    def plot_against_each_baseline(self):
+        """
+        Create separate plots comparing:
+        1. FRITS + FedLight vs Fixed
+        2. FRITS + FedLight vs Actuated
+        """
+        keys = [key for key in self.dataframes.keys() if key != 'fixed']
+        
+        # Create two separate comparisons: vs Fixed and vs Actuated
+        comparisons = [
+            {"name": "Fixed", "is_file": True},
+            {"name": "Actuated", "is_file": False}
+        ]
+        
+        for comparison in comparisons:
+            baseline_name = comparison["name"]
+            is_file_baseline = comparison["is_file"]
+            
+            for key in keys:  # For each main model (FRITS variants)
+                n_plots = len(self.dataframes[key])
+                if n_plots == 0:
+                    print(f"Warning: No data found for key '{key}'. Skipping plot.")
+                    continue
+                    
+                ncols = 2
+                nrows = math.ceil(n_plots / ncols)
+
+                fig, axs = plt.subplots(nrows=nrows, ncols=ncols, figsize=(14, 5 * nrows), constrained_layout=True)
+                if nrows * ncols == 1:
+                    axs = [axs]
+                else:
+                    axs = axs.flatten()
+                    
+                # Extract mu value for the plot title
+                digits = re.findall(r'\d+(\.\d+)?', key)
+                if digits and len(digits) > 1:
+                    if digits[1] == "":
+                        key_to_put = key
+                    else:
+                        value = round(float(digits[1]), 2)
+                        key_to_put = value
+                else:
+                    key_to_put = key
+                    
+                fig.suptitle(f"FRITS (μ = {key_to_put}) and FedLight vs {baseline_name}", fontsize=16)
+                
+                self.dataframes[key] = dict(sorted(self.dataframes[key].items(), key=lambda item: item[0]))
+                
+                for idx, (alpha, df) in enumerate(self.dataframes[key].items()):
+                    if not isinstance(df, pl.DataFrame):
+                        raise TypeError(f"Data for key '{key}' and alpha '{alpha}' must be a Polars DataFrame.")
+                    df = df.sort("system_time")
+    
+                    # Process main model (FRITS)
+                    new_df = df.group_by("system_time").agg([
+                        pl.col(self.col_of_interest).quantile(0.9975).alias("max"),
+                        pl.col(self.col_of_interest).quantile(0.0025).alias("min"),
+                        pl.col(self.col_of_interest).mean().alias("mean")
+                    ])
+                    
+                    # Plot main model (FRITS)
+                    colors = palette[0]  # First color for FRITS
+                    axs[idx].plot(new_df["system_time"], new_df["mean"], label="FRITS", color=colors)
+                    axs[idx].fill_between(
+                        new_df["system_time"],
+                        new_df["min"],
+                        new_df["max"],
+                        color=colors,
+                        alpha=0.2,
+                        label="FRITS Range"
+                    )
+
+                    max_time = new_df["system_time"].max()
+                    
+                    # Add FedLight
+                    fedlight_model_name = "FedLight-1 and 5"  # Use your FedLight model name here
+                    if fedlight_model_name in self.baseline_models_df and alpha in self.baseline_models_df[fedlight_model_name]:
+                        fedlight_data = self.baseline_models_df[fedlight_model_name][alpha]
+                        if isinstance(fedlight_data, pl.DataFrame):
+                            fedlight_data = fedlight_data.sort("system_time")
+                            masked_fedlight_data = fedlight_data.filter(pl.col("system_time") <= max_time)
+                            grouped_fedlight = masked_fedlight_data.group_by("system_time").agg([
+                                pl.col(self.col_of_interest).quantile(0.9975).alias("max"),
+                                pl.col(self.col_of_interest).quantile(0.0025).alias("min"),
+                                pl.col(self.col_of_interest).mean().alias("mean")
+                            ])
+                            axs[idx].plot(
+                                grouped_fedlight["system_time"], 
+                                grouped_fedlight["mean"], 
+                                label="FedLight", 
+                                color=palette[1],  # Second color for FedLight
+                                linestyle='-'
+                            )
+                            axs[idx].fill_between(
+                                grouped_fedlight["system_time"],
+                                grouped_fedlight["min"],
+                                grouped_fedlight["max"],
+                                color=palette[1],
+                                alpha=0.2,
+                                label="FedLight Range"
+                            )
+                    
+                    # Add the baseline (either Fixed or Actuated)
+                    if is_file_baseline:
+                        # Fixed baseline (from fixed file)
+                        df_fixed = self.fixed_df.clone()
+                        if isinstance(df_fixed, pl.DataFrame):
+                            df_fixed = df_fixed.filter(pl.col("system_time") <= max_time)
+                            df_fixed = df_fixed.sort("system_time")
+                            axs[idx].plot(
+                                df_fixed["system_time"], 
+                                df_fixed[self.col_of_interest], 
+                                label="Fixed", 
+                                color=palette[2],  # Third color for fixed
+                                linestyle='-'
+                            )
+                    else:
+                        # Actuated baseline (from baseline_models_df)
+                        actuated_model_name = "Actuated"
+                        if actuated_model_name in self.baseline_models_df and alpha in self.baseline_models_df[actuated_model_name]:
+                            actuated_data = self.baseline_models_df[actuated_model_name][alpha]
+                            if isinstance(actuated_data, pl.DataFrame):
+                                actuated_data = actuated_data.sort("system_time")
+                                masked_actuated_data = actuated_data.filter(pl.col("system_time") <= max_time)
+                                grouped_actuated = masked_actuated_data.group_by("system_time").agg([
+                                    pl.col(self.col_of_interest).quantile(0.9975).alias("max"),
+                                    pl.col(self.col_of_interest).quantile(0.0025).alias("min"),
+                                    pl.col(self.col_of_interest).mean().alias("mean")
+                                ])
+                                axs[idx].plot(
+                                    grouped_actuated["system_time"], 
+                                    grouped_actuated["mean"], 
+                                    label="Actuated", 
+                                    color=palette[2],  # Third color for actuated
+                                    linestyle='-'
+                                )
+                                axs[idx].fill_between(
+                                    grouped_actuated["system_time"],
+                                    grouped_actuated["min"],
+                                    grouped_actuated["max"],
+                                    color=palette[2],
+                                    alpha=0.2,
+                                    label="Actuated Range"
+                                )
+                    
+                    # Set y-axis limits
+                    axs[idx].set_ylim(self.min_value, self.max_value)
+                    
+                    # Formatting
+                    axs[idx].set_title(rf"$\alpha$ = {alpha/10}")
+                    axs[idx].set_xlabel("System Time")
+                    axs[idx].grid(True)
+                    axs[idx].set_ylabel(self.col_of_interest)
+                    if self.target_time != 0:
+                        axs[idx].set_xlim(0, self.target_time)
+                    axs[idx].legend()
+                
+                # Save figure
+                plt.gca().get_yaxis().get_offset_text().set_fontsize(18)
+                safe_key = key.replace(" ", "").replace("\\", "").replace(",", "_")
+                safe_baseline_name = baseline_name.replace(" ", "_").replace("-", "_")
+                
+                # Create figures directory if it doesn't exist
+                os.makedirs('./figures', exist_ok=True)
+                
+                plt.savefig(f'./figures/{safe_key}_and_FedLight_vs_{safe_baseline_name}.png', dpi=100, bbox_inches='tight')
+                plt.close()
 
 
     def plot_alpha_all(self):
@@ -266,5 +434,6 @@ if __name__ == "__main__":
     }
     
     plotter = Plotter(path, baseline_models_path=baseline_models_path, ignore=ignore)
-    plotter.plot_alpha_specific()
+    #plotter.plot_alpha_specific()  # Original plots with all models
+    plotter.plot_against_each_baseline()  # New pairwise comparison plots
     # plotter.plot_alpha_all()  # Uncomment to plot all alpha values in one plot

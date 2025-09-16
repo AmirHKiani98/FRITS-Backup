@@ -64,16 +64,16 @@ class ConfigurableArrivalDepartureState(ObservationFunction):
         noisy_state = []
         for index, value in enumerate(state):
             # Generate noise based on alpha
-            noise = random.randint(0, int(self.alpha))
             # TODO: Capture the flow and
             sim_time = traci.simulation.getTime()
             if not (isinstance(sim_time, (int, float)) and sim_time >= 0):
                 noise = 0  # fallback if sim_time is not valid
             else:
-                if index < len(self.number_vehicles_incoming_lanes):
-                    noise = self.number_vehicles_incoming_lanes[index] * self.alpha
-                else:
-                    noise = (self.number_vehicles_outgoing_lanes[index - len(self.number_vehicles_incoming_lanes)]) * self.alpha
+                # if index < len(self.number_vehicles_incoming_lanes):
+                #     noise = self.number_vehicles_incoming_lanes[index] * self.alpha
+                # else:
+                #     noise = (self.number_vehicles_outgoing_lanes[index - len(self.number_vehicles_incoming_lanes)]) * self.alpha
+                noise = self.alpha
             noisy_value = max(0, math.ceil(value + noise))  # Ensure non-negative values
             noisy_state.append(int(noisy_value))
         return noisy_state
