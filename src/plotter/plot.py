@@ -315,7 +315,6 @@ class Plotter:
                         new_df["max"],
                         color=colors,
                         alpha=0.2,
-                        label="FRITS Range"
                     )
 
                     max_time = new_df["system_time"].max()
@@ -345,7 +344,6 @@ class Plotter:
                                 grouped_fedlight["max"],
                                 color=palette[1],
                                 alpha=0.2,
-                                label="FedLight Range"
                             )
                     
                     # Add the baseline (either Fixed or Actuated)
@@ -388,7 +386,6 @@ class Plotter:
                                     grouped_actuated["max"],
                                     color=palette[2],
                                     alpha=0.2,
-                                    label="Actuated Range"
                                 )
                     
                     # Set y-axis limits
