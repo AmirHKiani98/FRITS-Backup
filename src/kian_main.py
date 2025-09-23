@@ -48,7 +48,7 @@ def main():
     parser.add_argument("--gui", type=bool, default=False)
     parser.add_argument("--noised-edge", type=str, default="all")
     parser.add_argument("--noise-added", type=bool, default=True)
-    parser.add_argument("--alpha", type=float, default=5, help="Noise level for the state perturbation (0 for no noise).")
+    parser.add_argument("--alpha", type=float, default=0, help="Noise level for the state perturbation (0 for no noise).")
     parser.add_argument("--simulation-time", type=int, default=300)
     parser.add_argument("--run-per-alpha", type=int, default=3)
     parser.add_argument("--delta-time", type=int, default=3)
@@ -219,13 +219,6 @@ def run_episode(env, simulation_time, agents, distance_matrix, distance_mean,
             reward = blend_rewards_neighborhood(reward, connectivity, nu)
         else:
             reward = blend_rewards(reward, nu)
-        
-        # for ts, agent in agents.items():
-        #     agent.memory.push(
-        #         env.encode(state[ts], ts), actions[ts], reward[ts], new_state[ts], False
-        #     )
-        #     if len(agent.memory) > batch_size:
-        #         agent.update(batch_size)
         
         state = new_state
         episode_rewards.append(sum(reward.values()))
