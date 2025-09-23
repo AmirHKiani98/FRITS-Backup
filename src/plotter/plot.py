@@ -424,10 +424,10 @@ if __name__ == "__main__":
     path = "./src/output_modification/4x4"
     ignore = ["attacked"]
     baseline_models_path = {
-        "FedLight-1 and 5": "./src/models/fedlight/output/1_5",
+        # "FedLight-1 and 5": "./src/models/fedlight/output/1_5",
         "Actuated": "./src/models/actuated/output",
         # "FedLight-6 and 11": "./src/models/fedlight/output/6_11",
-        # "Fedlight-10": "./src/models/fedlight/output/i4-fedlight",
+        "Fedlight-10": "./src/models/fedlight/output/i4-fedlight",
     }
     
     plotter = Plotter(path, baseline_models_path=baseline_models_path, ignore=ignore)

@@ -8,7 +8,8 @@ class ActuatedTLS:
         self.t_crit = float(t_crit)
         self.warn_missing = warn_missing
         self.alpha = alpha
-
+        self.last_detection = float("-inf")
+        
         # TLS link index -> in-lanes (from SUMO)
         cl = traci.trafficlight.getControlledLinks(self.id)
         if not cl:
@@ -40,11 +41,19 @@ class ActuatedTLS:
         for lane in lanes:
             det = self.lane_to_loop(lane)
             try:
-                gap = traci.inductionloop.getTimeSinceDetection(det)
-                if not isinstance(gap, (int, float)):
-                    raise ValueError(f"{self.id}: invalid gap {gap} for loop {det}")
+                indicated_veh = traci.inductionloop.getLastStepVehicleNumber(det)
+                if not isinstance(indicated_veh, (int, float)):
+                    raise ValueError(f"{self.id}: invalid gap {indicated_veh} for loop {det}")
+                if indicated_veh > 0:
+                    gap = 0
+                    self.last_detection = traci.simulation.getTime()
+                else:
+                    gap = traci.simulation.getTime() - self.last_detection
                 if self.is_attacked:
-                    gap += random.randint(0, self.alpha)
+                    uniform_value = random.uniform(0, 1)
+                    alpha_posibility = self.alpha/10
+                    if uniform_value < alpha_posibility:
+                        gap = 0
             except traci.TraCIException:
                 if self.warn_missing and det not in self._missing_warned:
                     self._missing_warned.add(det)

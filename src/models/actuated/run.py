@@ -1,6 +1,6 @@
 import os
 
 
-for alpha in [5]:
+for alpha in [0,1,2,3,4,5]:
     alpha = int(alpha)
     os.system(f"python -m src.models.actuated.main --alpha {alpha} --num-episodes 5 --noise-added True --noised-edge '1,5'")

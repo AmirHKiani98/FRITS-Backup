@@ -3,7 +3,7 @@ import os
 import numpy as np
 
 # With cutoff
-for attacked_intersections in ["1,5"]:
+for attacked_intersections in ["10"]:
     for cutoff in [0]:
         for nu in [0.5]:
             nu = float(nu)

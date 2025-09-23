@@ -11,7 +11,7 @@ import pandas as pd
 from tqdm import tqdm
 from src.enviroment.custom_sumorl_env import CustomSUMORLEnv
 from src.enviroment.state_env import create_arrival_departure_state
-from src.enviroment.utility import blend_rewards, blend_rewards_neighborhood, diff_waiting_time_reward_noised, diff_waiting_time_reward_normal, diff_waiting_time_reward_normal_phase_continuity, get_connectivity_network, get_intersections_distance_matrix, get_neighbours
+from src.enviroment.utility import blend_rewards, blend_rewards_neighborhood, diff_waiting_time_reward_noised, diff_waiting_time_reward_normal, get_connectivity_network, get_intersections_distance_matrix, get_neighbours
 from src.rl.kian_agent import KianAgent
 from src.rl.kian_cloud import KianLightCloud
 import torch
@@ -43,7 +43,7 @@ def main():
 
     parser.add_argument('--net', type=str, default=BASE_DIR + r"/networks/4x4.net.xml")
     parser.add_argument('--route', type=str, default=BASE_DIR + r'/routes/4x4c2c1.rou.xml')
-    parser.add_argument("--intersection-id", type=str, default="1,5")
+    parser.add_argument("--intersection-id", type=str, default="10")
     parser.add_argument("--num-episodes", type=int, default=5)
     parser.add_argument("--gui", type=bool, default=False)
     parser.add_argument("--noised-edge", type=str, default="all")
@@ -133,7 +133,7 @@ def main():
         )
         all_rewards[episode] = episode_rewards
 
-    alphas = list(range(6)) # change value of this list
+    alphas = list(range(args.alpha)) # change value of this list
     for _, agent in agents.items():
         agent.actor.eval()
         agent.critic.eval()
@@ -203,8 +203,8 @@ def run_episode(env, simulation_time, agents, distance_matrix, distance_mean,
         for ts in agents:
             s = torch.FloatTensor(state[ts])
             a = actions[ts]
-            r = reward[ts]  # Now using the same reward as DQL
-            s_ = torch.FloatTensor(new_state[ts])            
+            r = reward[ts]
+            s_ = torch.FloatTensor(new_state[ts])
             td_target = r + gamma * agents[ts].critic(s_).item()
             advantage = td_target - agents[ts].critic(s).item()
             trajectory[ts].append((s, a, td_target, advantage))
