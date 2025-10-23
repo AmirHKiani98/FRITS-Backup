@@ -59,6 +59,20 @@ class ConfigurableArrivalDepartureState(ObservationFunction):
             
         return state
     
+# I think if you want o include alpha=0.0 in this function and make sure there is always an attack when alpha is nonzero
+# We should do something like this
+
+    # def add_noise_to_state(self, state):
+    #     if self.alpha == 0.0:
+    #         return state
+    #     noisy_state = []
+    #     for index, value in enumerate(state):
+    #         noise = generate random noise using self.alpha
+    #         noisy_value = max(1, math.ceil(value + noise)) # notice '1' here
+    #         noisy_state.append(int(noisy_value))
+    #     return noisy_state
+
+    
     def add_noise_to_state(self, state):
         """Add noise to the state based on alpha value"""
         noisy_state = []
