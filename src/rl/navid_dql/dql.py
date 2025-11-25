@@ -19,7 +19,7 @@ class DQLAgent:
                  state_dim: int, 
                  action_dim: int, 
                  hidden_dim: int = 64, 
-                 lr: float = 1e-2, 
+                 lr: float = 1e-3, 
                  gamma: float = 0.99,
                  tau: float = 0.05,
                  update_every: int = 10,
@@ -84,7 +84,7 @@ class DQLAgent:
         
         q_values = self.q_network(state)
         with torch.no_grad():
-            next_q_values = self.q_network(next_state)
+            next_q_values = self.target_q_network(next_state)
         
         q_value = q_values.gather(1, action.unsqueeze(1)).squeeze(1)
         max_next_q_value = next_q_values.max(1)[0]
@@ -110,5 +110,5 @@ class DQLAgent:
     
     def load_policy(self, idx):
         self.q_network.load_state_dict(
-            './saved_q/agent_{}.pkl'.format(idx)
+            torch.load('./saved_q/agent_{}.pkl'.format(idx))
             )
